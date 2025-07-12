@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { ProjectType } from "@/libs/types/types";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
@@ -13,10 +13,10 @@ import { AnimatedElement } from "../animations/AnimationType";
 
 const Hero = ({ projects }: { projects: ProjectType[] }) => {
   const t = useTranslations();
-  const buttonRef = useRef<HTMLButtonElement>(null);
+  // const buttonRef = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
+  const isHovered = false;
+  const targetPosition = { x: 0, y: 0 };
   // const [scale, setScale] = useState(1);
   // const locale = useLocale();
 
