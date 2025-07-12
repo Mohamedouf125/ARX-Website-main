@@ -17,8 +17,8 @@ const Hero = ({ projects }: { projects: ProjectType[] }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
-  const [scale, setScale] = useState(1);
-  const locale = useLocale();
+  // const [scale, setScale] = useState(1);
+  // const locale = useLocale();
 
   useEffect(() => {
     if (!isHovered) {
@@ -43,7 +43,7 @@ const Hero = ({ projects }: { projects: ProjectType[] }) => {
       };
 
       returnAnimation();
-      setScale(1);
+      // setScale(1);
       return;
     }
 
@@ -69,29 +69,29 @@ const Hero = ({ projects }: { projects: ProjectType[] }) => {
     return () => cancelAnimationFrame(animationFrame);
   }, [isHovered, targetPosition]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!buttonRef.current) return;
+  // const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   if (!buttonRef.current) return;
 
-    const rect = buttonRef.current.getBoundingClientRect();
-    // More pronounced movement effect
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.6;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.6;
+  //   const rect = buttonRef.current.getBoundingClientRect();
+  //   // More pronounced movement effect
+  //   const x = (e.clientX - rect.left - rect.width / 2) * 0.6;
+  //   const y = (e.clientY - rect.top - rect.height / 2) * 0.6;
 
-    setTargetPosition({ x, y });
-    // Subtle scale and opacity changes
-    setScale(1.05);
-  };
+  //   setTargetPosition({ x, y });
+  //   // Subtle scale and opacity changes
+  //   setScale(1.05);
+  // };
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTargetPosition({ x: 0, y: 0 });
-    setScale(1);
-  };
+  // const handleMouseLeave = () => {
+  //   setIsHovered(false);
+  //   setTargetPosition({ x: 0, y: 0 });
+  //   setScale(1);
+  // };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    setScale(1.03);
-  };
+  // const handleMouseEnter = () => {
+  //   setIsHovered(true);
+  //   setScale(1.03);
+  // };
 
   return (
     <div className="w-full relative h-[80vh] lg:h-[110vh] ">
