@@ -110,12 +110,12 @@ const Hero = ({ banners }: { banners: BannerTypes[] }) => {
             }}
             className="w-full absolute top-0 left-0 right-0 bottom-0 z-0 h-full"
           >
-            {[0, 1, 2].map((index) => (
+            {banners.map((banner,index) => (
               <SwiperSlide key={index}>
                 <div className="w-full h-full relative">
                   <img
                     src={
-                      banners[index]?.image ||
+                      banner?.image ||
                       `/images/home/banner${index}.png`
                     }
                     className="w-full h-full object-cover"
