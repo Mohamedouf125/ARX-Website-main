@@ -151,7 +151,7 @@ const Hero = ({ projects }: { projects: ProjectType[] }) => {
                         </div>
                       </AnimatedElement>
 
-                      <AnimatedElement
+                      {/* <AnimatedElement
                         type="slideUp"
                         delay={0.6}
                         duration={1}
@@ -175,7 +175,7 @@ const Hero = ({ projects }: { projects: ProjectType[] }) => {
                             </button>
                           </Link>
                         </div>
-                      </AnimatedElement>
+                      </AnimatedElement> */}
                     </div>
                   </div>
                 </div>
