@@ -175,8 +175,8 @@ const Hero = ({ banners }: { banners: BannerTypes[] }) => {
                             text-[14px] xs:text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] xl:text-[19px] 2xl:text-[20px]
                             drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] max-w-[90%] mx-auto leading-relaxed">
                             {t("home.hero_description_part_one")}
-                            {t("home.hero_description_part_two")}
-                            {t("home.hero_description_part_three")}
+                            {/* {t("home.hero_description_part_two")}
+                            {t("home.hero_description_part_three")} */}
                           </p>
                         </div>
                       </AnimatedElement>
