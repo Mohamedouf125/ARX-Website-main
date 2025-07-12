@@ -1,0 +1,93 @@
+{
+  "header": {
+    "footerDescription": "ARX Developments is a leading real estate development company in Egypt, specializing in creating exceptional residential and commercial properties that combine luxury, comfort, and modern living.",
+    "links": "Quick Links",
+    "home": "Home",
+    "about": "About Us",
+    "projects": "Projects",
+    "blog": "Blog",
+    "FAQs": "FAQs",
+    "contact": "Contact Us"
+  },
+  "subscribe": {
+    "join_us": "Join Our Newsletter",
+    "subscribe_description": "Stay updated with our latest projects and exclusive offers",
+    "placeholder": "Enter your email",
+    "subscribe": "Subscribe"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "description_part_one": "We are available for real estate inquiries 24/7",
+    "description_part_two": "Our team is always ready to assist you with any inquiry",
+    "reach_us": "Reach Us",
+    "reach_us_description": "We're here to help and always happy to hear from you! 📞",
+    "office_address": "Office Address",
+    "phone_number": "Phone Number",
+    "email_us": "Email Us",
+    "schedule_meeting": "Schedule Meeting",
+    "follow_social": "Follow Our Social Media",
+    "send_message": "Send Us A Message",
+    "locations": "Our Locations",
+    "form": {
+      "name": "Name",
+      "name_placeholder": "Enter your name",
+      "email": "Email",
+      "email_placeholder": "Enter your email",
+      "phone": "Phone Number",
+      "phone_placeholder": "Enter phone number",
+      "subject": "Subject",
+      "subject_options": {
+        "interested": "Interested In",
+        "commercial": "Commercial",
+        "housing": "Housing",
+        "administrative": "Administrative",
+        "medical": "Medical"
+      },
+      "message": "Message",
+      "message_placeholder": "Enter your message",
+      "send": "Send"
+    }
+  },
+  "videos": {
+    "our_videos": "Our New Videos"
+  },
+  "about": {
+    "title": "About Us",
+    "description": "Discover our journey, mission, and the values that drive us to create exceptional real estate developments.",
+    "vision_title": "Our Vision",
+    "vision_description": "To be the leading real estate developer in Egypt, creating sustainable and innovative communities that enhance the quality of life for our customers.",
+    "mission_title": "Our Mission",
+    "mission_description": "To deliver exceptional real estate projects that exceed customer expectations while contributing to the development of our communities.",
+    "values_title": "Our Values",
+    "values_description": "Integrity, excellence, innovation, and customer satisfaction are the core values that guide everything we do.",
+    "years": "Years of<br/>Experience",
+    "units": "Units Delivered",
+    "constructions": "Constructions",
+    "clients": "Happy Clients",
+    "ahmed_job": "Chairman & CEO",
+    "ahmed_describe": "Leading the company with over 20 years of experience in real estate development.",
+    "yasser_job": "Managing Director",
+    "yasser_describe": "Overseeing operations and strategic planning for all development projects.",
+    "saad_job": "Technical Director",
+    "saad_describe": "Ensuring technical excellence and quality standards across all projects.",
+    "osama_job": "Financial Director",
+    "osama_describe": "Managing financial operations and investment strategies."
+  },
+  "projects": {
+    "title": "Our Projects",
+    "description": "Explore our diverse portfolio of residential and commercial developments across Egypt.",
+    "name": "Our Projects",
+    "search_placeholder": "Search for projects..."
+  },
+  "blog": {
+    "title": "Our Blog",
+    "description": "Stay updated with the latest news, insights, and trends in real estate development.",
+    "latest": "Latest Articles",
+    "welcome_to_our_blog": "Welcome to Our Blog",
+    "welcome_to_our_blog_description": "Discover insights, news, and expert perspectives on real estate development and investment opportunities."
+  },
+  "faqs": {
+    "title": "Frequently Asked Questions",
+    "description": "Find answers to common questions about our projects, services, and real estate development."
+  }
+} 

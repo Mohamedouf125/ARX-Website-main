@@ -1,0 +1,343 @@
+{
+    "header": {
+        "home": "Home",
+        "about": "About Us",
+        "projects": "Projects",
+        "contact": "Contact Us",
+        "blog": "Blog",
+        "footerDescription":"With 20+ years in Egypt's real estate market, ARX delivers exceptional services.",
+        "faqs": "FAQs",
+        "links": "Links",
+        "our_team": "Our Team",
+        "our-team": "Our Team",
+        "our-services": "Our Services",
+        "core-values": "Core Values"
+
+    },
+
+    "who_we_are":{
+        "total_years_of_experience": "Total Years Of Experience",
+        "units_sold": "Units Sold",
+        "total_constructions": "Total Constructions",
+        "total_clients": "Total Clients",
+        "offices_worldwide": "offices worldwide",
+        "years_of_experience": "years of experience",
+        "projects_completed": "projects completed",
+        "our_impact": "our impact",
+        "learn_more": "Learn More"
+    },
+
+
+    "home": {
+        "hero_title": "WE",
+        "hero_subtitle": "CREATE",
+        "hero_description": "ACHIEVEMENT",
+        "search_placeholder": "Search about projects",
+        "see_all_projects": "See All Projects",
+        "our_latest": "Our Latest",
+        "projects": "Projects",
+        "trusted_by_clients": "Testimonials",
+        "our_blog": "Our Blog",
+        "discover_inspiration_and_trends": "Discover inspiration and trends",
+        "hero_button": "Get your free quote",
+        "our_projects_description": "Our projects generate lasting dividends",
+        "our_partners": "We're proud to partner with best-in-class clients",
+        "view_all":"View All Blogs",
+        "hero_description_part_one": "We are a top 25 builder and developer fully invested",
+        "hero_description_part_two": "in our customers' success and improving the",
+        "hero_description_part_three": "communities we serve.",
+        "selected_projects": "Selected Projects",
+        "contact_us": "Contact Us",
+        "get_specialist_advice": "Get specialist advice for residential, commercial or property",
+        "property": "PROPERTY",
+        "quick_enquiry": "QUICK ENQUIRY",
+        "your_name": "Your Name*",
+        "your_email": "Your Email*",
+        "your_phone": "Your Phone*",
+        "your_inquiry_about": "Your Inquiry About*",
+        "your_message": "Your Message*",
+        "get_a_call_back": "Get a Call Back",
+        "residential_property": "Residential Property",
+        "commercial_property": "Commercial Property",
+        "investment_opportunities": "Investment Opportunities",
+        "free_consultation": "Free Consultation",
+        "property_valuation": "Property Valuation",
+        "under_construction": "Under Construction"
+    },
+    "second_hero":{
+        "title": "We're here to help you build your dream home",
+        "description": "Whether you're building, remodeling, buying, or selling, we bring seamless project execution under one roof.",
+        "button": "Get your free quote"
+    },
+    "about":{
+        "title": "About Us",
+        "description": "Shaping the world of things to come",
+        "vision_title" : "VISION",
+        "vision_button": "Meet The Team",
+        "vision_description": "To lead in urban development with a global and sustainable outlook, reflecting our company's ambition—from the heart of the world to its farthest horizons.",
+                "vision_description_part_one": "We'd love to share more with you, please complete this form and our dedicated team will get back to you shortly.",
+        "vision_description_part_two": "In markets from renewable energy, sports and entertainment, to data centers and healthcare, we work to ensure the built environment leaves a lasting positive impact. Together, we strive to make your project better than you imagined possible.",
+        "mission_title" : "MISSION",
+        "mission_description": "We create high-quality, culturally rich real estate aligned with global standards, meeting client needs through thoughtful planning and sustainable development.",
+        "values_title" : "VALUES",
+        "learn_more": "Learn More",
+        "values_description": "At Arx, we uphold quality, integrity, and client focus—driven by initiative, growth, and accountability to build trust and deliver lasting value in every project.",
+
+        "who_we": "WHO WE ",
+        "are":"ARE?",
+        "years":"Total Years Of Experience",
+
+        "small_cards":{
+            "prjects_in_development":"projects in development",
+            "square_feet_of_property":"square feet of property",
+            "total_projects_cost":"total projects cost"
+        },
+        "about_us": "About Us",
+        "big_cards":{
+            "what_we_do":"What we do",
+            "our_impact":"Our Impact",
+            "core_values":"Core Values",
+            "first_card_description":"We maintain this by ensuring transparency and professional conduct in every aspect.",
+            "second_card_description":"We work with both investors and developers to create landmarks that make an impact.",
+            "third_card_description":"To empower businesses with cutting-edge web solutions that enhance their digital presence and drive growth.",
+            "first_card_button":"Our Solutions",
+            "second_card_button":"Our Projects",
+            "third_card_button":"Discover More"
+        },
+
+
+        "units":"Units Sold",
+        "constructions":"Total Constructions",
+        "clients":"Total Clients"
+    },
+    "our_features": {
+    "span": "Our Main Focus",
+    "title": "Genuine partner in every aspect of development",
+    "page_title": "Our Services",
+    "description": "We take immense pride in our commitment to providing unparalleled service excellence to our valued customers.",
+    "read_more": "Read More",
+    "Residential": {
+      "title": "Residential",
+      "description": "Discover residential units that combine contemporary design with practical comfort, offering privacy, functionality, and a balanced lifestyle for individuals and families alike."
+    },
+    "Medical": {
+      "title": "Medical",
+      "description": "Premium medical units crafted for efficient care, equipped with advanced facilities to support better workflow, accurate diagnosis, and exceptional patient outcomes."
+    },
+    "Administrative": {
+      "title": "Administrative",
+      "description": "Our multi-skilled team provides innovative, forward-thinking solutions."
+    },
+    "Commercial": {
+      "title": "Commercial",
+      "description": "Elevate your business with flexible spaces tailored for all industries and sizes. Enjoy modern infrastructure, premium facilities, and a dynamic community that redefines growth and productivity."
+    }
+  },
+    "shorts":{
+        "title": "OUR SHORTS",
+        "description": "A glimpse into our journey,<br/> one reel at a time."
+    },
+    "services":{
+        "title": "OUR SERVICES",
+        "description": "OUR MAIN FOCUS"
+    },
+    "supporters":{
+        "years":"Total Years Of Experience",
+        "units":"Units Sold",
+        "constructions":"Total Constructions",
+        "clients":"Total Clients",
+        "our_partners": "We're proud to partner with best-in-class clients"
+    },
+    "subscribe":{
+        "join_us":"Join Our Newsletter Now",
+        "subscribe":"Subscribe",
+        "placeholder":"Enter your email to Subscribe",
+        "subscribe_description":"Subscribe to our weekly newsletter and receive updates via Email"
+    },
+    "projects":{
+        "title":"Explore Our Landmark Developments Shaping the Future.",
+        "name":"Projects",
+        "search_placeholder":"Search about projects",
+        "explore":"Explore",
+        "search":"Search",
+        "under_construction":"Under Construction",
+        "project_location":"Project Location",
+        "project_budget":"Project Budget",
+        "all_locations": "All Locations",
+        "all_budgets": "All Budgets",
+        "clear_filters": "Clear Filters",
+        "project_description": "Project Description",
+        "status": "Status",
+        "project_type": "Project Type",
+        "project_area": "Project Area",
+        "commencement_date": "Commencement Date",
+        "price_range": "Price Range",
+        "residential": "Residential",
+        "key_details": "Key Details",
+        "media": "Media",
+        "features_and_amenities": "Features & Amenities",
+        "space": "Space",
+        "location": "Location",
+        "building_date": "Building Date",
+        "download_brochure": "Download Brochure",
+        "project_brochure": "Project Brochure",
+        "brochure": "Brochure",
+        "download_brochure_description": "Download the project brochure for detailed information about the project.",
+        "download_brochure_button": "Download Brochure",
+        "no_brochure_available": "No Brochure Available",
+        "brochure_not_available_message": "The project brochure is not available at the moment. Please check back later for updates.",
+        "key_transport": "Key Transport",
+        "get_direction": "Get Direction",
+        "address": "Address",
+        "features_amenities": "Features & Amenities"
+    },
+    "faqs":{
+        "title":"FAQs",
+        "description":"Our global real estate experts are here to help you in this ever-changing market.",
+        "frequently asked questions":"Frequently Asked Questions",
+        "got questions? we've got answers!":"Got questions? We've got answers!",
+        "read_most_frequent_questions":"Read most frequent questions",
+        "find_your_answer":"Find your answer",
+        "browse our faqs to find everything you need to know":"Browse our FAQs to find everything you need to know.",
+        "didn't find an answer to your question?":"Didn't find an answer to your question?",
+        "get in touch with us for details on additional services":"Get in touch with us for details on additional services.",
+        "contact us":"Contact Us"
+    },
+    "contact":{
+        "title":"Contact Us",
+        "lcocation":"OUR LOCATIONS",
+        "description_part_one":"We're Always Available For Your Real Estate Needs 24/7.",
+        "description_part_two":"Our Team Is Ready To Assist And Answer Your Questions Anytime.",
+        "reach_us": "Reach Us",
+        "reach_us_description": "We're here to help and always happy to hear from you! 📞",
+        "office_address": "Office Address",
+        "phone_number": "Phone Number",
+        "email_us": "Email Us",
+        "schedule_meeting": "Schedule Meeting",
+        "follow_social": "Follow Our Social Media",
+        "send_message": "Leave a message",
+                "new_description": "Our global real estate experts are here to help you in this ever-changing market.",
+        "get_in_touch": "Get In Touch",
+        "support_email": "Support Email",
+        "call_us": "Call Us",
+        "visit_us": "Visit Us",
+        "location": "Location",
+        "form": {
+        "name": "Name",
+        "name_placeholder": "Enter your name",
+        "email": "Email",
+        "email_placeholder": "Enter your email",
+        "phone": "Phone Number",
+        "phone_placeholder": "Enter phone number",
+        "subject": "Subject",
+        "subject_options": {
+            "interested": "Interested In",
+            "commercial": "Commercial",
+            "housing": "Housing",
+            "administrative": "Administrative",
+            "medical": "Medical"
+        },
+        "message": "Message",
+        "message_placeholder": "Enter your message",
+        "send": "Submit"
+        }
+    },
+    "blog":{
+        "title":"Our Blog",
+        "our_videos":"OUR NEW VIDEOS",
+        "latest":"LATEST FROM FEED",
+        "continue_reading":"Continue Reading",
+        "category":"Real Estate",
+        "welcome_to_our_blog":"WELCOME TO OUR BLOG, WHERE WE SHARE THE LATEST",
+        "welcome_to_our_blog_description":"NEWS, TIPS, AND INSPIRING IDEAS!",
+        "view_all":"View All Posts",
+        "blog_not_found":"Blog Not Found"
+    },
+    "core_values":{
+        "page_title": "Core Values",
+        "title": "An exceptional quality that can't be beaten",
+        "description": "What makes us different",
+        "what_makes_us_different": "What makes us different",
+        "an_exceptional_quality_that_cant_be_beaten": "An exceptional quality that can't be beaten",
+        "high-quality": {
+            "title": "High quality",
+            "description": "Our goal is zero incidents and our lost time frequency rate is industry leading."
+        },
+        "community": {
+            "title": "Community",
+            "description": "We work with both investors and developers to create landmarks that make an impact."
+        },
+        "environmental": {
+            "title": "Environmental",
+            "description": "Our multi-skilled team provides innovative, forward-thinking solutions."
+        },
+        "innovation": {
+            "title": "Innovation",
+            "description": "We maintain this by ensuring transparency and professional conduct in every aspect."
+        },
+        "free_consultation": {
+            "title": "Free Consultation",
+            "description": "We work with both investors and developers to create landmarks that make an impact."
+        },
+        "timeline": {
+            "title": "Timeline",
+            "description": "We maintain this by ensuring transparency and professional conduct in every aspect."
+        },
+        "integrity_fairness": {
+            "title": "Integrity & Fairness",
+            "description": "Our goal is zero incidents and our lost time frequency rate is industry leading."
+        },
+        "real_partnership": {
+            "title": "Real Partnership",
+            "description": "We work with both investors and developers to create landmarks that make an impact."
+        }
+    },
+
+    "our_team":{
+        "title": "Our Team",
+        "description": "Meet the people who make it all happen",
+        "chairman_of_the_board_of_directors_speech": "Chairman Of The Board Of Directors Speech",
+        "global_executive": "Global executive",
+        "leadership": "leadership",
+        "yasser_name": "Eng. Yasser Omar",
+        "saad_name": "Dr. Saad Omar",
+        "osama_name": "Dr. Osama Omar",
+        "ahmed_name": "Dr. Ahmed Omar",
+        "ahmed_job": "Chairman of ARX Real Estate Development",
+        "yasser_job": "CEO of ARX Real Estate Development",
+        "saad_job": "Board member at ARX Real Estate Development",
+        "osama_job": "Board member of ARX Real Estate Development",
+        "ahmed_describe": "Dr. Ahmed Omar combines decades of experience with a visionary approach, leading the company to redefine excellence through innovation, quality, and trust—setting new industry benchmarks and guiding ARX to global leadership in real estate.",
+        "yasser_describe": "Yasser Omar drives the company forward with strategic insight and market awareness, delivering innovative, high-quality projects focused on sustainability, client satisfaction, and growth—ensuring ARX remains competitive and influential in today's evolving real estate landscape.",
+        "saad_describe": "Saad brings deep industry expertise and forward-thinking leadership. He plays a key role in shaping ARX's strategic direction, driving innovation and sustainability to ensure every project aligns with global standards and market expectations.",
+        "osama_describe": "Dr. Osama Omar leads with strategic vision and a passion for excellence, helping ARX push boundaries in real estate innovation, sustainability, and quality—setting the stage for lasting impact and continued success in the industry.",
+        "contact_info": "Contact Information",
+        "social_media": "Social Media",
+        "about_me": "About Me",
+        "job_title": "Job Title",
+        "experience": "Experience",
+        "education": "Education",
+        "achievements": "Achievements & Awards",
+        "cover_letter": "Cover Letter",
+        "get_in_touch": "Get in Touch",
+        "email": "Email",
+        "phone": "Phone",
+        "follow_on": "Follow on",
+        "years_experience": "Years of Experience",
+        "projects_completed": "Projects Completed",
+        "awards_won": "Awards Won",
+        "back_to_team": "Back to Team",
+        "member_details": "Team Member Details",
+        "join_our_team": "Join Our Team",
+        "start_a_career_with_excellent_benefits": "Start a career with excellent benefits",
+        "current_openings": "Current Openings"
+    },
+    
+    "footer":{
+        "footer_hero_title": "Your dream home awaits",
+        "footer_hero_button": "Get your free quote",
+        "footer_description": "Whether you're exploring our homes or envisioning something custom, we're here to bring your dream to life.",
+        "footer_big_text": "ARX DEVELOPMENT"
+    }
+
+}

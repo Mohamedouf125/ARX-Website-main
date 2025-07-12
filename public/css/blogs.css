@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+
+html {
+  font-family: "Lato", sans-serif;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Lato", sans-serif;
+  background-color: white;
+  color: #333;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.vertical-swiper {
+  scroll-snap-type: y mandatory;
+  overflow-y: hidden;
+}
+
+.vertical-swiper-slide {
+  scroll-snap-align: start;
+  transition: transform 0.5s ease;
+}
+
+.vertical-indicator {
+  transition: height 0.3s ease, opacity 0.3s ease;
+}
+
+.progress-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.7);
+  transition: width 0.1s linear;
+  z-index: 30;
+}
+
+.feature-card {
+  transition: all 0.4s ease;
+}
