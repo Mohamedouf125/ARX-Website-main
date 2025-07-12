@@ -83,6 +83,15 @@ export interface ServiceTypes{
     description: string;
 }
 
+export interface BannerTypes{
+    id: number;
+    type: string;
+    image: string;
+    title: string;
+    description: string;
+  
+}
+
 export interface TestimonialType{
     id: number;
     image: string;

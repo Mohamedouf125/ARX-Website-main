@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ProjectType } from "@/libs/types/types";
+import { BannerTypes } from "@/libs/types/types";
 import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade, Navigation, Pagination } from "swiper/modules";
@@ -11,7 +11,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { AnimatedElement } from "../animations/AnimationType";
 
-const Hero = ({ projects }: { projects: ProjectType[] }) => {
+const Hero = ({ banners }: { banners: BannerTypes[] }) => {
   const t = useTranslations();
   // const buttonRef = useRef<HTMLButtonElement>(null);
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -115,7 +115,7 @@ const Hero = ({ projects }: { projects: ProjectType[] }) => {
                 <div className="w-full h-full relative">
                   <img
                     src={
-                      projects[index]?.hero_image ||
+                      banners[index]?.image ||
                       `/images/home/banner${index}.png`
                     }
                     className="w-full h-full object-cover"
