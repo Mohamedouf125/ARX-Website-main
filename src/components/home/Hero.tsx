@@ -189,3 +189,4 @@ const Hero = ({ projects }: { projects: ProjectType[] }) => {
 };
 
 export default Hero;
+
