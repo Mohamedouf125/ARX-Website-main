@@ -40,7 +40,7 @@ export default async function Home({
 
   return (
     <div>
-      <Hero projects={HomeData.projects} />
+      <Hero banners={HomeData.banners} />
       <WhoWeAre />
       <AboutHome />
       <OurServices />
