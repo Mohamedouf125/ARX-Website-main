@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ProjectType } from "@/libs/types/types";
 import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
