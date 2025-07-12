@@ -9,7 +9,6 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Link from "next/link";
 import { AnimatedElement } from "../animations/AnimationType";
 
 const Hero = ({ projects }: { projects: ProjectType[] }) => {
