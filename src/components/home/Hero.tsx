@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { BannerTypes } from "@/libs/types/types";
 import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -14,60 +14,60 @@ import { AnimatedElement } from "../animations/AnimationType";
 const Hero = ({ banners }: { banners: BannerTypes[] }) => {
   const t = useTranslations();
   // const buttonRef = useRef<HTMLButtonElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const isHovered = false;
-  const targetPosition = { x: 0, y: 0 };
+  // const [position, setPosition] = useState({ x: 0, y: 0 });
+  // const isHovered = false;
+  // const targetPosition = { x: 0, y: 0 };
   // const [scale, setScale] = useState(1);
   // const locale = useLocale();
 
-  useEffect(() => {
-    if (!isHovered) {
-      // Smoothly return to original position when not hovered
-      const returnAnimation = () => {
-        setPosition((prev) => {
-          const dx = (0 - prev.x) * 0.1;
-          const dy = (0 - prev.y) * 0.1;
+  // useEffect(() => {
+  //   if (!isHovered) {
+  //     // Smoothly return to original position when not hovered
+  //     const returnAnimation = () => {
+  //       setPosition((prev) => {
+  //         const dx = (0 - prev.x) * 0.1;
+  //         const dy = (0 - prev.y) * 0.1;
 
-          if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-            return {
-              x: prev.x + dx,
-              y: prev.y + dy,
-            };
-          }
-          return { x: 0, y: 0 };
-        });
+  //         if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+  //           return {
+  //             x: prev.x + dx,
+  //             y: prev.y + dy,
+  //           };
+  //         }
+  //         return { x: 0, y: 0 };
+  //       });
 
-        if (Math.abs(position.x) > 0.1 || Math.abs(position.y) > 0.1) {
-          requestAnimationFrame(returnAnimation);
-        }
-      };
+  //       if (Math.abs(position.x) > 0.1 || Math.abs(position.y) > 0.1) {
+  //         requestAnimationFrame(returnAnimation);
+  //       }
+  //     };
 
-      returnAnimation();
-      // setScale(1);
-      return;
-    }
+  //     returnAnimation();
+  //     // setScale(1);
+  //     return;
+  //   }
 
-    const animate = () => {
-      setPosition((prev) => {
-        // Dynamic easing based on distance
-        const distance = Math.sqrt(
-          Math.pow(targetPosition.x - prev.x, 2) +
-            Math.pow(targetPosition.y - prev.y, 2)
-        );
-        const easingFactor = Math.min(0.3, 0.05 + distance * 0.005);
+  //   const animate = () => {
+  //     setPosition((prev) => {
+  //       // Dynamic easing based on distance
+  //       const distance = Math.sqrt(
+  //         Math.pow(targetPosition.x - prev.x, 2) +
+  //           Math.pow(targetPosition.y - prev.y, 2)
+  //       );
+  //       const easingFactor = Math.min(0.3, 0.05 + distance * 0.005);
 
-        return {
-          x: prev.x + (targetPosition.x - prev.x) * easingFactor,
-          y: prev.y + (targetPosition.y - prev.y) * easingFactor,
-        };
-      });
+  //       return {
+  //         x: prev.x + (targetPosition.x - prev.x) * easingFactor,
+  //         y: prev.y + (targetPosition.y - prev.y) * easingFactor,
+  //       };
+  //     });
 
-      requestAnimationFrame(animate);
-    };
+  //     requestAnimationFrame(animate);
+  //   };
 
-    const animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [isHovered, targetPosition]);
+  //   const animationFrame = requestAnimationFrame(animate);
+  //   return () => cancelAnimationFrame(animationFrame);
+  // }, [isHovered, targetPosition]);
 
   // const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
   //   if (!buttonRef.current) return;
