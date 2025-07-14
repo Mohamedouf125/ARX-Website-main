@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { BannerTypes } from "@/libs/types/types";
 import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
