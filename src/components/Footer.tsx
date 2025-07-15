@@ -299,7 +299,7 @@ const Footer: React.FC = () => {
                     {
                       id: 7,
                       title: t("our-services"),
-                      link: "/our-services",
+                      link: "/services",
                     },
                     {
                       id: 8,
@@ -385,7 +385,7 @@ const Footer: React.FC = () => {
                       {item.icon}
                       <a
                         href={item.link}
-                        className="transition flex items-center gap-2 text-[35px] font-['Switzer, Sans-serif'] font-[600]"
+                        className="transition flex items-center gap-2 text-[20px] mdtext-[30px] lg:text-[35px] font-['Switzer, Sans-serif'] font-[600]"
                       >
                         <span>{item.title}</span>
                       </a>
