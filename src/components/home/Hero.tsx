@@ -93,7 +93,7 @@ const Hero = ({ banners }: { banners: BannerTypes[] }) => {
   // };
 
   return (
-    <div className="w-full relative h-[80vh] lg:h-[110vh] ">
+    <div className="w-full relative h-[60vh] md:h-[80vh] lg:h-[110vh] ">
       <div className="w-full h-full flex items-center justify-center">
       <div className="w-full h-full flex justify-between items-center">
           <Swiper
