@@ -148,7 +148,7 @@ const Footer: React.FC = () => {
               </AnimatedElement>
             </div>
 
-            <div className="flex items-center justify-center mt-10">
+            {/* <div className="flex items-center justify-center mt-10">
               <AnimatedElement
                 type="slideUp"
                 duration={1}
@@ -172,7 +172,7 @@ const Footer: React.FC = () => {
                   </button>
                 </Link>
               </AnimatedElement>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

@@ -58,9 +58,9 @@ const ContactForm = () => {
           {t("quick_enquiry")}
         </div>
 
-        <h2 className="text-2xl lg:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+        {/* <h2 className="text-2xl lg:text-3xl md:text-4xl font-bold text-gray-900 mb-2">
           {t("get_specialist_advice")}
-        </h2>
+        </h2> */}
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">

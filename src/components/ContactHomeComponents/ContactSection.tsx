@@ -3,7 +3,7 @@ import ContactForm from "./ContactForm";
 
 const ContactSection = () => {
   return (
-    <section className="relative flex items-center justify-center p-20 px-10 lg:px-20">
+    <section className="relative flex items-center justify-center p-2 px-10 lg:px-20">
       {/* Background Image with Overlay */}
       <div className="bg-cover bg-center bg-no-repeat bg-[url('/bg-1.jpg')] relative p-30 px-5 sm:px-10 xl:px-40 rounded-3xl w-full">
         <div className="absolute inset-0 bg-black/40 rounded-3xl"></div>
