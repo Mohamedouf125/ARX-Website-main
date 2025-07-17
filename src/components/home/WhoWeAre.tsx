@@ -24,6 +24,7 @@ const WhoWeAre: NextPage = () => {
                   alt="Luxury Real Estate Building"
                   className="rounded-3xl object-cover w-full h-[700px]"
                 />
+                <div className="w-full h-full absolute top-0 bottom-0 left-0 right-0 bg-[#00000070]"></div>
               </AnimatedElement>
 
               {/* Overlay shapes */}
@@ -48,7 +49,7 @@ const WhoWeAre: NextPage = () => {
                 ref={statsRef}
                 className="absolute inset-0 z-20 p-4 flex flex-col justify-end"
               >
-                <div className="grid grid-cols-2 gap-3 items-center">
+                <div className="grid grid-cols-2 gap-3 items-center pb-[70px]">
                   {[
                     {
                       title: t("who_we_are.total_years_of_experience"),
@@ -86,8 +87,8 @@ const WhoWeAre: NextPage = () => {
                       duration={1}
                       className="w-full"
                     >
-                      <div className="luxury-card duration-300 flex flex-col items-start justify-between bg-white/90 backdrop-blur-sm p-3 rounded-2xl h-[140px] transition-all duration-300 shadow-lg">
-                        <h3 className="text-[10px] font-bold mb-1 border-b border-gray-300 pb-1 w-full uppercase leading-tight">
+                      <div className="luxury-card duration-300 flex flex-col items-start justify-between bg-white/20 backdrop-blur-sm p-3 rounded-2xl h-[140px] transition-all duration-300 shadow-lg">
+                        <h3 className="text-[10px] text-[#fff] font-bold mb-1 border-b border-gray-300 pb-1 w-full uppercase leading-tight">
                           {item.title}
                         </h3>
 
@@ -98,7 +99,7 @@ const WhoWeAre: NextPage = () => {
                                 start={0}
                                 end={item.value}
                                 duration={4}
-                                className="text-[35px]"
+                                className="text-[35px] text-[#fff]"
                                 enableScrollSpy={true}
                                 scrollSpyOnce={true}
                               />
@@ -108,7 +109,7 @@ const WhoWeAre: NextPage = () => {
                             </span>
                           </div>
 
-                          <span className="text-[10px] leading-tight text-gray-600 mt-1">
+                          <span className="text-[10px] leading-tight text-[#fff] mt-1">
                             {item.description}
                           </span>
                         </div>
