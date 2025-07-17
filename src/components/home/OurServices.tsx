@@ -148,7 +148,20 @@ const OurServices: NextPage = ({}) => {
     },
   ];
 
-  const ServiceCard = ({ service, index, isActive, onClick }: any) => (
+  const ServiceCard = ({
+    service,
+    isActive,
+    onClick,
+  }: {
+    service: {
+      icon: React.ReactNode;
+      title: string;
+      description: string;
+      image: string;
+    };
+    isActive: boolean;
+    onClick: React.MouseEventHandler<HTMLButtonElement>;
+  }) => (
     <button
       onClick={onClick}
       className={`p-4 rounded-lg transition-all duration-300 w-full ${
@@ -238,7 +251,6 @@ const OurServices: NextPage = ({}) => {
               <ServiceCard
                 key={index}
                 service={service}
-                index={index}
                 isActive={activeTab === index}
                 onClick={() => setActiveTab(index)}
               />
@@ -269,7 +281,6 @@ const OurServices: NextPage = ({}) => {
                 <SwiperSlide key={index}>
                   <ServiceCard
                     service={service}
-                    index={index}
                     isActive={true}
                     onClick={() => setActiveTab(index)}
                   />
