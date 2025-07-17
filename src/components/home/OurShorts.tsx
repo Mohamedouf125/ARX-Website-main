@@ -82,11 +82,11 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
 
           <AnimatedElement type="fadeIn" duration={1} className="w-full h-full">
             <div className="relative mt-8">
-              {/* Left Arrow */}
+              {/* Left Arrow - Hidden on mobile */}
               <button
                 onClick={() => scroll("left")}
                 aria-label="Previous"
-                className="absolute top-1/2 left-2 -translate-y-1/2 p-2 bg-black bg-opacity-30 rounded-full hover:bg-opacity-50 z-10"
+                className="hidden md:block absolute top-1/2 left-2 -translate-y-1/2 p-2 bg-black bg-opacity-30 rounded-full hover:bg-opacity-50 z-10"
               >
                 <svg
                   width="25"
@@ -103,15 +103,15 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
               </button>
 
               {/* Scrollable Track */}
-              <div className="px-15">
+              <div className="px-0 md:px-15">
                 <div
                   ref={containerRef}
-                  className="flex space-x-6 overflow-x-auto snap-x snap-mandatory hideScrollbar"
+                  className="flex space-x-4 md:space-x-6 overflow-x-auto snap-x snap-mandatory hideScrollbar pl-4 md:pl-0"
                 >
                   {shorts.map((video: ShortsTypes, index: number) => (
                     <div
                       key={video?.id || index}
-                      className="snap-start min-w-[280px] md:min-w-[320px] lg:min-w-[300px] h-[500px] bg-white rounded-xl overflow-hidden relative cursor-pointer"
+                      className="snap-start min-w-[calc(80vw-2rem)] md:min-w-[320px] lg:min-w-[300px] h-[500px] bg-white rounded-xl overflow-hidden relative cursor-pointer"
                       onClick={() => openVideoModal(video?.video)}
                     >
                       {/* Background Image */}
@@ -156,11 +156,11 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
                 </div>
               </div>
 
-              {/* Right Arrow */}
+              {/* Right Arrow - Hidden on mobile */}
               <button
                 onClick={() => scroll("right")}
                 aria-label="Next"
-                className="absolute top-1/2 right-2 -translate-y-1/2 p-2 bg-black bg-opacity-30 rounded-full hover:bg-opacity-50 z-10"
+                className="hidden md:block absolute top-1/2 right-2 -translate-y-1/2 p-2 bg-black bg-opacity-30 rounded-full hover:bg-opacity-50 z-10"
               >
                 <svg
                   width="25"
