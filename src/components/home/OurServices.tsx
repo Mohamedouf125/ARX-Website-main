@@ -6,6 +6,12 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import SmallHeadSpan from "../SharedComponent/SmallHeadSpan";
 import { AnimatedElement } from "../animations/AnimationType";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 
 const OurServices: NextPage = ({}) => {
   const t = useTranslations("our_features");
@@ -142,6 +148,29 @@ const OurServices: NextPage = ({}) => {
     },
   ];
 
+  const ServiceCard = ({ service, index, isActive, onClick }: any) => (
+    <button
+      onClick={onClick}
+      className={`p-4 rounded-lg transition-all duration-300 w-full ${
+        isActive ? "opacity-100" : "opacity-30"
+      }`}
+    >
+      <div className="">
+        <div
+          className={`text-[#DBA426] relative mb-3 border-b-2 border-gray-300 pb-8 after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-0 after:h-[2px] after:bg-[#DBA426] after:transition-all after:duration-300 ${
+            isActive ? "fill-[#DBA426] after:w-full" : "fill-black"
+          }`}
+        >
+          {service.icon}
+        </div>
+        <div className="text-left">
+          <h3 className="font-bold text-2xl capitalize">{service.title}</h3>
+          <p className="text-md mt-1 text-gray-500">{service.description}</p>
+        </div>
+      </div>
+    </button>
+  );
+
   return (
     <div className="w-full py-20 pt-40 mx-auto bg-white font-['lato'] mt-[-100px] rounded-t-3xl overflow-hidden">
       <div className="max-w-6xl mx-auto">
@@ -162,16 +191,6 @@ const OurServices: NextPage = ({}) => {
                 </h2>
               </div>
             </AnimatedElement>
-            {/* <AnimatedElement
-              type="slideLeft"
-              duration={1}
-              delay={0.3}
-              className="w-full h-full"
-            >
-              <SectionButton href={`/${locale}/services`}>
-                {t("read_more")}
-              </SectionButton>
-            </AnimatedElement> */}
           </div>
 
           {/* Right Column - Image */}
@@ -211,41 +230,72 @@ const OurServices: NextPage = ({}) => {
           </div>
         </div>
 
-        {/* Tab Buttons */}
+        {/* Tab Buttons - Grid for desktop, Swiper for mobile */}
         <AnimatedElement type="slideUp" duration={1} className="w-full h-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2  md:grid-cols-4 gap-4 items-start justify-center">
+          {/* Desktop Grid - Hidden on mobile */}
+          <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-start justify-center">
             {services.map((service, index) => (
-              <button
+              <ServiceCard
                 key={index}
+                service={service}
+                index={index}
+                isActive={activeTab === index}
                 onClick={() => setActiveTab(index)}
-                className={`p-4 rounded-lg transition-all duration-300 ${
-                  activeTab === index ? "opacity-100" : "opacity-30"
-                }`}
-              >
-                <div className="">
-                  <div
-                    className={`text-[#DBA426] relative mb-3 border-b-2 border-gray-300 pb-8 after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-0 after:h-[2px] after:bg-[#DBA426] after:transition-all after:duration-300 ${
-                      activeTab === index
-                        ? "fill-[#DBA426] after:w-full"
-                        : "fill-black"
-                    }`}
-                  >
-                    {service.icon}
-                  </div>
-                  <div className="text-left">
-                    <h3 className="font-bold text-2xl capitalize">
-                      {service.title}
-                    </h3>
-                    <p className="text-md mt-1 text-gray-500">
-                      {service.description}
-                    </p>
-                  </div>
-                </div>
-              </button>
+              />
             ))}
+          </div>
+
+          {/* Mobile Swiper - Visible only on mobile */}
+          <div className="block sm:hidden">
+            <Swiper
+              modules={[Pagination]}
+              spaceBetween={16}
+              slidesPerView={1.2}
+              centeredSlides={false}
+              pagination={{
+                clickable: true,
+                dynamicBullets: true,
+              }}
+              autoplay={{
+                delay: 3500,
+                disableOnInteraction: false,
+              }}
+              loop
+              onSlideChange={(swiper) => setActiveTab(swiper.activeIndex)}
+              initialSlide={activeTab}
+              className="services-swiper"
+            >
+              {services.map((service, index) => (
+                <SwiperSlide key={index}>
+                  <ServiceCard
+                    service={service}
+                    index={index}
+                    isActive={true}
+                    onClick={() => setActiveTab(index)}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
           </div>
         </AnimatedElement>
       </div>
+
+      {/* Custom styles for Swiper pagination */}
+      <style jsx global>{`
+        .services-swiper .swiper-pagination {
+          position: relative;
+          margin-top: 20px;
+        }
+
+        .services-swiper .swiper-pagination-bullet {
+          background-color: #e5e7eb;
+          opacity: 1;
+        }
+
+        .services-swiper .swiper-pagination-bullet-active {
+          background-color: #dba426;
+        }
+      `}</style>
     </div>
   );
 };

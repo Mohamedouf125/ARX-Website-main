@@ -12,7 +12,7 @@ const WhoWeAre: NextPage = () => {
 
   return (
     <section className="bg-white relative rounded-3xl mt-[-100px] z-10 w-full">
-      <div className="w-full py-16 lg:w-[85%] mx-auto font-['lato']">
+      <div className="w-full md:py-16 lg:w-[85%] mx-auto font-['lato']">
         <div className="max-w-6xl mx-auto px-4 py-12">
           {/* Mobile Layout: Stats overlaid on image */}
           <div className="block md:hidden">
