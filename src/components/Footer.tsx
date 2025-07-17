@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
@@ -35,87 +35,88 @@ const Footer: React.FC = () => {
     feachData();
   }, []);
 
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
-  const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
-  const [scale, setScale] = useState(1);
-  const [opacity, setOpacity] = useState(1);
+  // const buttonRef = useRef<HTMLButtonElement>(null);
+  // const [position, setPosition] = useState({ x: 0, y: 0 });
+  // const [isHovered, setIsHovered] = useState(false);
+  // const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
+  // const [scale, setScale] = useState(1);
+  // const [opacity, setOpacity] = useState(1);
 
-  useEffect(() => {
-    if (!isHovered) {
-      // Smoothly return to original position when not hovered
-      const returnAnimation = () => {
-        setPosition((prev) => {
-          const dx = (0 - prev.x) * 0.1;
-          const dy = (0 - prev.y) * 0.1;
 
-          if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-            return {
-              x: prev.x + dx,
-              y: prev.y + dy,
-            };
-          }
-          return { x: 0, y: 0 };
-        });
+  // useEffect(() => {
+  //   if (!isHovered) {
+  //     // Smoothly return to original position when not hovered
+  //     const returnAnimation = () => {
+  //       setPosition((prev) => {
+  //         const dx = (0 - prev.x) * 0.1;
+  //         const dy = (0 - prev.y) * 0.1;
 
-        if (Math.abs(position.x) > 0.1 || Math.abs(position.y) > 0.1) {
-          requestAnimationFrame(returnAnimation);
-        }
-      };
+  //         if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+  //           return {
+  //             x: prev.x + dx,
+  //             y: prev.y + dy,
+  //           };
+  //         }
+  //         return { x: 0, y: 0 };
+  //       });
 
-      returnAnimation();
-      setScale(1);
-      return;
-    }
+  //       if (Math.abs(position.x) > 0.1 || Math.abs(position.y) > 0.1) {
+  //         requestAnimationFrame(returnAnimation);
+  //       }
+  //     };
 
-    const animate = () => {
-      setPosition((prev) => {
-        // Dynamic easing based on distance
-        const distance = Math.sqrt(
-          Math.pow(targetPosition.x - prev.x, 2) +
-            Math.pow(targetPosition.y - prev.y, 2)
-        );
-        const easingFactor = Math.min(0.3, 0.05 + distance * 0.005);
+  //     returnAnimation();
+  //     setScale(1);
+  //     return;
+  //   }
 
-        return {
-          x: prev.x + (targetPosition.x - prev.x) * easingFactor,
-          y: prev.y + (targetPosition.y - prev.y) * easingFactor,
-        };
-      });
+  //   const animate = () => {
+  //     setPosition((prev) => {
+  //       // Dynamic easing based on distance
+  //       const distance = Math.sqrt(
+  //         Math.pow(targetPosition.x - prev.x, 2) +
+  //           Math.pow(targetPosition.y - prev.y, 2)
+  //       );
+  //       const easingFactor = Math.min(0.3, 0.05 + distance * 0.005);
 
-      requestAnimationFrame(animate);
-    };
+  //       return {
+  //         x: prev.x + (targetPosition.x - prev.x) * easingFactor,
+  //         y: prev.y + (targetPosition.y - prev.y) * easingFactor,
+  //       };
+  //     });
 
-    const animationFrame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(animationFrame);
-  }, [isHovered, targetPosition]);
+  //     requestAnimationFrame(animate);
+  //   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (!buttonRef.current) return;
+  //   const animationFrame = requestAnimationFrame(animate);
+  //   return () => cancelAnimationFrame(animationFrame);
+  // }, [isHovered, targetPosition]);
 
-    const rect = buttonRef.current.getBoundingClientRect();
-    // More pronounced movement effect
-    const x = (e.clientX - rect.left - rect.width / 2) * 0.6;
-    const y = (e.clientY - rect.top - rect.height / 2) * 0.6;
+  // const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+  //   if (!buttonRef.current) return;
 
-    setTargetPosition({ x, y });
-    // Subtle scale and opacity changes
-    setScale(1.05);
-    setOpacity(0.95);
-  };
+  //   const rect = buttonRef.current.getBoundingClientRect();
+  //   // More pronounced movement effect
+  //   const x = (e.clientX - rect.left - rect.width / 2) * 0.6;
+  //   const y = (e.clientY - rect.top - rect.height / 2) * 0.6;
 
-  const handleMouseLeave = () => {
-    setIsHovered(false);
-    setTargetPosition({ x: 0, y: 0 });
-    setScale(1);
-    setOpacity(1);
-  };
+  //   setTargetPosition({ x, y });
+  //   // Subtle scale and opacity changes
+  //   setScale(1.05);
+  //   setOpacity(0.95);
+  // };
 
-  const handleMouseEnter = () => {
-    setIsHovered(true);
-    setScale(1.03);
-  };
+  // const handleMouseLeave = () => {
+  //   setIsHovered(false);
+  //   setTargetPosition({ x: 0, y: 0 });
+  //   setScale(1);
+  //   setOpacity(1);
+  // };
+
+  // const handleMouseEnter = () => {
+  //   setIsHovered(true);
+  //   setScale(1.03);
+  // };
 
   return (
     <div className="relative footer p-20 px-5 md:px-10 lg:px-20 pt-48 mt-[-100px] pb-5 bg-[url('/footer-bg.jpg')] bg-cover bg-center bg-no-repeat h-full z-0">
