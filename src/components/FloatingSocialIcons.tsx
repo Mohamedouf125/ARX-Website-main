@@ -1,64 +1,246 @@
 "use client";
+import { FC, useState } from "react";
+// import Link from "next/link";
+// import { LoginModal, SignupModal } from "./AuthModals";
+// import { getUserFromCookies, isAuthenticated, UserProfile } from "@/libs/server/auth";
+import { useLocale } from "next-intl";
 
-import { useEffect, useState } from "react";
+const FloatingSocialIcons: FC = () => {
+    // const [isLoginOpen, setIsLoginOpen] = useState(false);
+    // const [isSignupOpen, setIsSignupOpen] = useState(false);
+    // const [user, setUser] = useState<UserProfile | null>(null);
+    const [isExpanded, setIsExpanded] = useState(false);
+    const locale = useLocale();
+    
+    // Check if locale is RTL
+    const isRTL = locale === 'ar' || locale === 'he' || locale === 'fa' || locale === 'ur';
 
-const FloatingSocialIcons = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      const footerSection = document.querySelector(".footer");
-      const scrollPosition = window.scrollY;
+    // Check if user is authenticated on component mount
+    // useEffect(() => {
+    //     if (isAuthenticated()) {
+    //         const userData = getUserFromCookies();
+    //         if (userData) {
+    //             setUser(userData);
+    //         }
+    //     }
+    // }, []);
 
-      if (footerSection) {
-        const footerRect = footerSection.getBoundingClientRect();
-        const inFooterSection =
-          footerRect.top <= window.innerHeight && footerRect.top >= 0;
+    // const handleLoginClick = () => {
+    //     if (user) {
+    //         // If user is logged in, redirect to profile
+    //         window.location.href = `${locale}/myprofile`;
+    //     } else {
+    //         // If user is not logged in, open login modal
+    //         setIsLoginOpen(true);
+    //     }
+    // };
 
-        // Hide if scroll position is less than 200px or in footer section
-        setIsVisible(!(scrollPosition <= 200 || inFooterSection));
-      }
+    const toggleExpanded = () => {
+        setIsExpanded(!isExpanded);
     };
 
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+    return (
+        <div className={`fixed bottom-8 z-40 flex flex-col gap-3 ${isRTL ? 'left-8' : 'right-8'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+            {/* Social Media Icons Container */}
+            <div
+                className={`flex flex-col gap-3 transition-all duration-500 transform origin-bottom ${
+                    isExpanded
+                        ? 'opacity-100 translate-y-0 scale-100'
+                        : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
+                }`}
+            >
+                {/* Facebook Icon */}
+                <a
+                    href="https://www.facebook.com/LinkedMed.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden bg-gradient-to-br from-[#1877F2] to-[#0C63D4] hover:from-[#165eab] hover:to-[#0a4d8c] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
+                >
+                    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="white"
+                        className="relative z-10 drop-shadow-sm"
+                    >
+                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                </a>
 
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+                {/* Instagram Icon */}
+                <a
+                    href="https://www.instagram.com/linked_med/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden bg-gradient-to-br from-[#E4405F] via-[#F77737] to-[#FCAF45] hover:from-[#d63384] hover:via-[#fd7e14] hover:to-[#ffc107] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
+                >
+                    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="white"
+                        className="relative z-10 drop-shadow-sm"
+                    >
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                    </svg>
+                </a>
 
-  if (!isVisible) return null;
+                {/* TikTok Icon */}
+                <a
+                    href="https://www.tiktok.com/@linkedmed?_t=ZS-8wx8iIJnMTx&_r=1"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden bg-gradient-to-br from-[#000000] via-[#1a1a1a] to-[#333333] hover:from-[#ff0050] hover:via-[#00f2ea] hover:to-[#000000] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
+                >
+                    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="white"
+                        className="relative z-10 drop-shadow-sm"
+                    >
+                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
+                    </svg>
+                </a>
 
-  return (
-    <div className="fixed bottom-8 end-8 z-50 flex flex-col gap-4">
-      <button
-        className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-200"
-        aria-label="Share on Facebook"
-      >
-        <svg
-          width="30"
-          height="30"
-          viewBox="0 0 30 30"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g clipPath="url(#clip0_195_1755)">
-            <path
-              d="M8.01166 25.6939L8.49645 25.9363C10.5164 27.1482 12.7788 27.7138 15.0411 27.7138C22.1513 27.7138 27.9688 21.8964 27.9688 14.7861C27.9688 11.3926 26.5952 8.07986 24.1713 5.65591C21.7474 3.23197 18.5154 1.8584 15.0411 1.8584C7.93086 1.8584 2.11339 7.67587 2.19419 14.8669C2.19419 17.2909 2.92137 19.634 4.13335 21.654L4.45654 22.1387L3.16377 26.9058L8.01166 25.6939Z"
-              fill="#00E676"
+                {/* WhatsApp Icon */}
+                <a
+                    href="https://wa.me"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden bg-gradient-to-br from-[#25D366] to-[#128C7E] hover:from-[#1ea952] hover:to-[#0d6b5c] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
+                >
+                    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="white"
+                        className="relative z-10 drop-shadow-sm"
+                    >
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.465 3.488" />
+                    </svg>
+                </a>
+
+                {/* LinkedIn Icon */}
+                <a
+                    href="https://linkedin.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden bg-gradient-to-br from-[#0A66C2] to-[#004B8D] hover:from-[#0958a5] hover:to-[#003d73] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
+                >
+                    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="white"
+                        className="relative z-10 drop-shadow-sm"
+                    >
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                    </svg>
+                </a>
+
+                {/* Premium Login Button */}
+                {/* <button
+                    onClick={handleLoginClick}
+                    className="group relative overflow-hidden bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#f093fb] hover:from-[#5a6cf3] hover:via-[#6a42a0] hover:to-[#ef6aff] text-white font-semibold py-2 px-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
+                >
+                    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="18"
+                        height="18"
+                        fill="white"
+                        className="relative z-10 drop-shadow-sm"
+                    >
+                        {user ? (
+                            // Show different icon if user is logged in (dashboard/profile icon)
+                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
+                        ) : (
+                            // Show login icon if user is not logged in
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        )}
+                    </svg>
+                </button> */}
+            </div>
+
+            {/* Toggle Button - Now at the bottom */}
+            <button
+                onClick={toggleExpanded}
+                className={`group relative overflow-hidden gradient-btn p-3 bg-[#dba426] rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center ${
+                    isExpanded ? 'rotate-45' : ''
+                }`}
+            >
+                <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    width="20"
+                    height="20"
+                    fill="white"
+                    className="relative z-10 drop-shadow-sm transition-transform duration-300"
+                >
+                    {isExpanded ? (
+                        // Close/X icon
+                        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    ) : (
+                        // Menu/hamburger icon
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+                    )}
+                </svg>
+            </button>
+
+            {/* Floating backdrop effect */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent rounded-3xl blur-xl scale-110 pointer-events-none"></div>
+
+            {/* Login Modal */}
+            {/* <LoginModal
+                isOpen={isLoginOpen}
+                onClose={() => {
+                    setIsLoginOpen(false);
+                    // Check if user logged in after modal closes
+                    if (isAuthenticated()) {
+                        const userData = getUserFromCookies();
+                        if (userData) {
+                            setUser(userData);
+                        }
+                    }
+                }}
+                onSwitchModal={() => {
+                    setIsLoginOpen(false);
+                    setIsSignupOpen(true);
+                }}
             />
-            <path
-              d="M25.5445 4.3631C22.7973 1.53517 18.9998 0 15.1215 0C6.88008 0 0.254626 6.70625 0.335425 14.8669C0.335425 17.4524 1.06261 19.9572 2.27458 22.2195L0.173828 29.8953L8.01125 27.8754C10.1928 29.0874 12.6168 29.6529 15.0407 29.6529C23.2013 29.6529 29.8268 22.9467 29.8268 14.7861C29.8268 10.827 28.2916 7.11024 25.5445 4.3631ZM15.1215 27.1482C12.9399 27.1482 10.7584 26.5826 8.90003 25.4514L8.41524 25.209L3.72895 26.421L4.94092 21.8155L4.61773 21.3307C1.06261 15.5941 2.75937 7.99902 8.57684 4.4439C14.3943 0.88878 21.9085 2.58554 25.4637 8.40301C29.0188 14.2205 27.322 21.7347 21.5046 25.2898C19.6462 26.5018 17.3838 27.1482 15.1215 27.1482ZM22.2317 18.1796L21.343 17.7756C21.343 17.7756 20.0502 17.21 19.2422 16.806C19.1614 16.806 19.0806 16.7252 18.9998 16.7252C18.7574 16.7252 18.5958 16.806 18.4342 16.8868C18.4342 16.8868 18.3534 16.9676 17.2222 18.2604C17.1415 18.422 16.9799 18.5028 16.8183 18.5028H16.7375C16.6567 18.5028 16.4951 18.422 16.4143 18.3412L16.0103 18.1796C15.1215 17.7756 14.3135 17.2908 13.6671 16.6444C13.5055 16.4828 13.2631 16.3212 13.1015 16.1596C12.536 15.5941 11.9704 14.9477 11.5664 14.2205L11.4856 14.0589C11.4048 13.9781 11.4048 13.8973 11.324 13.7357C11.324 13.5741 11.324 13.4125 11.4048 13.3317C11.4048 13.3317 11.728 12.9277 11.9704 12.6853C12.132 12.5237 12.2128 12.2813 12.3744 12.1197C12.536 11.8773 12.6168 11.5541 12.536 11.3117C12.4552 10.9078 11.4856 8.7262 11.2432 8.24142C11.0816 7.99902 10.92 7.91822 10.6776 7.83742H10.4352C10.2736 7.83742 10.0312 7.83742 9.78881 7.83742C9.62722 7.83742 9.46562 7.91822 9.30403 7.91822L9.22323 7.99902C9.06163 8.07982 8.90003 8.24142 8.73844 8.32221C8.57684 8.48381 8.49604 8.64541 8.33445 8.807C7.76886 9.53419 7.44567 10.423 7.44567 11.3117C7.44567 11.9581 7.60726 12.6045 7.84966 13.1701L7.93046 13.4125C8.65764 14.9477 9.62722 16.3212 10.92 17.5332L11.2432 17.8564C11.4856 18.0988 11.728 18.2604 11.8896 18.5028C13.5863 19.9572 15.5255 21.0075 17.707 21.5731C17.9494 21.6539 18.2726 21.6539 18.515 21.7347C18.7574 21.7347 19.0806 21.7347 19.323 21.7347C19.727 21.7347 20.2118 21.5731 20.535 21.4115C20.7774 21.2499 20.939 21.2499 21.1006 21.0883L21.2622 20.9267C21.4238 20.7651 21.5854 20.6843 21.7469 20.5227C21.9085 20.3611 22.0701 20.1995 22.1509 20.038C22.3125 19.7148 22.3933 19.3108 22.4741 18.9068C22.4741 18.7452 22.4741 18.5028 22.4741 18.3412C22.4741 18.3412 22.3933 18.2604 22.2317 18.1796Z"
-              fill="white"
-            />
-          </g>
-          <defs>
-            <clipPath id="clip0_195_1755">
-              <rect width="30" height="30" fill="white" />
-            </clipPath>
-          </defs>
-        </svg>
-      </button>
-    </div>
-  );
+
+            <SignupModal
+                isOpen={isSignupOpen}
+                onClose={() => {
+                    setIsSignupOpen(false);
+                    // Check if user signed up after modal closes
+                    if (isAuthenticated()) {
+                        const userData = getUserFromCookies();
+                        if (userData) {
+                            setUser(userData);
+                        }
+                    }
+                }}
+                onSwitchModal={() => {
+                    setIsSignupOpen(false);
+                    setIsLoginOpen(true);
+                }}
+            /> */}
+        </div>
+    );
 };
 
 export default FloatingSocialIcons;

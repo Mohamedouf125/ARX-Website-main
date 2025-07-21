@@ -2,19 +2,19 @@
 import React from "react";
 import { Link } from "@/i18n/routing";
 import { BlogType } from "@/libs/types/types";
-import { useTranslations,useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 
 interface BlogCardProps {
   post: BlogType;
 }
 
 function BlogCard({ post }: BlogCardProps) {
-  const locale =useLocale();
+  // const locale =useLocale();
   const t = useTranslations("blog");
 
   return (
     <div className="group relative w-full grid grid-cols-1 md:grid-cols-2 sm:gap-10 items-center border-b last:border-b-0 border-gray-200 pb-10 mb-10 h-[500px] h-[360px] lg:h-[450px]">
-      <Link href={`/${locale}/blogs/${post.slug}`} className="media w-full  h-full rounded-3xl overflow-hidden mb-5">
+      <Link href={`/blogs/${post.slug}`} className="media w-full  h-full rounded-3xl overflow-hidden mb-5">
         <img
           src={post.image}
           alt={post.title}

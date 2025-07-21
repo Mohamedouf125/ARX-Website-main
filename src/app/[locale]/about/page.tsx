@@ -321,7 +321,7 @@ const AboutPage = () => {
                 title: t("big_cards.our_impact"),
                 description: t("big_cards.second_card_description"),
                 button: t("big_cards.second_card_button"),
-                background: "bg-[#000000]",
+                background: "bg-[#dba426]",
                 top: true,
                 image: "/build.png",
                 animation: "slideUp",
