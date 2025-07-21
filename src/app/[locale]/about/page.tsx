@@ -248,8 +248,17 @@ const AboutPage = () => {
                       delay={delay}
                       className="w-full h-full bg-white p-8 rounded-3xl shadow-lg"
                     >
-                      <div className="flex justify-end mb-5 ">
+                      {/* <div className="flex justify-end mb-5 ">
                         <p className="">{icon}</p>
+                      </div> */}
+                      <div className="flex justify-end mb-5 ">
+                        <div className="w-8 h-8 md:w-12 md:h-12 flex items-center justify-center">
+                          {React.cloneElement(icon, {
+                            width: "100%",
+                            height: "100%",
+                            className: "w-full h-full",
+                          })}
+                        </div>
                       </div>
                       <div className="">
                         <span className="text-[70px] font-[700] text-black flex items-center leading-none">
@@ -303,7 +312,7 @@ const AboutPage = () => {
                 title: t("big_cards.what_we_do"),
                 description: t("big_cards.first_card_description"),
                 button: t("big_cards.first_card_button"),
-                background: "bg-[#a87300]",
+                background: "bg-[#020202]",
                 animation: "slideRight",
                 href: "/services",
               },
@@ -312,7 +321,7 @@ const AboutPage = () => {
                 title: t("big_cards.our_impact"),
                 description: t("big_cards.second_card_description"),
                 button: t("big_cards.second_card_button"),
-                background: "bg-[#dba426]",
+                background: "bg-[#000000]",
                 top: true,
                 image: "/build.png",
                 animation: "slideUp",

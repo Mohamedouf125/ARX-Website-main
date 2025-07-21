@@ -61,10 +61,10 @@ const ProjectCard = ({ project }: { project?: ProjectType }) => {
                   {project?.title}
                 </Link>
               </div>
-              <div
+              {/* <div
                 className="text-[18px] font-[400] uppercase"
                 dangerouslySetInnerHTML={{ __html: project?.hero_title || "" }}
-              />
+              /> */}
             </div>
           </div>
         </div>

@@ -3,6 +3,8 @@
 import { memo } from "react";
 import { BlogType } from "@/libs/types/types";
 import HoverLink from "./HoverLink";
+import { useLocale } from "next-intl";
+import Link from "next/link";
 
 interface LatestBlogsProps {
   blogs: BlogType[];
@@ -10,6 +12,7 @@ interface LatestBlogsProps {
 }
 
 const LatestBlogs = memo(({ blogs, category }: LatestBlogsProps) => {
+  const locale =useLocale();
   if (!blogs || blogs.length === 0) {
     return null;
   }
@@ -18,6 +21,7 @@ const LatestBlogs = memo(({ blogs, category }: LatestBlogsProps) => {
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 max-w-7xl mx-auto px-6">
       {blogs.map((src: BlogType, idx: number) => (
         <div className="relative w-full" key={`${src.slug}-${idx}`}>
+          <Link href={`/${locale}/blogs/${src.slug}`}>
           <div className="media w-full h-60 rounded-3xl overflow-hidden mb-5">
             <img
               src={src.image}
@@ -26,6 +30,7 @@ const LatestBlogs = memo(({ blogs, category }: LatestBlogsProps) => {
               loading="lazy"
             />
           </div>
+          </Link>
           <div className="">
             <div className="head grid grid-cols-3 items-center gap-5 mb-4">
               <span className="text-[12px] font-medium text-black text-center bg-[#035B8D] text-white px-1 py-2 rounded-full w-full">
@@ -39,7 +44,7 @@ const LatestBlogs = memo(({ blogs, category }: LatestBlogsProps) => {
               </span>
             </div>
             <div className="inline-block group">
-              <HoverLink href={`/blogs/${src.slug}`} title={src.title} />
+              <HoverLink href={`/${locale}/blogs/${src.slug}`} title={src.title} />
             </div>
           </div>
         </div>

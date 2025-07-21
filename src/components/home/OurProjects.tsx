@@ -169,9 +169,12 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
 
                           {/* Project Title with Bottom Border */}
                           <div className="mb-4">
+                            <Link href={`${locale}/projects/${project.slug}`}>
                             <h2 className="text-3xl font-bold text-gray-900 mb-2">
                               {project.title}
                             </h2>
+                            </Link>
+
 
                             <div className="description">
                               <p
@@ -206,7 +209,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                           {/* Floating Button with Arrow - Bottom Right */}
                           <div className="bg-black/20 rounded-full absolute bottom-[-20px] sm:bottom-[-25px] sm:right-[65px] right-[40px]">
                             <Link
-                              href={`/projects/${project.slug}`}
+                              href={`${locale}/projects/${project.slug}`}
                               className="group inline-flex items-center bg-[#DBA426] hover:bg-[#DBA426] text-white p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                             >
                               <svg

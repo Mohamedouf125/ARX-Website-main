@@ -93,7 +93,7 @@ const CoreValuesPage = () => {
                 >
                   <div className="">
                     <div
-                      className={`fill-[#035B8D] relative mb-3 border-b-2 border-gray-300 pb-8 after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-0 after:h-[2px] after:bg-[#035B8D] after:transition-all after:duration-300`}
+                      className={`fill-[#DBA426] relative mb-3 border-b-2 border-gray-300 pb-8 after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-0 after:h-[2px] after:bg-[#035B8D] after:transition-all after:duration-300`}
                     >
                       {value.icon}
                     </div>

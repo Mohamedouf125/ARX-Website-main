@@ -4,6 +4,8 @@ import {
   FaMapMarkerAlt,
   FaPhoneAlt,
   FaEnvelopeOpen,
+  FaChevronLeft,
+  FaChevronRight,
 } from "react-icons/fa";
 
 import PhoneInput from "react-phone-number-input";
@@ -12,13 +14,58 @@ import { useTranslations, useLocale } from "next-intl";
 import PageHero from "@/components/PageHero";
 import { AnimatedElement } from "@/components/animations/AnimationType";
 
-
 const inputStyle = "bg-gray-100 p-6 w-full focus:outline-none rounded-full";
 
 const ContactPage = () => {
   const [phone, setPhone] = useState("");
+  const [currentSlide, setCurrentSlide] = useState(0);
   const t = useTranslations("contact");
   const locale = useLocale();
+
+  const contactData = [
+    {
+      id: 1,
+      icon: <FaEnvelopeOpen />,
+      title: t("support_email"),
+      btn: t("email_us"),
+      description: "info@arxeg.com",
+      link: "mailto:info@arxeg.com",
+      animation: "slideUp",
+    },
+    {
+      id: 2,
+      icon: <FaPhoneAlt />,
+      title: t("phone_number"),
+      btn: t("call_us"),
+      description: "16591",
+      link: "tel:16591",
+      animation: "slideUp",
+      delay: 0.2,
+    },
+    {
+      id: 3,
+      icon: <FaMapMarkerAlt />,
+      title: t("location"),
+      btn: t("visit_us"),
+      description:
+        "New Cairo - south 90 St- top 90 building\nNew Damietta - the 3rd district – 15th St",
+      link: "https://maps.app.goo.gl/VYVirReCxBxe4zQC9",
+      animation: "slideUp",
+      delay: 0.4,
+    },
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % contactData.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + contactData.length) % contactData.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentSlide(index);
+  };
 
   return (
     <div className="bg-white">
@@ -39,39 +86,9 @@ const ContactPage = () => {
       <div className="bg-white z-10 relative px-6 py-40 rounded-3xl">
         <div className="max-w-7xl mx-auto">
           <div className="list">
-            <ul className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-              {[
-                {
-                  id: 1,
-                  icon: <FaEnvelopeOpen />,
-                  title: t("support_email"),
-                  btn: t("email_us"),
-                  description: "info@areeg.com",
-                  link: "mailto:info@areeg.com",
-                  animation: "slideUp",
-                },
-                {
-                  id: 2,
-                  icon: <FaPhoneAlt />,
-                  title: t("phone_number"),
-                  btn: t("call_us"),
-                  description: "16591",
-                  link: "tel:16591",
-                  animation: "slideUp",
-                  delay: 0.2,
-                },
-                {
-                  id: 2,
-                  icon: <FaMapMarkerAlt />,
-                  title: t("location"),
-                  btn: t("visit_us"),
-                  description:
-                    "New Cairo - south 90 St- top 90 building\nNew Damietta - the 3rd district – 15th St",
-                  link: "https://maps.app.goo.gl/VYVirReCxBxe4zQC9",
-                  animation: "slideUp",
-                  delay: 0.4,
-                },
-              ].map((item) => (
+            {/* Desktop Grid - unchanged */}
+            <ul className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+              {contactData.map((item) => (
                 <li key={item.id} className="">
                   <AnimatedElement
                     key={item.id}
@@ -105,6 +122,83 @@ const ContactPage = () => {
                 </li>
               ))}
             </ul>
+
+            {/* Mobile Slider */}
+            <div className="md:hidden relative">
+              <div className="overflow-hidden">
+                <div 
+                  className="flex transition-transform duration-300 ease-in-out"
+                  style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+                >
+                  {contactData.map((item) => (
+                    <div key={item.id} className="w-full flex-shrink-0 px-4">
+                      <AnimatedElement
+                        key={item.id}
+                        type={
+                          item.animation as "slideUp" | "slideLeft" | "slideRight"
+                        }
+                        duration={1}
+                        delay={item.delay}
+                        className="w-full h-full"
+                      >
+                        <div className="p-4 lg:p-6 xl:p-10 border border-gray-200 rounded-3xl space-y-8 flex flex-col justify-between h-full">
+                          <div className="icon text-2xl">{item.icon}</div>
+                          <div className="content">
+                            <h3 className="text-[20px] lg:text-[25px] font-[600]">
+                              {item.title}
+                            </h3>
+                            <p className="text-[16px] lg:text-[20px] font-[500] opacity-60 whitespace-pre-line">
+                              {item.description}
+                            </p>
+                          </div>
+
+                          <div className="w-full">
+                            <a href={item.link} target="_blank" rel="noopener noreferrer">
+                              <button className="bg-[#dba426] hover:bg-black w-full text-white px-6 py-4 rounded-full font-[600] hover:bg-opacity-90 transition-all duration-300">
+                                {item.btn}
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </AnimatedElement>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-200 rounded-full p-2 shadow-lg hover:bg-gray-50 transition-all duration-200 z-10"
+                aria-label="Previous slide"
+              >
+                <FaChevronLeft className="w-4 h-4 text-gray-600" />
+              </button>
+              
+              <button
+                onClick={nextSlide}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-200 rounded-full p-2 shadow-lg hover:bg-gray-50 transition-all duration-200 z-10"
+                aria-label="Next slide"
+              >
+                <FaChevronRight className="w-4 h-4 text-gray-600" />
+              </button>
+
+              {/* Dot Indicators */}
+              <div className="flex justify-center mt-6 space-x-2">
+                {contactData.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => goToSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                      index === currentSlide 
+                        ? 'bg-[#dba426]' 
+                        : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                    aria-label={`Go to slide ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
           </div>
 
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mt-20">

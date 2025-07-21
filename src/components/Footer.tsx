@@ -9,6 +9,7 @@ import { AxiosHeaders } from "axios";
 import { ProjectType } from "@/libs/types/types";
 import { FaSquareWhatsapp } from "react-icons/fa6";
 import { AnimatedElement } from "./animations/AnimationType";
+import imagelogo from "../../public/arx.png";
 
 const Footer: React.FC = () => {
   const t = useTranslations("header");
@@ -41,7 +42,6 @@ const Footer: React.FC = () => {
   // const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
   // const [scale, setScale] = useState(1);
   // const [opacity, setOpacity] = useState(1);
-
 
   // useEffect(() => {
   //   if (!isHovered) {
@@ -218,11 +218,12 @@ const Footer: React.FC = () => {
             {/* Logo + Description */}
             <div>
               <Image
-                src="https://storage.googleapis.com/furniture-hub/arx/settings/ARX%20Logo%20(1).png"
+                // src="https://storage.googleapis.com/furniture-hub/arx/settings/ARX%20Logo%20(1).png"
+                src={imagelogo}
                 alt="ARX Logo"
                 width={104}
                 height={48}
-                className="h-20 w-auto mb-2 bg-black p-2 rounded-lg mb-10"
+                className="h-30 w-auto   p-2 rounded-lg mb-10"
               />
               <p className="text-lg font-[500] text-gray-400 leading-6">
                 {t("footerDescription")}
