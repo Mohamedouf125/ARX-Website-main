@@ -11,31 +11,6 @@ import { notFound } from "next/navigation";
 export const dynamic = "force-dynamic";
 export const revalidate = 3600; // Revalidate every hour
 
-// Function to sanitize HTML content - only allow text formatting tags
-const sanitizeHtml = (html: string): string => {
-  if (!html) return "";
-
-  // Remove all img tags
-  let sanitized = html.replace(/<img[^>]*>/gi, "");
-
-  // Remove all a tags but keep their text content
-  sanitized = sanitized.replace(/<a[^>]*>(.*?)<\/a>/gi, "$1");
-
-  // Remove any remaining script tags
-  sanitized = sanitized.replace(/<script[^>]*>.*?<\/script>/gi, "");
-
-  // Remove any remaining style tags
-  sanitized = sanitized.replace(/<style[^>]*>.*?<\/style>/gi, "");
-
-  // Only allow specific tags: p, h1-h6, strong, b, em, i, br, div, span
-  // Remove any other tags but keep their content
-  sanitized = sanitized.replace(
-    /<(?!\/?(p|h[1-6]|strong|b|em|i|br|div|span))[^>]*>/gi,
-    ""
-  );
-
-  return sanitized;
-};
 
 // Move data fetching outside component to prevent recreation on each render
 const fetchBlogData = async (blogSlug: string, locale: string) => {
@@ -90,6 +65,8 @@ const formatDate = (dateString: string) => {
   }
 };
 
+
+
 const BlogPage = async ({
   params,
 }: {
@@ -139,7 +116,6 @@ const BlogPage = async ({
   const t = await getTranslations("blog");
 
   // Sanitize the blog description
-  const sanitizedDescription = sanitizeHtml(blog?.description || "");
 
   console.log("Blog data:", blog);
 
@@ -174,6 +150,9 @@ const BlogPage = async ({
 
   // Pre-format the date to avoid dynamic calculations
   const formattedDate = formatDate(blog?.created_at || "");
+
+    console.log(blog?.description);
+
 
   return (
     <div>
@@ -229,7 +208,7 @@ const BlogPage = async ({
           <div className="description my-16">
             <div
               className="text-gray-500 text-[18px] font-[400] space-y-3 leading-[25px] rounded-3xl prose prose-lg max-w-none"
-              dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
+              dangerouslySetInnerHTML={{ __html: blog?.description || "" }}
             />
           </div>
           <hr className="text-gray-500" />
