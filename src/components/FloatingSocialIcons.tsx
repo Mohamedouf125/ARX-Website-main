@@ -1,39 +1,14 @@
 "use client";
 import { FC, useState } from "react";
-// import Link from "next/link";
-// import { LoginModal, SignupModal } from "./AuthModals";
-// import { getUserFromCookies, isAuthenticated, UserProfile } from "@/libs/server/auth";
 import { useLocale } from "next-intl";
 
 const FloatingSocialIcons: FC = () => {
-    // const [isLoginOpen, setIsLoginOpen] = useState(false);
-    // const [isSignupOpen, setIsSignupOpen] = useState(false);
-    // const [user, setUser] = useState<UserProfile | null>(null);
     const [isExpanded, setIsExpanded] = useState(false);
     const locale = useLocale();
     
     // Check if locale is RTL
     const isRTL = locale === 'ar' || locale === 'he' || locale === 'fa' || locale === 'ur';
 
-    // Check if user is authenticated on component mount
-    // useEffect(() => {
-    //     if (isAuthenticated()) {
-    //         const userData = getUserFromCookies();
-    //         if (userData) {
-    //             setUser(userData);
-    //         }
-    //     }
-    // }, []);
-
-    // const handleLoginClick = () => {
-    //     if (user) {
-    //         // If user is logged in, redirect to profile
-    //         window.location.href = `${locale}/myprofile`;
-    //     } else {
-    //         // If user is not logged in, open login modal
-    //         setIsLoginOpen(true);
-    //     }
-    // };
 
     const toggleExpanded = () => {
         setIsExpanded(!isExpanded);
@@ -51,7 +26,7 @@ const FloatingSocialIcons: FC = () => {
             >
                 {/* Facebook Icon */}
                 <a
-                    href="https://www.facebook.com/LinkedMed.org"
+                    href="https://www.facebook.com/Arxeg"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden bg-gradient-to-br from-[#1877F2] to-[#0C63D4] hover:from-[#165eab] hover:to-[#0a4d8c] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
@@ -71,7 +46,7 @@ const FloatingSocialIcons: FC = () => {
 
                 {/* Instagram Icon */}
                 <a
-                    href="https://www.instagram.com/linked_med/"
+                    href="https://www.instagram.com/arx_development?fbclid=IwY2xjawJpp4FleHRuA2FlbQIxMAABHsK70ZmLq_hZIw8UmLKyXm5pt1kvS7IoqrDiiFJEg7v2NGDlFSOpk_HElAUv_aem_s3XVj4lCIstYoNnnbdqO2Q"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden bg-gradient-to-br from-[#E4405F] via-[#F77737] to-[#FCAF45] hover:from-[#d63384] hover:via-[#fd7e14] hover:to-[#ffc107] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
@@ -89,9 +64,29 @@ const FloatingSocialIcons: FC = () => {
                     </svg>
                 </a>
 
+                {/* Threads Icon */}
+                <a
+                    href="https://www.threads.com/@arx_development"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative overflow-hidden bg-gradient-to-br from-[#000000] to-[#1a1a1a] hover:from-[#333333] hover:to-[#000000] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
+                >
+                    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        width="20"
+                        height="20"
+                        fill="white"
+                        className="relative z-10 drop-shadow-sm"
+                    >
+                        <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.292 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.781 3.63 2.695 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.79-1.202.065-2.361-.218-3.259-.801-1.063-.689-1.685-1.74-1.752-2.964-.065-1.19.408-2.285 1.33-3.082.88-.76 2.119-1.207 3.583-1.291a13.853 13.853 0 0 1 3.02.142c-.126-.742-.375-1.332-.9-1.9-.787-.852-2.022-1.231-4.026-1.231-1.312 0-2.639.226-3.845.653l-.423-1.392c1.339-.477 2.786-.737 4.268-.767 2.447-.03 4.309.53 5.536 1.663.742.685 1.18 1.508 1.38 2.58a12.175 12.175 0 0 1 3.543 2.117c1.006.823 1.697 1.873 2.057 3.126.665 2.317.196 4.996-2.275 7.104-1.687 1.44-3.93 2.135-7.065 2.188z"/>
+                    </svg>
+                </a>
+
                 {/* TikTok Icon */}
                 <a
-                    href="https://www.tiktok.com/@linkedmed?_t=ZS-8wx8iIJnMTx&_r=1"
+                    href="https://www.tiktok.com/@arxdevelopment?_t=ZS-8vVQOdLOG8e&_r=1"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden bg-gradient-to-br from-[#000000] via-[#1a1a1a] to-[#333333] hover:from-[#ff0050] hover:via-[#00f2ea] hover:to-[#000000] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
@@ -131,7 +126,7 @@ const FloatingSocialIcons: FC = () => {
 
                 {/* LinkedIn Icon */}
                 <a
-                    href="https://linkedin.com"
+                    href="https://linkedin.com/company/arxdevelopment"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden bg-gradient-to-br from-[#0A66C2] to-[#004B8D] hover:from-[#0958a5] hover:to-[#003d73] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
@@ -148,30 +143,6 @@ const FloatingSocialIcons: FC = () => {
                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                     </svg>
                 </a>
-
-                {/* Premium Login Button */}
-                {/* <button
-                    onClick={handleLoginClick}
-                    className="group relative overflow-hidden bg-gradient-to-br from-[#667eea] via-[#764ba2] to-[#f093fb] hover:from-[#5a6cf3] hover:via-[#6a42a0] hover:to-[#ef6aff] text-white font-semibold py-2 px-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
-                >
-                    <div className={`absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 -skew-x-12 transition-transform duration-700 ${isRTL ? 'translate-x-full group-hover:-translate-x-full' : '-translate-x-full group-hover:translate-x-full'}`}></div>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        width="18"
-                        height="18"
-                        fill="white"
-                        className="relative z-10 drop-shadow-sm"
-                    >
-                        {user ? (
-                            // Show different icon if user is logged in (dashboard/profile icon)
-                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z" />
-                        ) : (
-                            // Show login icon if user is not logged in
-                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                        )}
-                    </svg>
-                </button> */}
             </div>
 
             {/* Toggle Button - Now at the bottom */}
@@ -202,43 +173,6 @@ const FloatingSocialIcons: FC = () => {
 
             {/* Floating backdrop effect */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/5 via-transparent to-transparent rounded-3xl blur-xl scale-110 pointer-events-none"></div>
-
-            {/* Login Modal */}
-            {/* <LoginModal
-                isOpen={isLoginOpen}
-                onClose={() => {
-                    setIsLoginOpen(false);
-                    // Check if user logged in after modal closes
-                    if (isAuthenticated()) {
-                        const userData = getUserFromCookies();
-                        if (userData) {
-                            setUser(userData);
-                        }
-                    }
-                }}
-                onSwitchModal={() => {
-                    setIsLoginOpen(false);
-                    setIsSignupOpen(true);
-                }}
-            />
-
-            <SignupModal
-                isOpen={isSignupOpen}
-                onClose={() => {
-                    setIsSignupOpen(false);
-                    // Check if user signed up after modal closes
-                    if (isAuthenticated()) {
-                        const userData = getUserFromCookies();
-                        if (userData) {
-                            setUser(userData);
-                        }
-                    }
-                }}
-                onSwitchModal={() => {
-                    setIsSignupOpen(false);
-                    setIsLoginOpen(true);
-                }}
-            /> */}
         </div>
     );
 };
