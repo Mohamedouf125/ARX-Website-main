@@ -131,38 +131,10 @@ const Footer: React.FC = () => {
               duration={1}
               className="w-full h-full"
             >
-              <div className="justify-center capitalize text-white text-[40px] lg:text-[70px] font-bold font-['Lucida Grande'] tracking-tight leading-[1]">
+              <div className="justify-center  !mb-[5vw] capitalize text-white text-[clamp(0.5rem,2rem+1.5625vw,4.0625rem)] font-bold font-['Lucida Grande'] tracking-tight leading-[1]">
                 {t2("footer_hero_title")}
               </div>
             </AnimatedElement>
-
-            
-
-            {/* <div className="flex items-center justify-center mt-10">
-              <AnimatedElement
-                type="slideUp"
-                duration={1}
-                delay={0.4}
-                className="w-full h-full"
-              >
-                <Link href="/contact">
-                  <button
-                    ref={buttonRef}
-                    onMouseMove={handleMouseMove}
-                    onMouseLeave={handleMouseLeave}
-                    onMouseEnter={handleMouseEnter}
-                    className="bg-[#DBA426] border linear border-white/10 text-white p-6 rounded-full w-32 h-32 lg:w-40 lg:h-40 flex items-center justify-center font-[700] leading-[1] font-['Lucida Grande'] capitalize text-[16px] lg:text-[22px] transition-all duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:shadow-[0_0_20px_rgba(1,91,141,0.5)] hover:border-white/30"
-                    style={{
-                      transform: `translate3d(${position.x}px, ${position.y}px, 0) scale(${scale})`,
-                      opacity: opacity,
-                      willChange: "transform, opacity",
-                    }}
-                  >
-                    <span>{t2("footer_hero_button")}</span>
-                  </button>
-                </Link>
-              </AnimatedElement>
-            </div> */}
           </div>
         </div>
       </div>
