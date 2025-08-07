@@ -256,7 +256,7 @@ const Footer: React.FC = () => {
                     className="flex items-center gap-2 items-start"
                   >
                     <FaMapMarkerAlt className="text-[#DBA426] w-5 h-5 w-[35px]" />
-                    Montaser Tower, El-Geish Street - Intersection of El-Sherif
+                    Mansoura Tower, El-Geish Street - Intersection of El-Sherif
                     El-Radi Street - Mansoura Second Section
                   </a>
                 </li>

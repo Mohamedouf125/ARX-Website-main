@@ -280,7 +280,7 @@ const ProjectPage: React.FC = () => {
 
       <PageHero
         title={projectData?.title || "Axiom Tower"}
-        backgroundImage={projectData?.cover || ""}
+        backgroundImage={projectData?.icon || ""}
         height="small"
         hideDescription={true}
         breadcrumbs={[
@@ -381,7 +381,7 @@ const ProjectPage: React.FC = () => {
 
             <div className="image mt-10 md:mt-16">
               <Image
-                src={projectData?.image}
+                src={projectData?.hero_image}
                 alt=""
                 className="w-full h-[300px] sm:h-[400px] lg:h-[600px] xl:h-full object-cover rounded-3xl"
                 width={1920}
