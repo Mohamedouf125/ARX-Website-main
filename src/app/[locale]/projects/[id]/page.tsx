@@ -55,7 +55,14 @@ const ProjectPage: React.FC = () => {
 
   // State for video swiper
   const [currentVideoSlide, setCurrentVideoSlide] = useState(0);
-
+  const [amenityFilter, setAmenityFilter] = useState("all");
+  const filteredAmenities =
+    projectData?.amenities?.filter((item) => {
+      if (amenityFilter === "all") return true;
+      if (amenityFilter === "amenity") return item.type === "amenity";
+      if (amenityFilter === "outdoor") return item.type === "out_door_feature";
+      return true;
+    }) || [];
   // State for tabs
   const [activeTab, setActiveTab] = useState("photos");
 
@@ -121,9 +128,7 @@ const ProjectPage: React.FC = () => {
     };
 
     feachData();
-  });
-
-  // Tabs data with content
+  }, [id, locale]);
   const tabs: TabContent[] = [
     {
       id: "photos",
@@ -327,12 +332,12 @@ const ProjectPage: React.FC = () => {
                     id: 1,
                     icon: <Layers className="w-6 h-6 text-black" />,
                     title: t("status"),
-                    description: t("under_construction"),
+                    description: projectData.project_status,
                   },
                   {
                     id: 2,
                     icon: <Building className="w-6 h-6 text-black" />,
-                    title: t("project_type"),
+                    title: projectData.project_type,
                     description: t("residential"),
                   },
                   {
@@ -445,58 +450,104 @@ const ProjectPage: React.FC = () => {
           </div>
 
           <div className="features mt-16">
-            <div className="text-[35px] md:text-[40px] lg:text-[55px] font-[600] mb-16 capitalize">
-              {t("features_amenities")}
-            </div>
-            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-20">
-              {projectData?.features?.map(
-                (
-                  item: {
-                    id?: number;
-                    key?: string;
-                    value?: string;
-                    image?: string;
-                  },
-                  index: number
-                ) => {
-                  // Get icon based on index or use default
-                  const IconComponent =
-                    featureIcons[index % featureIcons.length] || ShieldCheck;
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-16 gap-6">
+              <div className="text-[35px] md:text-[40px] lg:text-[55px] font-[600] capitalize">
+                {t("features_amenities")}
+              </div>
 
-                  return (
-                    <li
-                      key={item.id}
-                      className="group text-center p-10 bg-gradient-to-b from-[#F6F3EC] to-[#F6F3EC00] rounded-3xl relative flex flex-col"
-                    >
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex items-center justify-center z-0">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          viewBox="0 0 320 104"
-                          width={150}
-                          fill="none"
-                        >
-                          <path
-                            fillRule="evenodd"
-                            clipRule="evenodd"
-                            d="M0 0H320C290.545 0 267.772 24.6753 253.628 49.8666C235.516 82.1247 200.378 104 160 104C119.622 104 84.4835 82.1247 66.3718 49.8666C52.228 24.6753 29.4552 0 0 0Z"
-                            fill="white"
-                          ></path>
-                        </svg>
-                      </div>
-                      <div className="icon flex font-[400] items-center justify-center absolute top-[-50px] left-1/2 -translate-x-1/2 bg-[#dba426] text-white rounded-full z-10 p-4 border-10 border-white group-hover:scale-110 transition-all duration-300">
-                        <IconComponent className="w-10 h-10 font-[400]" />
-                      </div>
-                      <div className="content z-10 mt-8">
-                        <h3 className="text-[23px] font-[600]">{item.key}</h3>
-                        <p className="text-[17px] font-[500] opacity-60">
-                          {item.value}
-                        </p>
-                      </div>
-                    </li>
-                  );
-                }
-              )}
+              {/* Filter Buttons */}
+              <div className="flex flex-wrap justify-center lg:justify-end gap-2">
+                <button
+                  onClick={() => setAmenityFilter("all")}
+                  className={`px-6 py-3 rounded-full border transition-all duration-300 ${
+                    amenityFilter === "all"
+                      ? "bg-[#dba426] text-white border-[#dba426]"
+                      : "bg-white text-black border-gray-300 hover:border-[#dba426]"
+                  }`}
+                >
+                {t("All Features")}
+                </button>
+                <button
+                  onClick={() => setAmenityFilter("amenity")}
+                  className={`px-6 py-3 rounded-full border transition-all duration-300 ${
+                    amenityFilter === "amenity"
+                      ? "bg-[#dba426] text-white border-[#dba426]"
+                      : "bg-white text-black border-gray-300 hover:border-[#dba426]"
+                  }`}
+                >
+                   {t("Amenities")}
+                </button>
+                <button
+                  onClick={() => setAmenityFilter("outdoor")}
+                  className={`px-6 py-3 rounded-full border transition-all duration-300 ${
+                    amenityFilter === "outdoor"
+                      ? "bg-[#dba426] text-white border-[#dba426]"
+                      : "bg-white text-black border-gray-300 hover:border-[#dba426]"
+                  }`}
+                >
+                 {t("Outdoor Features")}
+                </button>
+              </div>
+            </div>
+
+            {/* Results Count */}
+            <div className="mb-16 text-gray-600">
+              Showing {filteredAmenities.length} of{" "}
+              {projectData?.amenities?.length || 0} features
+            </div>
+
+            {/* Amenities Grid */}
+            <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-20">
+              {filteredAmenities.map((item, index) => {
+                // Get icon based on index or use default
+                const IconComponent =
+                  featureIcons[index % featureIcons.length] || ShieldCheck;
+
+                return (
+                  <li
+                    key={item.id}
+                    className="group text-center p-10 bg-gradient-to-b from-[#F6F3EC] to-[#F6F3EC00] rounded-3xl relative flex flex-col transform transition-all duration-300 hover:scale-105"
+                  >
+                    <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full flex items-center justify-center z-0">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 320 104"
+                        width={150}
+                        fill="none"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M0 0H320C290.545 0 267.772 24.6753 253.628 49.8666C235.516 82.1247 200.378 104 160 104C119.622 104 84.4835 82.1247 66.3718 49.8666C52.228 24.6753 29.4552 0 0 0Z"
+                          fill="white"
+                        ></path>
+                      </svg>
+                    </div>
+                    <div className="icon flex font-[400] items-center justify-center absolute top-[-50px] left-1/2 -translate-x-1/2 bg-[#dba426] text-white rounded-full z-10 p-4 border-10 border-white group-hover:scale-110 transition-all duration-300">
+                      <IconComponent className="w-10 h-10 font-[400]" />
+                    </div>
+                    <div className="content z-10 mt-8">
+                      <h3 className="text-[23px] font-[600] mb-2">
+                        {item.title}
+                      </h3>
+                      {/* Type Badge */}
+                    </div>
+                  </li>
+                );
+              })}
             </ul>
+
+            {/* No Results Message */}
+            {filteredAmenities.length === 0 && (
+              <div className="text-center py-20">
+                <div className="text-gray-400 text-lg mb-2">
+                  No features found
+                </div>
+                <p className="text-gray-500">
+                  Try selecting a different filter option
+                </p>
+              </div>
+            )}
           </div>
         </div>
 

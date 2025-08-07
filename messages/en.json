@@ -155,6 +155,9 @@
         "subscribe_description":"Subscribe to our weekly newsletter and receive updates via Email"
     },
     "projects":{
+        "Outdoor Features": "Outdoor Features",
+        "All Features": "All Features",
+        "Amenities": "Amenities",
         "title":"Explore Our Landmark Developments Shaping the Future.",
         "name":"Projects",
         "search_placeholder":"Search about projects",
@@ -334,7 +337,7 @@
     },
     
     "footer":{
-        "footer_hero_title": "Your dream home awaits",
+        "footer_hero_title": "The foundation of your next great move",
         "footer_hero_button": "Get your free quote",
         "footer_description": "Whether you're exploring our homes or envisioning something custom, we're here to bring your dream to life.",
         "footer_big_text": "ARX DEVELOPMENT"

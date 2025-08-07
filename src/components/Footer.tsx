@@ -136,18 +136,7 @@ const Footer: React.FC = () => {
               </div>
             </AnimatedElement>
 
-            <div className="desc mt-5">
-              <AnimatedElement
-                type="slideUp"
-                duration={1}
-                delay={0.2}
-                className="w-full h-full"
-              >
-                <span className="text-white font-bold font-['Lato'] capitalize tracking-wide opacity-70 text-[16px] md:text-[16px] lg:text-[18px]">
-                  {t2("footer_description")}
-                </span>
-              </AnimatedElement>
-            </div>
+            
 
             {/* <div className="flex items-center justify-center mt-10">
               <AnimatedElement

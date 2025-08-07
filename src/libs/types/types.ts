@@ -1,4 +1,6 @@
 export interface ProjectType {
+  project_type: string;
+  project_status: string;
   id: number;
   propert_listing_no: string | null;
   image: string;

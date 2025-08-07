@@ -142,6 +142,9 @@
     "subscribe_description": "اشترك في نشرتنا الإخبارية الأسبوعية واحصل على التحديثات عبر البريد الإلكتروني"
   },
   "projects": {
+    "Outdoor Features": "الميزات الخارجية",
+    "All Features": "جميع الميزات",
+    "Amenities": "مرافق",
     "title": "استكشف أعمالنا المعمارية المثيرة التي تشكل المستقبل.",
     "name": "المشاريع",
     "project_location": "موقع المشروع",
@@ -320,7 +323,7 @@
     "blog_not_found":"المدونة غير موجودة"
   },
   "footer":{
-    "footer_hero_title":"منزلك المثالي ينتظرك",
+    "footer_hero_title":"ألأساس لخطوتك العظيمة القادمة",
     "footer_description":"سواء كنت تستكشف منازلنا أو تخطط لشيء مخصص، نحن هنا لجعل رؤيتك حقيقة.",
     "footer_hero_button":"احصل على عرض مجاني",
     "footer_big_text":"spaciaz"
