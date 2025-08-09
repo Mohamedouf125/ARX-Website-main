@@ -52,7 +52,7 @@ const Testimonial = ({ testimonials }: { testimonials: TestimonialType[] }) => {
               decoding="async"
               width="128"
               height="128"
-              src="https://demo2.wpopal.com/spaciaz/wp-content/uploads/2025/03/h1_img-4.jpg"
+              src="/الدايرة.jpg"
               className="w-full h-full object-cover"
               alt="Testimonial"
             />

@@ -119,7 +119,7 @@ const Footer: React.FC = () => {
   // };
 
   return (
-    <div className="relative footer p-20 px-5 md:px-10 lg:px-20 pt-48 mt-[-100px] pb-5 bg-[url('/footer-bg.jpg')] bg-cover bg-center bg-no-repeat h-full z-0">
+    <div className="relative footer p-20 px-5 md:px-10 lg:px-20 pt-48 mt-[-100px] pb-5 bg-[url('/footer-bg.jpg3.jpg')] bg-cover bg-center bg-no-repeat h-full z-0">
       <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-0"></div>
 
       {/* footer hero */}

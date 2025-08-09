@@ -44,7 +44,7 @@ const AboutPage = () => {
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
           { label: t("title") },
         ]}
-        backgroundImage="/images/home/aboutus.png"
+        backgroundImage={"/header__about__us.webp"}
         height="medium"
       />
 

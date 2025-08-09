@@ -52,7 +52,7 @@ const BlogsPage = async ({
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
           { label: t("title") },
         ]}
-        backgroundImage="/images/home/AxiomTower.png"
+        backgroundImage="/header__blogs.webp"
         hideDescription={true}
         height="medium"
       />

@@ -77,7 +77,7 @@ const ContactPage = () => {
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
           { label: t("title") },
         ]}
-        backgroundImage="/images/home/banner1.png"
+        backgroundImage="/header__contact__us.webp"
         height="medium"
         showDescription={false}
       />

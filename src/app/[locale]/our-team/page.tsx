@@ -13,6 +13,7 @@ async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations("our_team");
   const teamMembers = getAllTeamMembers();
 
+
   return (
     <div>
       <PageHero
@@ -22,7 +23,7 @@ async function Page({ params }: { params: Promise<{ locale: string }> }) {
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
           { label: t("title") },
         ]}
-        backgroundImage="/images/home/aboutus.png"
+        backgroundImage="/header__team.webp"
         height="medium"
       />
       {/* BOARD OF DIRECTORS */}

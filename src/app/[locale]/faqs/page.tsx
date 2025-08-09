@@ -52,7 +52,7 @@ export default function FAQ() {
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
           { label: t("title") },
         ]}
-        backgroundImage="/images/home/banner1.png"
+        backgroundImage="/header__f&q.webp"
         height="medium"
         showDescription={false}
       />

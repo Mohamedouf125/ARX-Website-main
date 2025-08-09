@@ -37,7 +37,7 @@ const ProjectsPage = async ({
       {/* Hero Section with Search */}
       <PageHero
         title={t("name")}
-        backgroundImage={"/images/home/banner1.png"}
+        backgroundImage={"/project__header.webp"}
         height="small"
         hideDescription={true}
         breadcrumbs={[
