@@ -155,6 +155,8 @@
         "subscribe_description":"Subscribe to our weekly newsletter and receive updates via Email"
     },
     "projects":{
+        "type":"Type",
+
         "Outdoor Features": "Outdoor Features",
         "All Features": "All Features",
         "Amenities": "Amenities",

@@ -13,7 +13,7 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-interface ServiceItem {
+interface Service {
   id: number;
   image: string;
   title: string;
@@ -21,163 +21,46 @@ interface ServiceItem {
 }
 
 interface OurServicesProps {
-  services: ServiceItem[];
+  services: Service[];
 }
 
 const OurServices: NextPage<OurServicesProps> = ({ services }) => {
   const t = useTranslations("our_features");
   const [activeTab, setActiveTab] = useState(0);
 
-  // Icon mapping based on service titles or IDs
-  const getServiceIcon = (service: ServiceItem) => {
-    const title = service.title.toLowerCase();
-    
-    // Residential/سكني
-    if (title.includes('سكني') || title.includes('residential')) {
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
-          viewBox="0 0 32 32"
-        >
-          <path
-            fill="#dba426"
-            d="M4.265 7.999c0-2.057 1.674-3.734 3.734-3.734s3.734 1.674 3.734 3.734c0 2.057-1.674 3.734-3.734 3.734s-3.734-1.674-3.734-3.734zM0 7.999c0 4.418 3.581 7.999 7.999 7.999s7.999-3.581 7.999-7.999c0-4.418-3.581-7.999-7.999-7.999s-7.999 3.581-7.999 7.999z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M0 24.001c0-4.418 3.581-7.999 7.999-7.999s7.999 3.581 7.999 7.999c0 4.418-3.581 7.999-7.999 7.999s-7.999-3.583-7.999-7.999z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M15.999 7.999c0-4.418 3.583-7.999 8.002-7.999s7.999 3.581 7.999 7.999c0 4.418-3.581 7.999-7.999 7.999s-8.002-3.581-8.002-7.999z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M20.266 24.001c0-2.057 1.674-3.734 3.734-3.734s3.734 1.674 3.734 3.734c0 2.060-1.674 3.734-3.734 3.734s-3.734-1.677-3.734-3.734zM15.999 24.001c0 4.418 3.581 7.999 7.999 7.999s7.999-3.581 7.999-7.999c0-4.418-3.581-7.999-7.999-7.999s-7.999 3.581-7.999 7.999z"
-          ></path>
-        </svg>
-      );
-    }
-    
-    // Medical/طبي
-    if (title.includes('طبي') || title.includes('medical')) {
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
-          viewBox="0 0 32 32"
-        >
-          <path
-            fill="#dba426"
-            d="M15.999 24.532c4.117 0 7.466 3.348 7.466 7.466h8.533c0-8.837-7.162-15.999-15.999-15.999s-15.999 7.165-15.999 16.001h8.533c0-4.117 3.348-7.468 7.466-7.468z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M15.999 7.466c-4.117 0-7.466-3.348-7.466-7.466h-8.533c0 8.837 7.162 15.999 15.999 15.999s16.001-7.162 16.001-15.999h-8.533c0 4.117-3.351 7.466-7.468 7.466z"
-          ></path>
-        </svg>
-      );
-    }
-    
-    // Commercial/تجاري
-    if (title.includes('تجاري') || title.includes('commercial')) {
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
-          viewBox="0 0 32 32"
-        >
-          <path
-            fill="#dba426"
-            d="M24.001 5.333c-1.471 0-2.666 1.195-2.666 2.666s1.195 2.667 2.666 2.667 2.666-1.195 2.666-2.667h5.333c0 4.418-3.581 7.999-7.999 7.999s-7.999-3.581-7.999-7.999c-0.002-4.418 3.581-7.999 7.999-7.999v5.333z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M5.333 7.999c0 1.471 1.195 2.667 2.666 2.667s2.667-1.195 2.667-2.667c0-1.471-1.195-2.666-2.667-2.666v-5.333c4.418 0 7.999 3.581 7.999 7.999s-3.581 7.999-7.999 7.999c-4.418 0-7.999-3.581-7.999-7.999h5.333z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M26.667 24.001c0-1.471-1.195-2.667-2.666-2.667s-2.667 1.195-2.667 2.667c0 1.471 1.195 2.666 2.667 2.666v5.333c-4.418 0-7.999-3.581-7.999-7.999s3.581-7.999 7.999-7.999c4.418 0 7.999 3.581 7.999 7.999h-5.333z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M7.999 26.667c1.471 0 2.667-1.195 2.667-2.666s-1.195-2.667-2.667-2.667c-1.471 0-2.666 1.195-2.666 2.667h-5.333c0-4.418 3.581-7.999 7.999-7.999s7.999 3.581 7.999 7.999c0 4.418-3.581 7.999-7.999 7.999v-5.333z"
-          ></path>
-        </svg>
-      );
-    }
-    
-    // Administrative/إداري
-    if (title.includes('إداري') || title.includes('administrative')) {
-      return (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="40"
-          height="40"
-          viewBox="0 0 32 32"
-        >
-          <path
-            fill="#dba426"
-            d="M24 0c4.418 0 7.999 3.581 7.999 7.999h-16.001c0-4.418 3.583-7.999 8.002-7.999z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M24 7.999c4.418 0 7.999 3.581 7.999 7.999h-16.001c0-4.418 3.583-7.999 8.002-7.999z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M7.999 32c-4.418 0-7.999-3.583-7.999-7.999h15.999c0 4.416-3.581 7.999-7.999 7.999z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M7.999 24.001c-4.418 0-7.999-3.583-7.999-8.002h15.999c0 4.418-3.581 8.002-7.999 8.002z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M32 24.001c0 4.418-3.581 7.999-7.999 7.999v-16.001c4.416 0 7.999 3.583 7.999 8.002z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M24.001 24.001c0 4.418-3.581 7.999-7.999 7.999v-16.001c4.416 0 7.999 3.583 7.999 8.002z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M0 7.999c0-4.418 3.581-7.999 7.999-7.999v15.999c-4.418 0-7.999-3.581-7.999-7.999z"
-          ></path>
-          <path
-            fill="#dba426"
-            d="M7.999 7.999c0-4.418 3.581-7.999 7.999-7.999v15.999c-4.418 0-7.999-3.581-7.999-7.999z"
-          ></path>
-        </svg>
-      );
-    }
-    
-    // Default icon if no match
-    return (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="40"
-        height="40"
-        viewBox="0 0 32 32"
-      >
-        <path
-          fill="#dba426"
-          d="M4.265 7.999c0-2.057 1.674-3.734 3.734-3.734s3.734 1.674 3.734 3.734c0 2.057-1.674 3.734-3.734 3.734s-3.734-1.674-3.734-3.734zM0 7.999c0 4.418 3.581 7.999 7.999 7.999s7.999-3.581 7.999-7.999c0-4.418-3.581-7.999-7.999-7.999s-7.999 3.581-7.999 7.999z"
-        ></path>
-      </svg>
-    );
+  // Helper function to strip HTML tags from description
+  const stripHtmlTags = (html: string) => {
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
   };
+
+  // Create services array with icons from service images and static tab images
+  const servicess = services.map((service, index) => ({
+    icon: (
+      <Image 
+        src={service.image} 
+        alt={service.title} 
+        width={40} 
+        height={40}
+        className="rounded-lg object-cover"
+      />
+    ),
+    title: service.title,
+    description: stripHtmlTags(service.description),
+    image: `/h2_tab-icon${index + 1}.jpg`, // Static images for main display
+  }));
 
   const ServiceCard = ({
     service,
     isActive,
     onClick,
   }: {
-    service: ServiceItem;
+    service: {
+      icon: React.ReactNode;
+      title: string;
+      description: string;
+      image: string;
+    };
     isActive: boolean;
     onClick: React.MouseEventHandler<HTMLButtonElement>;
   }) => (
@@ -193,18 +76,20 @@ const OurServices: NextPage<OurServicesProps> = ({ services }) => {
             isActive ? "fill-[#DBA426] after:w-full" : "fill-black"
           }`}
         >
-          {getServiceIcon(service)}
+          {service.icon}
         </div>
         <div className="text-left">
           <h3 className="font-bold text-2xl capitalize">{service.title}</h3>
-          <div 
-            className="text-md mt-1 text-gray-500"
-            dangerouslySetInnerHTML={{ __html: service.description }}
-          />
+          <p className="text-md mt-1 text-gray-500">{service.description}</p>
         </div>
       </div>
     </button>
   );
+
+  // Handle case when services array is empty or undefined
+  if (!services || services.length === 0) {
+    return <div>No services available</div>;
+  }
 
   return (
     <div className="w-full py-20 pt-40 mx-auto bg-white font-['lato'] mt-[-100px] rounded-t-3xl overflow-hidden">
@@ -254,8 +139,8 @@ const OurServices: NextPage<OurServicesProps> = ({ services }) => {
                 className="w-full h-full"
               >
                 <Image
-                  src={services[activeTab]?.image || '/default-image.jpg'}
-                  alt={services[activeTab]?.title || 'Service'}
+                  src={servicess[activeTab]?.image || "/h2_tab-icon1.jpg"}
+                  alt={servicess[activeTab]?.title || "Service"}
                   width={500}
                   height={500}
                   className="object-cover rounded-3xl w-full h-full shadow-none"
@@ -269,9 +154,9 @@ const OurServices: NextPage<OurServicesProps> = ({ services }) => {
         <AnimatedElement type="slideUp" duration={1} className="w-full h-full">
           {/* Desktop Grid - Hidden on mobile */}
           <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-start justify-center">
-            {services.map((service, index) => (
+            {servicess.map((service, index) => (
               <ServiceCard
-                key={service.id}
+                key={services[index]?.id || index}
                 service={service}
                 isActive={activeTab === index}
                 onClick={() => setActiveTab(index)}
@@ -299,8 +184,8 @@ const OurServices: NextPage<OurServicesProps> = ({ services }) => {
               initialSlide={activeTab}
               className="services-swiper"
             >
-              {services.map((service, index) => (
-                <SwiperSlide key={service.id}>
+              {servicess.map((service, index) => (
+                <SwiperSlide key={services[index]?.id || index}>
                   <ServiceCard
                     service={service}
                     isActive={true}

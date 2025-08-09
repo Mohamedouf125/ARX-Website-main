@@ -142,6 +142,8 @@
     "subscribe_description": "اشترك في نشرتنا الإخبارية الأسبوعية واحصل على التحديثات عبر البريد الإلكتروني"
   },
   "projects": {
+    "type":"نوع",
+
     "Outdoor Features": "الميزات الخارجية",
     "All Features": "جميع الميزات",
     "Amenities": "مرافق",

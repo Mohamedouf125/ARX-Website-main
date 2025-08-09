@@ -337,8 +337,8 @@ const ProjectPage: React.FC = () => {
                   {
                     id: 2,
                     icon: <Building className="w-6 h-6 text-black" />,
-                    title: projectData.project_type,
-                    description: t("residential"),
+                    title: t("type"),
+                    description: projectData.project_type,
                   },
                   {
                     id: 3,
