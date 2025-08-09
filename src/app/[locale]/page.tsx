@@ -43,7 +43,8 @@ export default async function Home({
       <Hero banners={HomeData.banners} />
       <WhoWeAre />
       <AboutHome />
-      <OurServices />
+      <OurServices services={HomeData.main_focus} />
+
       <OurProjects projects={HomeData.projects} />
       <ShortsPage shorts={HomeData.our_videos} />
       <SupportersPage />

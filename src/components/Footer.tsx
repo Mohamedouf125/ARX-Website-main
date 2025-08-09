@@ -321,14 +321,14 @@ const Footer: React.FC = () => {
                     title: "info@arxeg.com",
                     link: "mailto:info@arxeg.com",
                     icon: (
-                      <FaEnvelope size={25} className="text-[#DBA426] mt-1" />
+                      <FaEnvelope size={20} className="text-[#DBA426] mt-1" />
                     ),
                   },
                   {
                     id: 2,
                     title: "16591",
                     link: "tel:16591",
-                    icon: <FaPhone size={25} className="text-[#DBA426] mt-1" />,
+                    icon: <FaPhone size={20} className="text-[#DBA426] mt-1" />,
                   },
                   {
                     id: 3,
@@ -336,7 +336,7 @@ const Footer: React.FC = () => {
                     link: "https://wa.me/201001703888",
                     icon: (
                       <FaSquareWhatsapp
-                        size={30}
+                        size={25}
                         className="text-[#DBA426] mt-1"
                       />
                     ),

@@ -5,6 +5,7 @@ import { Autoplay } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const PhotosSwiper = ({ projectData }: { projectData: ProjectType | null }) => {
+  
   return (
     <div className="relative">
       <Swiper

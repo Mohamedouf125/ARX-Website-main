@@ -13,13 +13,28 @@ import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-const OurServices: NextPage = ({}) => {
+interface ServiceItem {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
+}
+
+interface OurServicesProps {
+  services: ServiceItem[];
+}
+
+const OurServices: NextPage<OurServicesProps> = ({ services }) => {
   const t = useTranslations("our_features");
   const [activeTab, setActiveTab] = useState(0);
 
-  const services = [
-    {
-      icon: (
+  // Icon mapping based on service titles or IDs
+  const getServiceIcon = (service: ServiceItem) => {
+    const title = service.title.toLowerCase();
+    
+    // Residential/سكني
+    if (title.includes('سكني') || title.includes('residential')) {
+      return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
@@ -43,13 +58,12 @@ const OurServices: NextPage = ({}) => {
             d="M20.266 24.001c0-2.057 1.674-3.734 3.734-3.734s3.734 1.674 3.734 3.734c0 2.060-1.674 3.734-3.734 3.734s-3.734-1.677-3.734-3.734zM15.999 24.001c0 4.418 3.581 7.999 7.999 7.999s7.999-3.581 7.999-7.999c0-4.418-3.581-7.999-7.999-7.999s-7.999 3.581-7.999 7.999z"
           ></path>
         </svg>
-      ),
-      title: t("Residential.title"),
-      description: t("Residential.description"),
-      image: "/h2_tab-icon1.jpg",
-    },
-    {
-      icon: (
+      );
+    }
+    
+    // Medical/طبي
+    if (title.includes('طبي') || title.includes('medical')) {
+      return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
@@ -65,13 +79,12 @@ const OurServices: NextPage = ({}) => {
             d="M15.999 7.466c-4.117 0-7.466-3.348-7.466-7.466h-8.533c0 8.837 7.162 15.999 15.999 15.999s16.001-7.162 16.001-15.999h-8.533c0 4.117-3.351 7.466-7.468 7.466z"
           ></path>
         </svg>
-      ),
-      title: t("Medical.title"),
-      description: t("Medical.description"),
-      image: "/h2_tab-icon2.jpg",
-    },
-    {
-      icon: (
+      );
+    }
+    
+    // Commercial/تجاري
+    if (title.includes('تجاري') || title.includes('commercial')) {
+      return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
@@ -95,13 +108,12 @@ const OurServices: NextPage = ({}) => {
             d="M7.999 26.667c1.471 0 2.667-1.195 2.667-2.666s-1.195-2.667-2.667-2.667c-1.471 0-2.666 1.195-2.666 2.667h-5.333c0-4.418 3.581-7.999 7.999-7.999s7.999 3.581 7.999 7.999c0 4.418-3.581 7.999-7.999 7.999v-5.333z"
           ></path>
         </svg>
-      ),
-      title: t("Commercial.title"),
-      description: t("Commercial.description"),
-      image: "/h2_tab-icon3.jpg",
-    },
-    {
-      icon: (
+      );
+    }
+    
+    // Administrative/إداري
+    if (title.includes('إداري') || title.includes('administrative')) {
+      return (
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="40"
@@ -141,24 +153,31 @@ const OurServices: NextPage = ({}) => {
             d="M7.999 7.999c0-4.418 3.581-7.999 7.999-7.999v15.999c-4.418 0-7.999-3.581-7.999-7.999z"
           ></path>
         </svg>
-      ),
-      title: t("Administrative.title"),
-      description: t("Administrative.description"),
-      image: "/h2_tab-icon4.jpg",
-    },
-  ];
+      );
+    }
+    
+    // Default icon if no match
+    return (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="40"
+        height="40"
+        viewBox="0 0 32 32"
+      >
+        <path
+          fill="#dba426"
+          d="M4.265 7.999c0-2.057 1.674-3.734 3.734-3.734s3.734 1.674 3.734 3.734c0 2.057-1.674 3.734-3.734 3.734s-3.734-1.674-3.734-3.734zM0 7.999c0 4.418 3.581 7.999 7.999 7.999s7.999-3.581 7.999-7.999c0-4.418-3.581-7.999-7.999-7.999s-7.999 3.581-7.999 7.999z"
+        ></path>
+      </svg>
+    );
+  };
 
   const ServiceCard = ({
     service,
     isActive,
     onClick,
   }: {
-    service: {
-      icon: React.ReactNode;
-      title: string;
-      description: string;
-      image: string;
-    };
+    service: ServiceItem;
     isActive: boolean;
     onClick: React.MouseEventHandler<HTMLButtonElement>;
   }) => (
@@ -174,11 +193,14 @@ const OurServices: NextPage = ({}) => {
             isActive ? "fill-[#DBA426] after:w-full" : "fill-black"
           }`}
         >
-          {service.icon}
+          {getServiceIcon(service)}
         </div>
         <div className="text-left">
           <h3 className="font-bold text-2xl capitalize">{service.title}</h3>
-          <p className="text-md mt-1 text-gray-500">{service.description}</p>
+          <div 
+            className="text-md mt-1 text-gray-500"
+            dangerouslySetInnerHTML={{ __html: service.description }}
+          />
         </div>
       </div>
     </button>
@@ -232,8 +254,8 @@ const OurServices: NextPage = ({}) => {
                 className="w-full h-full"
               >
                 <Image
-                  src={services[activeTab].image}
-                  alt={services[activeTab].title}
+                  src={services[activeTab]?.image || '/default-image.jpg'}
+                  alt={services[activeTab]?.title || 'Service'}
                   width={500}
                   height={500}
                   className="object-cover rounded-3xl w-full h-full shadow-none"
@@ -249,7 +271,7 @@ const OurServices: NextPage = ({}) => {
           <div className="hidden sm:grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-start justify-center">
             {services.map((service, index) => (
               <ServiceCard
-                key={index}
+                key={service.id}
                 service={service}
                 isActive={activeTab === index}
                 onClick={() => setActiveTab(index)}
@@ -278,7 +300,7 @@ const OurServices: NextPage = ({}) => {
               className="services-swiper"
             >
               {services.map((service, index) => (
-                <SwiperSlide key={index}>
+                <SwiperSlide key={service.id}>
                   <ServiceCard
                     service={service}
                     isActive={true}

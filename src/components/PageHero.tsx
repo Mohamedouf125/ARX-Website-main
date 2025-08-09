@@ -40,7 +40,7 @@ const PageHero: React.FC<PageHeroProps> = ({
 
   return (
     <section
-      className={`relative ${heightClasses[height]} w-full bg-cover bg-center z-[0] mb-[-40px]`}
+      className={`relative ${heightClasses[height]} w-full bg-cover bg-center z-[0]`}
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
       {/* Overlay */}
