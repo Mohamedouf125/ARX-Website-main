@@ -55,10 +55,10 @@ const ProjectPage: React.FC = () => {
 
   // State for video swiper
   const [currentVideoSlide, setCurrentVideoSlide] = useState(0);
-  const [amenityFilter, setAmenityFilter] = useState("all");
+  // Changed default from "all" to "amenity"
+  const [amenityFilter, setAmenityFilter] = useState("amenity");
   const filteredAmenities =
     projectData?.amenities?.filter((item) => {
-      if (amenityFilter === "all") return true;
       if (amenityFilter === "amenity") return item.type === "amenity";
       if (amenityFilter === "outdoor") return item.type === "out_door_feature";
       return true;
@@ -455,18 +455,8 @@ const ProjectPage: React.FC = () => {
                 {t("features_amenities")}
               </div>
 
-              {/* Filter Buttons */}
+              {/* Filter Buttons - Removed "All Features" button */}
               <div className="flex flex-wrap justify-center lg:justify-end gap-2">
-                <button
-                  onClick={() => setAmenityFilter("all")}
-                  className={`px-6 py-3 rounded-full border transition-all duration-300 ${
-                    amenityFilter === "all"
-                      ? "bg-[#dba426] text-white border-[#dba426]"
-                      : "bg-white text-black border-gray-300 hover:border-[#dba426]"
-                  }`}
-                >
-                {t("All Features")}
-                </button>
                 <button
                   onClick={() => setAmenityFilter("amenity")}
                   className={`px-6 py-3 rounded-full border transition-all duration-300 ${
