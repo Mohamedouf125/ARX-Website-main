@@ -92,7 +92,7 @@ export interface BannerTypes {
 }
 
 export interface TestimonialType {
-  data: {
+  data?: {
     id: number;
     name: string;
     description: string;

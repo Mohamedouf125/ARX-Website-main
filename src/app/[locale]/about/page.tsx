@@ -18,7 +18,7 @@ import { AnimatedElement } from "@/components/animations/AnimationType";
 const AboutPage = () => {
   const t = useTranslations("about");
   const locale = useLocale();
-  const [testimonials, setTestimonials] = React.useState<TestimonialType[]>([]);
+  const [testimonials, setTestimonials] = React.useState<TestimonialType>({});
 
   useEffect(() => {
     const fetchTestimonials = async () => {
