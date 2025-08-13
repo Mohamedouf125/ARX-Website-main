@@ -194,7 +194,7 @@ const Footer: React.FC = () => {
                   <a
                     href="https://maps.google.com/?q=30.026306,31.489864"
                     target="_blank"
-                    className="flex items-center gap-2 items-start"
+                    className="flex gap-2"
                   >
                     <FaMapMarkerAlt className="text-[#DBA426] w-5 h-5" />
                     New Cairo-st 90, Top 90 Building
@@ -204,7 +204,7 @@ const Footer: React.FC = () => {
                   <a
                     href="https://maps.google.com/?q=31.438272,31.664551"
                     target="_blank"
-                    className="flex items-center gap-2 items-start"
+                    className="flex items-center gap-2"
                   >
                     <FaMapMarkerAlt className="text-[#DBA426] w-5 h-5" />
                     New Damietta, Third District, Street 15
@@ -214,11 +214,11 @@ const Footer: React.FC = () => {
                   <a
                     href="https://maps.google.com/?q=31.438272,31.664551"
                     target="_blank"
-                    className="flex items-center gap-2 items-start"
+                    className="flex items-center gap-2"
                   >
-                    <FaMapMarkerAlt className="text-[#DBA426] w-5 h-5 w-[35px]" />
-                    Mansoura Tower, El-Geish Street - Intersection of El-Sherif
-                    El-Radi Street - Mansoura Second Section
+                    <FaMapMarkerAlt className="text-[#DBA426] w-5 h-5" />
+                    Mansoura Tower,El-Geish Street-Intersection of El-Sherif
+                    El-Radi 
                   </a>
                 </li>
               </ul>
@@ -321,14 +321,14 @@ const Footer: React.FC = () => {
                     title: "info@arxeg.com",
                     link: "mailto:info@arxeg.com",
                     icon: (
-                      <FaEnvelope size={20} className="text-[#DBA426] mt-1" />
+                      <FaEnvelope size={15} className="text-[#DBA426] mt-1" />
                     ),
                   },
                   {
                     id: 2,
                     title: "16591",
                     link: "tel:16591",
-                    icon: <FaPhone size={20} className="text-[#DBA426] mt-1" />,
+                    icon: <FaPhone size={15} className="text-[#DBA426] mt-1" />,
                   },
                   {
                     id: 3,
@@ -336,7 +336,7 @@ const Footer: React.FC = () => {
                     link: "https://wa.me/201001703888",
                     icon: (
                       <FaSquareWhatsapp
-                        size={25}
+                        size={20}
                         className="text-[#DBA426] mt-1"
                       />
                     ),
@@ -348,7 +348,7 @@ const Footer: React.FC = () => {
                       {item.icon}
                       <a
                         href={item.link}
-                        className="transition flex items-center gap-2 text-[20px] mdtext-[30px] lg:text-[35px] font-['Switzer, Sans-serif'] font-[600]"
+                        className="transition flex items-center gap-2 text-[0px] mdtext-[20px] lg:text-[25px] font-['Switzer, Sans-serif'] font-[550]"
                       >
                         <span>{item.title}</span>
                       </a>

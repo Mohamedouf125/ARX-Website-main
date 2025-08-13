@@ -13,23 +13,27 @@ function BlogCard({ post }: BlogCardProps) {
   const t = useTranslations("blog");
 
   return (
-    <div className="group relative w-full grid grid-cols-1 md:grid-cols-2 sm:gap-10 items-center border-b last:border-b-0 border-gray-200 pb-10 mb-10 h-[500px] h-[360px] lg:h-[450px]">
-      <Link href={`/blogs/${post.slug}`} className="media w-full  h-full rounded-3xl overflow-hidden mb-5">
+    <div className="group relative w-full grid grid-cols-1 md:grid-cols-2 sm:gap-10 items-center border-b last:border-b-0 border-gray-200 pb-10 mb-10 h-[500px]  lg:h-[450px]">
+      <Link
+        href={`/blogs/${post.slug}`}
+        className="media w-full h-full rounded-3xl overflow-hidden mb-5"
+      >
         <img
           src={post.image}
           alt={post.title}
-          className="object-cover object-center w-full h-full -translate-x-6 scale-[1.2] transition-all duration-300 ease-in-out group-hover:translate-x-0"
+          className="object-cover object-center w-full h-full rounded-3xl transition-all duration-300 ease-in-out group-hover:scale-105"
         />
       </Link>
+
       <div className="lg:px-5 xl:px-10">
         <div className="head grid grid-cols-3 items-center gap-5 mb-8">
-          <span className="text-[12px] font-medium text-black text-center bg-[#DBA426] text-white px-1 py-2 rounded-full w-full">
+          <span className="text-[12px] font-medium  text-center bg-[#DBA426] text-white px-1 py-2 rounded-full w-full">
             {post.category || "Social Media"}
           </span>
 
-          <span className="w-full h-[1px] bg-gray-300 block flex justify-center"></span>
+          <span className="w-full h-[1px] bg-gray-300 block  justify-center"></span>
 
-          <span className="text-[12px] font-medium text-black flex text-gray-500 font-[400]">
+          <span className="text-[12px]  flex text-gray-500 font-[400]">
             {new Date(post.created_at || Date.now()).toLocaleDateString(
               "en-US",
               {
@@ -88,7 +92,7 @@ function BlogCard({ post }: BlogCardProps) {
               e.currentTarget.style.backgroundSize = "0% 2px";
             }}
           >
-            <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#DBA426] w-full "></span>
+            <span className="absolute bottom-0 left-0  h-[1px] bg-[#DBA426] w-full "></span>
             {t("continue_reading")}
           </Link>
         </div>

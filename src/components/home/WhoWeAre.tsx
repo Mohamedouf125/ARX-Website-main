@@ -60,7 +60,7 @@ const WhoWeAre: NextPage = () => {
                     },
                     {
                       title: t("who_we_are.units_sold"),
-                      value: 3,
+                      value: 1500,
                       description: t("who_we_are.offices_worldwide"),
                       animation: "slideUp",
                       delay: 0.2,
@@ -74,7 +74,7 @@ const WhoWeAre: NextPage = () => {
                     },
                     {
                       title: t("who_we_are.total_clients"),
-                      value: 2,
+                      value: 2000,
                       description: t("who_we_are.offices_worldwide"),
                       animation: "slideUp",
                       delay: 0.6,
@@ -168,7 +168,7 @@ const WhoWeAre: NextPage = () => {
                 },
                 {
                   title: t("who_we_are.units_sold"),
-                  value: 3,
+                  value: 1500,
                   description: t("who_we_are.offices_worldwide"),
                   animation: "slideUp",
                   delay: 0.2,
@@ -182,7 +182,7 @@ const WhoWeAre: NextPage = () => {
                 },
                 {
                   title: t("who_we_are.total_clients"),
-                  value: 2,
+                  value: 2000,
                   description: t("who_we_are.offices_worldwide"),
                   animation: "slideUp",
                   delay: 0.6,
