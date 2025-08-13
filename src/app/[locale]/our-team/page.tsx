@@ -38,8 +38,8 @@ async function Page({ params }: { params: Promise<{ locale: string }> }) {
             className="w-full h-full"
           >
             <h2 className="text-[70px] font-semibold">
-              <p>{t("global_executive")}</p>
-              <p>{t("leadership")}</p>
+              <p>{t("Board of Directors")}</p>
+              {/* <p>{t("leadership")}</p> */}
             </h2>
           </AnimatedElement>
         </div>

@@ -60,55 +60,61 @@ export interface ProjectType {
   }>;
 }
 
-
-
-export interface BlogType{
-    id: number;
-    image: string;
-    cover: string;
-    title: string;
-    description: string;
-    keywords: string;
-    slug: string;
-    meta_title: string;
-    meta_description: string;
-    meta_keywords: string;
-    category?: string;
-    created_at?: string;
-    updated_at?: string;
+export interface BlogType {
+  id: number;
+  image: string;
+  cover: string;
+  title: string;
+  description: string;
+  keywords: string;
+  slug: string;
+  meta_title: string;
+  meta_description: string;
+  meta_keywords: string;
+  category?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 
-export interface ServiceTypes{
-    id: number;
-    image: string;
-    title: string;
-    description: string;
+export interface ServiceTypes {
+  id: number;
+  image: string;
+  title: string;
+  description: string;
 }
 
-export interface BannerTypes{
+export interface BannerTypes {
+  id: number;
+  type: string;
+  image: string;
+  title: string;
+  description: string;
+}
+
+export interface TestimonialType {
+  data: {
+    id: number;
+    name: string;
+    description: string;
+    image?: string; // Optional since not present in current data
+    role?: string; // Optional since not present in current data
+  }[];
+  bannerCircle?: {
     id: number;
     type: string;
+    name: string | null;
     image: string;
-    title: string;
+    link: string | null;
     description: string;
-  
+  };
 }
-
-export interface TestimonialType{
-    id: number;
-    image: string;
-    name: string;
-    role: string;
-    description: string;
-    
-}
-export interface ShortsTypes{
-    id: number;
-    video: string;
-    background: string;
-    title?: string;
-    location?: string;
-    thumbnail?: string;
+export interface ShortsTypes {
+  id: number;
+  video: string;
+  background: string;
+  title?: string;
+  location?: string;
+  thumbnail?: string;
 }
 
 export interface FQAType {

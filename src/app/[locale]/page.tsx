@@ -41,7 +41,7 @@ export default async function Home({
   return (
     <div>
       <Hero banners={HomeData?.sliders} />
-      <WhoWeAre bannerWho={HomeData?.bannerWho?.iamge} />
+      <WhoWeAre bannerWho={HomeData?.bannerWho?.image} />
       <AboutHome bannerAbout={HomeData?.bannerAbout?.image} />
 
       <OurServices services={HomeData?.main_focus} />
@@ -52,7 +52,7 @@ export default async function Home({
       <OurBlogs blogs={HomeData?.blogs} />
       <HomeContact contact={HomeData?.bannerQuickEnquiry.image} />
 
-      <Testimonial testimonials={HomeData?.testimonials} bannerCircle={HomeData?.bannerCircle.image} />
+      <Testimonial testimonials={HomeData?.testimonials}/>
 
     </div>
   );

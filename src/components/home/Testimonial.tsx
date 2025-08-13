@@ -1,4 +1,3 @@
-// pages/ProjectAndBlog.tsx
 "use client";
 
 import React from "react";
@@ -10,14 +9,9 @@ import { TestimonialType } from "@/libs/types/types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { AnimatedElement } from "../animations/AnimationType";
+import Image from "next/image";
 
-const Testimonial = ({
-  testimonials,
-  bannerCircle,
-}: {
-  testimonials: TestimonialType[];
-  bannerCircle: string;
-}) => {
+const Testimonial = ({ testimonials }: { testimonials: TestimonialType }) => {
   return (
     <div className="space-y-24 px-4 py-40 bg-[#f8f5f0] relative mt-30 rounded-b-3xl z-10 w-full">
       {/* Circular Spinner with Text and Center Elements */}
@@ -53,12 +47,12 @@ const Testimonial = ({
         {/* Center Image */}
         <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
           <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-lg">
-            <img
+            <Image
+              width={128}
+              height={128}
               loading="lazy"
               decoding="async"
-              width="128"
-              height="128"
-              src={bannerCircle}
+              src={testimonials?.bannerCircle?.image || ""}
               className="w-full h-full object-cover"
               alt="Testimonial"
             />
@@ -156,7 +150,7 @@ const Testimonial = ({
               }}
               className="testimonial-swiper w-full"
             >
-              {testimonials.map((testimonial, index) => (
+              {testimonials?.data?.map((testimonial, index) => (
                 <SwiperSlide key={testimonial.id || index}>
                   <div className="text-center">
                     <p
@@ -169,7 +163,9 @@ const Testimonial = ({
                     <div className="flex items-center justify-center space-x-3">
                       {testimonial.image && (
                         <div className="w-12 h-12 rounded-full overflow-hidden">
-                          <img
+                          <Image
+                            width={40}
+                            height={40}
                             src={testimonial.image}
                             alt={testimonial.name}
                             className="object-cover w-full h-full"
@@ -181,7 +177,7 @@ const Testimonial = ({
                           {testimonial.name}
                         </p>
                         <p className="text-sm w-full border-t-1 border-[#DBA426] text-gray-500 pt-1">
-                          {testimonial.name}
+                          {testimonial.role || testimonial.name}
                         </p>
                       </div>
                     </div>

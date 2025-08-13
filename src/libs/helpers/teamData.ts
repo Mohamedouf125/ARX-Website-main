@@ -49,7 +49,7 @@ export const teamMembers: TeamMember[] = [
     },
     job: {
       en: "Chairman & CEO",
-      ar: "رئيس مجلس الإدارة والمدير التنفيذي"
+      ar: "رئيس مجلس الإدارة"
     },
     image: "https://storage.googleapis.com/furniture-hub/arx/about_us/2.webp",
     email: "ahmed.omar@arxdevelopments.com",
@@ -114,7 +114,7 @@ export const teamMembers: TeamMember[] = [
       ar: "المهندس ياسر عمر"
     },
     job: {
-      en: "Managing Director",
+      en: "Deputy CEO",
       ar: "المدير التنفيذي"
     },
     image: "https://storage.googleapis.com/furniture-hub/arx/about_us/3%20(1).webp",
@@ -179,8 +179,8 @@ export const teamMembers: TeamMember[] = [
       ar: "الدكتور سعد عمر"
     },
     job: {
-      en: "Technical Director",
-      ar: "المدير التقني"
+      en: "Board Member",
+      ar: "عضو مجلس الإدارة"
     },
     image: "https://storage.googleapis.com/furniture-hub/arx/about_us/4.webp",
     email: "saad.omar@arxdevelopments.com",
@@ -243,8 +243,8 @@ export const teamMembers: TeamMember[] = [
       ar: "الدكتور أسامة عمر"
     },
     job: {
-      en: "Financial Director",
-      ar: "المدير المالي"
+      en: "Board Member",
+      ar: "عضو مجلس الإدارة"
     },
     image: "https://storage.googleapis.com/furniture-hub/arx/about_us/1%20(1).webp",
     email: "osama.omar@arxdevelopments.com",
