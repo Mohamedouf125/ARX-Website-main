@@ -143,8 +143,17 @@
     "subscribe_description": "اشترك في نشرتنا الإخبارية الأسبوعية واحصل على التحديثات عبر البريد الإلكتروني"
   },
   "projects": {
+    "location":"الموقع",
     "type":"نوع",
-
+ "Coast": "الساحل",
+  "University": "الجامعة",
+  "Supermarket": "السوبرماركت",
+  "Park": "الحديقة",
+  "Railway station": "محطة القطار",
+  "Airport": "المطار",
+  "Bus station": "محطة الحافلات",
+  "Bank": "البنك",
+  "Hospital": "المستشفى",
     "Outdoor Features": "الميزات الخارجية",
     "All Features": "جميع الميزات",
     "Amenities": "مرافق",

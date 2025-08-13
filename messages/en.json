@@ -156,7 +156,15 @@
     },
     "projects":{
         "type":"Type",
-
+"Coast": "Coast",
+  "University": "University",
+  "Supermarket": "Supermarket",
+  "Park": "Park",
+  "Railway station": "Railway station",
+  "Airport": "Airport",
+  "Bus station": "Bus station",
+  "Bank": "Bank",
+  "Hospital": "Hospital",
         "Outdoor Features": "Outdoor Features",
         "All Features": "All Features",
         "Amenities": "Amenities",

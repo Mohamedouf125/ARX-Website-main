@@ -660,10 +660,10 @@ const ProjectPage: React.FC = () => {
                         value: "350m",
                       },
                     ].map(
-                      (item: { id?: number; key?: string; value?: string }) => (
+                      (item: { id?: number; key: string; value?: string }) => (
                         <li key={item.id}>
                           <h3 className="text-[17px] font-[600] opacity-40">
-                            {item.key}
+                            {t(item.key)}
                           </h3>
                           <p className="text-[17px] font-[600] ">
                             {item.value}

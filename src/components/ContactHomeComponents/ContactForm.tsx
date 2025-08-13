@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { useTranslations } from "next-intl";
 import { FaArrowRight } from "react-icons/fa";
+import { useLocale } from "next-intl";
 
 const ContactForm = () => {
   const t = useTranslations("home");
@@ -21,7 +22,7 @@ const ContactForm = () => {
     phone: "",
     inquiry: "",
   });
-
+  const locale = useLocale();
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -87,17 +88,19 @@ const ContactForm = () => {
         </div>
 
         {/* Phone and Inquiry Row */}
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid  md:grid-cols-2 gap-4">
           <Input
             name="phone"
             type="tel"
             required
             value={formData.phone}
             onChange={handleInputChange}
-            className="h-14 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400"
+            className={`h-14 ${locale === "ar" ? "text-right" : ""} bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400`}
             placeholder={t("your_phone")}
           />
           <Select
+            dir={locale === "ar" ? "rtl" : "ltr"}
+
             value={formData.inquiry}
             onValueChange={handleInquiryChange}
             required
