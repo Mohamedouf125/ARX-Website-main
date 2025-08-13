@@ -11,7 +11,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { AnimatedElement } from "../animations/AnimationType";
 
-const Testimonial = ({ testimonials }: { testimonials: TestimonialType[] }) => {
+const Testimonial = ({
+  testimonials,
+  bannerCircle,
+}: {
+  testimonials: TestimonialType[];
+  bannerCircle: string;
+}) => {
   return (
     <div className="space-y-24 px-4 py-40 bg-[#f8f5f0] relative mt-30 rounded-b-3xl z-10 w-full">
       {/* Circular Spinner with Text and Center Elements */}
@@ -52,7 +58,7 @@ const Testimonial = ({ testimonials }: { testimonials: TestimonialType[] }) => {
               decoding="async"
               width="128"
               height="128"
-              src="/الدايرة.jpg"
+              src={bannerCircle}
               className="w-full h-full object-cover"
               alt="Testimonial"
             />

@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "@/i18n/routing";
 import { BlogType } from "@/libs/types/types";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 interface BlogCardProps {
   post: BlogType;
@@ -18,7 +19,9 @@ function BlogCard({ post }: BlogCardProps) {
         href={`/blogs/${post.slug}`}
         className="media w-full h-full rounded-3xl overflow-hidden mb-5"
       >
-        <img
+        <Image
+          width={50000}
+          height={50000}
           src={post.image}
           alt={post.title}
           className="object-cover object-center w-full h-full rounded-3xl transition-all duration-300 ease-in-out group-hover:scale-105"

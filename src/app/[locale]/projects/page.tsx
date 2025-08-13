@@ -30,7 +30,7 @@ const ProjectsPage = async ({
 
   const projects = await feachData();
 
-  console.log(projects);
+  console.log("projects", projects);
 
   return (
     <div className="min-h-screen bg-white pb-20">
@@ -46,7 +46,7 @@ const ProjectsPage = async ({
         ]}
       />
 
-      <ProjectsClient projects={projects} />
+      <ProjectsClient projects={projects.properties} />
     </div>
   );
 };

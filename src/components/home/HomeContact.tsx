@@ -1,10 +1,10 @@
 import React from 'react'
 import ContactSection from '../ContactHomeComponents/ContactSection'
 
-function HomeContact() {
+function HomeContact({contact}: {contact: string}) {
   return (
     <div>
-      <ContactSection />
+      <ContactSection contact={contact} />
     </div>
   )
 }

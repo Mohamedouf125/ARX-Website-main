@@ -1,11 +1,18 @@
 import { AnimatedElement } from "../animations/AnimationType";
 import ContactForm from "./ContactForm";
+import "@/app/globals.css"
+  
+interface ContactSectionProps {
+  contact: string;
+}
 
-const ContactSection = () => {
+const ContactSection = ({contact}: ContactSectionProps) => {
   return (
     <section className="relative flex items-center justify-center p-2 px-10 lg:px-20">
       {/* Background Image with Overlay */}
-      <div className="bg-cover bg-center bg-no-repeat bg-[url('/bg-12.jpg')] relative p-30 px-5 sm:px-10 xl:px-40 rounded-3xl w-full">
+      <div className="bg-cover bg-center bg-no-repeat relative p-30 px-5 sm:px-10 xl:px-40 rounded-3xl w-full" style={{
+        backgroundImage: `url(${contact || '/bg-12.jpg'})`,
+      }}>
         <div className="absolute inset-0 bg-black/40 rounded-3xl"></div>
         {/* shapes */}
         <div className="cover z-10 absolute top-0 left-0 w-full h-full">

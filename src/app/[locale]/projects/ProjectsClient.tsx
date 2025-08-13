@@ -38,7 +38,7 @@ const ProjectsClient: React.FC<ProjectsClientProps> = ({ projects }) => {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {filteredProjects.map((project: ProjectType, index: number) => (
+              {filteredProjects?.map((project: ProjectType, index: number) => (
                 <ProjectCard key={index} project={project} />
               ))}
             </div>

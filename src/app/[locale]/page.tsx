@@ -50,8 +50,10 @@ export default async function Home({
       <ShortsPage shorts={HomeData?.our_videos} />
       <SupportersPage />
       <OurBlogs blogs={HomeData?.blogs} />
-      <HomeContact />
-      <Testimonial testimonials={HomeData?.testimonials} />
+      <HomeContact contact={HomeData?.bannerQuickEnquiry.image} />
+
+      <Testimonial testimonials={HomeData?.testimonials} bannerCircle={HomeData?.bannerCircle.image} />
+
     </div>
   );
 }
