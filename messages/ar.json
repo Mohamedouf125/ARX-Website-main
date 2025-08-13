@@ -338,7 +338,11 @@
     "footer_hero_title":"ألأساس لخطوتك العظيمة القادمة",
     "footer_description":"سواء كنت تستكشف منازلنا أو تخطط لشيء مخصص، نحن هنا لجعل رؤيتك حقيقة.",
     "footer_hero_button":"احصل على عرض مجاني",
-    "footer_big_text":"spaciaz"
+    "footer_big_text":"spaciaz",
+  "footer_address": "برج المنصورة، شارع الجيش - تقاطع شارع الشريف الرضي",
+  "footer_address_2": "دمياط الجديدة، الحي الثالث، شارع 15",
+  "footer_address_3": "القاهرة الجديدة - شارع 90، مبنى توب 90"
+
   }
 
 }

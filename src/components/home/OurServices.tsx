@@ -8,6 +8,8 @@ import SmallHeadSpan from "../SharedComponent/SmallHeadSpan";
 import { AnimatedElement } from "../animations/AnimationType";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import { useLocale } from "next-intl";
+
 
 // Import Swiper styles
 import "swiper/css";
@@ -27,20 +29,22 @@ interface OurServicesProps {
 const OurServices: NextPage<OurServicesProps> = ({ services }) => {
   const t = useTranslations("our_features");
   const [activeTab, setActiveTab] = useState(0);
+  const locale = useLocale();
+
 
   // Helper function to strip HTML tags from description
   const stripHtmlTags = (html: string) => {
-    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent || "";
   };
 
   // Create services array with icons from service images and static tab images
   const servicess = services.map((service, index) => ({
     icon: (
-      <Image 
-        src={service.image} 
-        alt={service.title} 
-        width={40} 
+      <Image
+        src={service.image}
+        alt={service.title}
+        width={40}
         height={40}
         className="rounded-lg object-cover"
       />
@@ -79,8 +83,10 @@ const OurServices: NextPage<OurServicesProps> = ({ services }) => {
           {service.icon}
         </div>
         <div className="text-left">
-          <h3 className="font-bold text-2xl capitalize">{service.title}</h3>
-          <p className="text-md mt-1 text-gray-500">{service.description}</p>
+          <h3 className={`font-bold ${locale === "ar" ? "text-right" : "text-left"} text-2xl capitalize`}>
+            {service.title}
+          </h3>
+          <p className={`text-md mt-1 text-gray-500 ${locale === "ar" ? "text-right" : "text-left"}`}>{service.description}</p>
         </div>
       </div>
     </button>

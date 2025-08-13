@@ -197,7 +197,7 @@ const Footer: React.FC = () => {
                     className="flex gap-2"
                   >
                     <FaMapMarkerAlt className="text-[#DBA426] w-5 h-5" />
-                    New Cairo-st 90, Top 90 Building
+                    {t2("footer_address_3")}
                   </a>
                 </li>
                 <li className="">
@@ -207,7 +207,7 @@ const Footer: React.FC = () => {
                     className="flex items-center gap-2"
                   >
                     <FaMapMarkerAlt className="text-[#DBA426] w-5 h-5" />
-                    New Damietta, Third District, Street 15
+                    {t2("footer_address_2")}
                   </a>
                 </li>
                 <li className="">
@@ -217,8 +217,8 @@ const Footer: React.FC = () => {
                     className="flex items-center gap-2"
                   >
                     <FaMapMarkerAlt className="text-[#DBA426] w-5 h-5" />
-                    Mansoura Tower,El-Geish Street-Intersection of El-Sherif
-                    El-Radi 
+                    {t2("footer_address")} 
+
                   </a>
                 </li>
               </ul>
