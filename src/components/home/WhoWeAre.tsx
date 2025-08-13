@@ -6,7 +6,12 @@ import { useTranslations } from "next-intl";
 import CountUp from "react-countup";
 import { AnimatedElement } from "../animations/AnimationType";
 
-const WhoWeAre: NextPage = () => {
+interface WhoWeAreProps {
+  bannerWho: string;
+}
+
+const WhoWeAre: NextPage<WhoWeAreProps> = ({ bannerWho }: WhoWeAreProps) => {
+
   const t = useTranslations();
   const statsRef = useRef<HTMLDivElement>(null);
 
@@ -20,7 +25,7 @@ const WhoWeAre: NextPage = () => {
               {/* Image - Mobile */}
               <AnimatedElement type="fadeIn" duration={1} className="w-full">
                 <img
-                  src="/who.jpg"
+                  src={bannerWho}
                   alt="Luxury Real Estate Building"
                   className="rounded-3xl object-cover w-full h-[700px]"
                 />

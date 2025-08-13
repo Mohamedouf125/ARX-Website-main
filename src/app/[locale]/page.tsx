@@ -40,17 +40,18 @@ export default async function Home({
 
   return (
     <div>
-      <Hero banners={HomeData.banners} />
-      <WhoWeAre />
-      <AboutHome />
-      <OurServices services={HomeData.main_focus} />
+      <Hero banners={HomeData?.sliders} />
+      <WhoWeAre bannerWho={HomeData?.bannerWho?.iamge} />
+      <AboutHome bannerAbout={HomeData?.bannerAbout?.image} />
 
-      <OurProjects projects={HomeData.projects} />
-      <ShortsPage shorts={HomeData.our_videos} />
+      <OurServices services={HomeData?.main_focus} />
+
+      <OurProjects projects={HomeData?.projects} />
+      <ShortsPage shorts={HomeData?.our_videos} />
       <SupportersPage />
-      <OurBlogs blogs={HomeData.blogs} />
+      <OurBlogs blogs={HomeData?.blogs} />
       <HomeContact />
-      <Testimonial testimonials={HomeData.testimonials} />
+      <Testimonial testimonials={HomeData?.testimonials} />
     </div>
   );
 }

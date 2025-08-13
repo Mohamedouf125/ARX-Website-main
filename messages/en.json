@@ -1,21 +1,21 @@
 {
     "header": {
+        "our_services": "Our Services",
+        "core_values": "Core Values",
         "home": "Home",
         "about": "About Us",
         "projects": "Projects",
         "contact": "Contact Us",
         "blog": "Blog",
-        "footerDescription":"With 20+ years in Egypt's real estate market, ARX delivers exceptional services.",
+        "footerDescription": "With 20+ years in Egypt's real estate market, ARX delivers exceptional services.",
         "faqs": "FAQs",
         "links": "Links",
         "our_team": "Our Team",
         "our-team": "Our Team",
         "our-services": "Our Services",
         "core-values": "Core Values"
-
     },
-
-    "who_we_are":{
+    "who_we_are": {
         "total_years_of_experience": "Total Years Of Experience",
         "units_sold": "Units Sold",
         "total_constructions": "Total Constructions",
@@ -26,8 +26,6 @@
         "our_impact": "our impact",
         "learn_more": "Learn More"
     },
-
-
     "home": {
         "hero_title": "WE",
         "hero_subtitle": "CREATE",
@@ -42,7 +40,7 @@
         "hero_button": "Get your free quote",
         "our_projects_description": "Our projects generate lasting dividends",
         "our_partners": "We're proud to partner with best-in-class clients",
-        "view_all":"View All Blogs",
+        "view_all": "View All Blogs",
         "hero_description_part_one": "A legacy in the making — ARX Development has been shaping Egypt’s real estate scene for over 20 years.",
         "hero_description_part_two": "in our customers' success and improving the",
         "hero_description_part_three": "communities we serve.",
@@ -64,118 +62,114 @@
         "property_valuation": "Property Valuation",
         "under_construction": "Under Construction"
     },
-    "second_hero":{
+    "second_hero": {
         "title": "We're here to help you build your dream home",
         "description": "Whether you're building, remodeling, buying, or selling, we bring seamless project execution under one roof.",
         "button": "Get your free quote"
     },
-    "about":{
+    "about": {
         "title": "About Us",
-        "description": "Shaping the world of things to come",
-        "vision_title" : "VISION",
+        "description": "Leading real estate transformation with a clear vision and a purpose-driven mission",
+        "vision_title": "VISION",
         "vision_button": "Meet The Team",
         "vision_description": "To lead in urban development with a global and sustainable outlook, reflecting our company's ambition—from the heart of the world to its farthest horizons.",
-                "vision_description_part_one": "We are a real estate development company specializing in delivering integrated property solutions that elevate the experience of living, working, and investing.",
+        "vision_description_part_one": "We are a real estate development company specializing in delivering integrated property solutions that elevate the experience of living, working, and investing.",
         "vision_description_part_two": "that balance contemporary design with practical needs.We are committed to creating real value through projects that serve diverse real estate purposes and align with evolving market expectations.",
-        "mission_title" : "MISSION",
+        "mission_title": "MISSION",
         "mission_description": "We create high-quality, culturally rich real estate aligned with global standards, meeting client needs through thoughtful planning and sustainable development.",
-        "values_title" : "VALUES",
+        "values_title": "VALUES",
         "learn_more": "Learn More",
         "values_description": "At Arx, we uphold quality, integrity, and client focus—driven by initiative, growth, and accountability to build trust and deliver lasting value in every project.",
-
         "who_we": "WHO WE ",
-        "are":"ARE?",
-        "years":"Total Years Of Experience",
-
-        "small_cards":{
-            "prjects_in_development":"projects in development",
-            "square_feet_of_property":"square feet of property",
-            "total_projects_cost":"total projects cost"
+        "are": "ARE?",
+        "years": "Total Years Of Experience",
+        "small_cards": {
+            "prjects_in_development": "projects in development",
+            "square_feet_of_property": "square feet of property",
+            "total_projects_cost": "total projects cost"
         },
         "about_us": "About Us",
-        "big_cards":{
-            "what_we_do":"What we do",
-            "our_impact":"Our Impact",
-            "core_values":"Core Values",
-            "first_card_description":"We maintain this by ensuring transparency and professional conduct in every aspect.",
-            "second_card_description":"We work with both investors and developers to create landmarks that make an impact.",
-            "third_card_description":"To empower businesses with cutting-edge web solutions that enhance their digital presence and drive growth.",
-            "first_card_button":"Our Solutions",
-            "second_card_button":"Our Projects",
-            "third_card_button":"Discover More"
+        "big_cards": {
+            "what_we_do": "What we do",
+            "our_impact": "Our Impact",
+            "core_values": "Core Values",
+            "first_card_description": "We maintain this by ensuring transparency and professional conduct in every aspect.",
+            "second_card_description": "We work with both investors and developers to create landmarks that make an impact.",
+            "third_card_description": "To empower businesses with cutting-edge web solutions that enhance their digital presence and drive growth.",
+            "first_card_button": "Our Solutions",
+            "second_card_button": "Our Projects",
+            "third_card_button": "Discover More"
         },
-
-
-        "units":"Units Sold",
-        "constructions":"Total Constructions",
-        "clients":"Total Clients"
+        "units": "Units Sold",
+        "constructions": "Total Constructions",
+        "clients": "Total Clients"
     },
     "our_features": {
-    "span": "Our Main Focus",
-    "title": "Your Premier Destination for Sustainable Real Estate Growth",
-    "page_title": "Our Services",
-    "description": "We take immense pride in our commitment to providing unparalleled service excellence to our valued customers.",
-    "read_more": "Read More",
-    "Residential": {
-      "title": "Residential",
-      "description": "Discover residential units that combine contemporary design with practical comfort, offering privacy, functionality, and a balanced lifestyle for individuals and families alike."
+        "span": "Our Main Focus",
+        "title": "Your Premier Destination for Sustainable Real Estate Growth",
+        "page_title": "Our Services",
+        "description": "We take immense pride in our commitment to providing unparalleled service excellence to our valued customers.",
+        "read_more": "Read More",
+        "Residential": {
+            "title": "Residential",
+            "description": "Discover residential units that combine contemporary design with practical comfort, offering privacy, functionality, and a balanced lifestyle for individuals and families alike."
+        },
+        "Medical": {
+            "title": "Medical",
+            "description": "Premium medical units crafted for efficient care, equipped with advanced facilities to support better workflow, accurate diagnosis, and exceptional patient outcomes."
+        },
+        "Administrative": {
+            "title": "Administrative",
+            "description": "Our multi-skilled team provides innovative, forward-thinking solutions."
+        },
+        "Commercial": {
+            "title": "Commercial",
+            "description": "Elevate your business with flexible spaces tailored for all industries and sizes. Enjoy modern infrastructure, premium facilities, and a dynamic community that redefines growth and productivity."
+        }
     },
-    "Medical": {
-      "title": "Medical",
-      "description": "Premium medical units crafted for efficient care, equipped with advanced facilities to support better workflow, accurate diagnosis, and exceptional patient outcomes."
-    },
-    "Administrative": {
-      "title": "Administrative",
-      "description": "Our multi-skilled team provides innovative, forward-thinking solutions."
-    },
-    "Commercial": {
-      "title": "Commercial",
-      "description": "Elevate your business with flexible spaces tailored for all industries and sizes. Enjoy modern infrastructure, premium facilities, and a dynamic community that redefines growth and productivity."
-    }
-  },
-    "shorts":{
+    "shorts": {
         "title": "OUR SHORTS",
         "description": "A glimpse into our journey,<br/> one reel at a time."
     },
-    "services":{
+    "services": {
         "title": "OUR SERVICES",
         "description": "OUR MAIN FOCUS"
     },
-    "supporters":{
-        "years":"Total Years Of Experience",
-        "units":"Units Sold",
-        "constructions":"Total Constructions",
-        "clients":"Total Clients",
+    "supporters": {
+        "years": "Total Years Of Experience",
+        "units": "Units Sold",
+        "constructions": "Total Constructions",
+        "clients": "Total Clients",
         "our_partners": "We're proud to partner with best-in-class clients"
     },
-    "subscribe":{
-        "join_us":"Join Our Newsletter Now",
-        "subscribe":"Subscribe",
-        "placeholder":"Enter your email to Subscribe",
-        "subscribe_description":"Subscribe to our weekly newsletter and receive updates via Email"
+    "subscribe": {
+        "join_us": "Join Our Newsletter Now",
+        "subscribe": "Subscribe",
+        "placeholder": "Enter your email to Subscribe",
+        "subscribe_description": "Subscribe to our weekly newsletter and receive updates via Email"
     },
-    "projects":{
-        "type":"Type",
-"Coast": "Coast",
-  "University": "University",
-  "Supermarket": "Supermarket",
-  "Park": "Park",
-  "Railway station": "Railway station",
-  "Airport": "Airport",
-  "Bus station": "Bus station",
-  "Bank": "Bank",
-  "Hospital": "Hospital",
+    "projects": {
+        "type": "Type",
+        "Coast": "Coast",
+        "University": "University",
+        "Supermarket": "Supermarket",
+        "Park": "Park",
+        "Railway station": "Railway station",
+        "Airport": "Airport",
+        "Bus station": "Bus station",
+        "Bank": "Bank",
+        "Hospital": "Hospital",
         "Outdoor Features": "Outdoor Features",
         "All Features": "All Features",
         "Amenities": "Amenities",
-        "title":"Explore Our Landmark Developments Shaping the Future.",
-        "name":"Projects",
-        "search_placeholder":"Search about projects",
-        "explore":"Explore",
-        "search":"Search",
-        "under_construction":"Under Construction",
-        "project_location":"Project Location",
-        "project_budget":"Project Budget",
+        "title": "Explore Our Landmark Developments Shaping the Future.",
+        "name": "Projects",
+        "search_placeholder": "Search about projects",
+        "explore": "Explore",
+        "search": "Search",
+        "under_construction": "Under Construction",
+        "project_location": "Project Location",
+        "project_budget": "Project Budget",
         "all_locations": "All Locations",
         "all_budgets": "All Budgets",
         "clear_filters": "Clear Filters",
@@ -204,23 +198,23 @@
         "address": "Address",
         "features_amenities": "Features & Amenities"
     },
-    "faqs":{
-        "title":"FAQs",
-        "description":"Our global real estate experts are here to help you in this ever-changing market.",
-        "frequently asked questions":"Frequently Asked Questions",
-        "got questions? we've got answers!":"Got questions? We've got answers!",
-        "read_most_frequent_questions":"Read most frequent questions",
-        "find_your_answer":"Find your answer",
-        "browse our faqs to find everything you need to know":"Browse our FAQs to find everything you need to know.",
-        "didn't find an answer to your question?":"Didn't find an answer to your question?",
-        "get in touch with us for details on additional services":"Get in touch with us for details on additional services.",
-        "contact us":"Contact Us"
+    "faqs": {
+        "title": "FAQs",
+        "description": "Our global real estate experts are here to help you in this ever-changing market.",
+        "frequently asked questions": "Frequently Asked Questions",
+        "got questions? we've got answers!": "Got questions? We've got answers!",
+        "read_most_frequent_questions": "Read most frequent questions",
+        "find_your_answer": "Find your answer",
+        "browse our faqs to find everything you need to know": "Browse our FAQs to find everything you need to know.",
+        "didn't find an answer to your question?": "Didn't find an answer to your question?",
+        "get in touch with us for details on additional services": "Get in touch with us for details on additional services.",
+        "contact us": "Contact Us"
     },
-    "contact":{
-        "title":"Contact Us",
-        "lcocation":"OUR LOCATIONS",
-        "description_part_one":"We're Always Available For Your Real Estate Needs 24/7.",
-        "description_part_two":"Our Team Is Ready To Assist And Answer Your Questions Anytime.",
+    "contact": {
+        "title": "Contact Us",
+        "lcocation": "OUR LOCATIONS",
+        "description_part_one": "We're Always Available For Your Real Estate Needs 24/7.",
+        "description_part_two": "Our Team Is Ready To Assist And Answer Your Questions Anytime.",
         "reach_us": "Reach Us",
         "reach_us_description": "We're here to help and always happy to hear from you! 📞",
         "office_address": "Office Address",
@@ -229,44 +223,44 @@
         "schedule_meeting": "Schedule Meeting",
         "follow_social": "Follow Our Social Media",
         "send_message": "Leave a message",
-                "new_description": "Our global real estate experts are here to help you in this ever-changing market.",
+        "new_description": "Our global real estate experts are here to help you in this ever-changing market.",
         "get_in_touch": "Get In Touch",
         "support_email": "Support Email",
         "call_us": "Call Us",
         "visit_us": "Visit Us",
         "location": "Location",
         "form": {
-        "name": "Name",
-        "name_placeholder": "Enter your name",
-        "email": "Email",
-        "email_placeholder": "Enter your email",
-        "phone": "Phone Number",
-        "phone_placeholder": "Enter phone number",
-        "subject": "Subject",
-        "subject_options": {
-            "interested": "Interested In",
-            "commercial": "Commercial",
-            "housing": "Housing",
-            "administrative": "Administrative",
-            "medical": "Medical"
-        },
-        "message": "Message",
-        "message_placeholder": "Enter your message",
-        "send": "Submit"
+            "name": "Name",
+            "name_placeholder": "Enter your name",
+            "email": "Email",
+            "email_placeholder": "Enter your email",
+            "phone": "Phone Number",
+            "phone_placeholder": "Enter phone number",
+            "subject": "Subject",
+            "subject_options": {
+                "interested": "Interested In",
+                "commercial": "Commercial",
+                "housing": "Housing",
+                "administrative": "Administrative",
+                "medical": "Medical"
+            },
+            "message": "Message",
+            "message_placeholder": "Enter your message",
+            "send": "Submit"
         }
     },
-    "blog":{
-        "title":"Our Blog",
-        "our_videos":"OUR NEW VIDEOS",
-        "latest":"LATEST FROM FEED",
-        "continue_reading":"Continue Reading",
-        "category":"Real Estate",
-        "welcome_to_our_blog":"WELCOME TO OUR BLOG, WHERE WE SHARE THE LATEST",
-        "welcome_to_our_blog_description":"NEWS, TIPS, AND INSPIRING IDEAS!",
-        "view_all":"View All Posts",
-        "blog_not_found":"Blog Not Found"
+    "blog": {
+        "title": "Our Blog",
+        "our_videos": "OUR NEW VIDEOS",
+        "latest": "LATEST FROM FEED",
+        "continue_reading": "Continue Reading",
+        "category": "Real Estate",
+        "welcome_to_our_blog": "WELCOME TO OUR BLOG, WHERE WE SHARE THE LATEST",
+        "welcome_to_our_blog_description": "NEWS, TIPS, AND INSPIRING IDEAS!",
+        "view_all": "View All Posts",
+        "blog_not_found": "Blog Not Found"
     },
-    "core_values":{
+    "core_values": {
         "page_title": "Core Values",
         "title": "An exceptional quality that can't be beaten",
         "description": "What makes us different",
@@ -305,8 +299,7 @@
             "description": "We work with both investors and developers to create landmarks that make an impact."
         }
     },
-
-    "our_team":{
+    "our_team": {
         "title": "Our Team",
         "description": "Meet the people who make it all happen",
         "chairman_of_the_board_of_directors_speech": "Chairman Of The Board Of Directors Speech",
@@ -345,8 +338,7 @@
         "start_a_career_with_excellent_benefits": "Start a career with excellent benefits",
         "current_openings": "Current Openings"
     },
-    
-    "footer":{
+    "footer": {
         "footer_hero_title": "The foundation of your next great move",
         "footer_hero_button": "Get your free quote",
         "footer_description": "Whether you're exploring our homes or envisioning something custom, we're here to bring your dream to life.",
@@ -355,5 +347,4 @@
         "footer_address_2": "New Damietta, Third District, Street 15",
         "footer_address_3": "New Cairo-st 90, Top 90 Building"
     }
-
 }

@@ -10,7 +10,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { AnimatedElement } from "../animations/AnimationType";
 
-const Hero = ({ banners }: { banners: BannerTypes[] }) => {
+const Hero = ({ banners }: { banners?: BannerTypes[] }) => {
+
   const t = useTranslations();
   // const buttonRef = useRef<HTMLButtonElement>(null);
   // const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -109,7 +110,8 @@ const Hero = ({ banners }: { banners: BannerTypes[] }) => {
             }}
             className="w-full absolute top-0 left-0 right-0 bottom-0 z-0 h-full"
           >
-            {banners.map((banner, index) => (
+            {banners?.map((banner, index) => (
+
               <SwiperSlide key={index}>
                 <div className="w-full h-full relative">
                   {/* Optimized image with multiple resolution support */}

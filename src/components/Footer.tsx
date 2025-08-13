@@ -18,23 +18,26 @@ const Footer: React.FC = () => {
   const locale = useLocale();
 
   useEffect(() => {
-    const feachData = async () => {
-      try {
-        const response = await getData(
-          "properties",
-          {},
-          new AxiosHeaders({
-            lang: locale,
-          })
-        );
-        setProjects(response.data);
-      } catch (error) {
-        throw error;
-      }
-    };
+  const feachData = async () => {
+    try {
+      const response = await getData(
+        "properties",
+        {},
+        new AxiosHeaders({ lang: locale })
+      );
 
-    feachData();
-  }, []);
+      const data = Array.isArray(response?.data) ? response.data : [];
+      setProjects(data);
+
+    } catch (error) {
+      console.error(error);
+      setProjects([]); // fallback عشان نتفادى الخطأ
+    }
+  };
+
+  feachData();
+}, [locale]);
+
 
   // const buttonRef = useRef<HTMLButtonElement>(null);
   // const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -231,47 +234,47 @@ const Footer: React.FC = () => {
                   {[
                     {
                       id: 1,
-                      title: t("home"),
+                      title: "home",
                       link: "/",
                     },
                     {
                       id: 2,
-                      title: t("about"),
+                      title: "about",
                       link: "/about",
                     },
                     {
                       id: 3,
-                      title: t("projects"),
+                      title: "projects",
                       link: "/projects",
                     },
                     {
                       id: 4,
-                      title: t("blog"),
+                      title: "blog",
                       link: "/blogs",
                     },
                     {
                       id: 5,
-                      title: t("faqs"),
+                      title: "faqs",
                       link: "/faqs",
                     },
                     {
                       id: 6,
-                      title: t("our-team"),
+                      title: "our-team",
                       link: "/our-team",
                     },
                     {
                       id: 7,
-                      title: t("our-services"),
+                      title: "our-services",
                       link: "/services",
                     },
                     {
                       id: 8,
-                      title: t("core-values"),
+                      title: "core-values",
                       link: "/core-values",
                     },
                     {
                       id: 9,
-                      title: t("contact"),
+                      title: "contact",
                       link: "/contact",
                     },
                   ].map((item) => (
@@ -280,7 +283,7 @@ const Footer: React.FC = () => {
                         href={item.link}
                         className="hover:text-[#DBA426] transition font-['Switzer, Sans-serif'] font-[600] text-[16px] leading-[1.5] transition-all duration-300"
                       >
-                        {item.title}
+                        {t(item.title)}
                       </Link>
                     </li>
                   ))}

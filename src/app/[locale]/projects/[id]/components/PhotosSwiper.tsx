@@ -1,24 +1,46 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ProjectType } from "@/libs/types/types";
 import { Autoplay, Navigation, Keyboard, Mousewheel } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 const PhotosSwiper = ({ projectData }: { projectData: ProjectType | null }) => {
-  
+  const [swiperReady, setSwiperReady] = useState(false);
+
+  // Wait for images to load before initializing Swiper
+  useEffect(() => {
+    if (!projectData?.property_listing_images) return;
+    const imgPromises = projectData.property_listing_images.map(
+      (slide) =>
+        new Promise((resolve) => {
+          const img = new Image();
+          img.src = slide.image;
+          img.onload = resolve;
+          img.onerror = resolve; // still resolve to avoid blocking
+        })
+    );
+    Promise.all(imgPromises).then(() => setSwiperReady(true));
+  }, [projectData]);
+
+  if (!swiperReady) return null; // or loading placeholder
+
   return (
     <div className="relative">
       <Swiper
         modules={[Autoplay, Navigation, Keyboard, Mousewheel]}
         spaceBetween={24}
         slidesPerView={1}
+        // preloadImages={true}
+        watchSlidesProgress
         autoplay={{
           delay: 8000,
           disableOnInteraction: false,
         }}
         navigation={{
-          nextEl: '.swiper-button-next-photos',
-          prevEl: '.swiper-button-prev-photos',
+          nextEl: ".swiper-button-next-photos",
+          prevEl: ".swiper-button-prev-photos",
         }}
         keyboard={{
           enabled: true,
@@ -45,19 +67,19 @@ const PhotosSwiper = ({ projectData }: { projectData: ProjectType | null }) => {
           },
         }}
         onSwiper={(swiper) => {
-          swiper.el.addEventListener('mouseenter', () => {
-            swiper.el.focus();
-          });
-        }}
+  setTimeout(() => swiper.update(), 0);
+  window.addEventListener("resize", () => swiper.update());
+}}
+
       >
         {projectData?.property_listing_images?.map(
-          (slides: { id: number; image: string }, index: number) => (
+          (slide: { id: number; image: string }, index: number) => (
             <SwiperSlide key={index} className="group imageSlide">
               <div className="w-full">
-                <div className="swiper-slide-active media w-full h-[200px] sm:h-[300px] 2xl:h-[400px] rounded-3xl overflow-hidden">
+                <div className="media w-full h-[200px] sm:h-[300px] 2xl:h-[400px] rounded-3xl overflow-hidden">
                   <img
-                    src={slides.image}
-                    alt={slides.image}
+                    src={slide.image}
+                    alt={`Slide ${index}`}
                     className="object-cover w-full h-full"
                   />
                 </div>
@@ -87,7 +109,7 @@ const PhotosSwiper = ({ projectData }: { projectData: ProjectType | null }) => {
           />
         </svg>
       </button>
-      
+
       <button
         className="swiper-button-next-photos absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-black z-10 shadow-lg transition-all duration-300 hover:scale-110"
         aria-label="Next photo"
