@@ -11,7 +11,7 @@ export async function getTestimonials(locale: string) {
         lang: locale,
       })
     );
-    return response.data;
+    return response.data.testimonials;
   } catch (error) {
     console.error("Error fetching testimonials:", error);
     throw error;

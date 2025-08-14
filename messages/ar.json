@@ -64,6 +64,23 @@
     "under_construction": "قيد التطوير"
   },
   "about": {
+    "big_cards": {
+    "what_we_do": "ما نقوم به",
+    "our_impact": "أثرنا",
+    "core_values": "قيمنا الأساسية",
+    "first_card_description": "نحافظ على ذلك من خلال ضمان الشفافية والسلوك المهني في كل جانب.",
+    "second_card_description": "نسعى جاهدين لخلق معالم بارزة تُحدث أثرًا إيجابيًا.",
+    "third_card_description": "قيمنا هي الركيزة التي نبني عليها نجاحاتنا، ونقود بها مستقبل التطوير العقاري.",
+    "first_card_button": "خدماتنا",
+    "second_card_button": "مشاريعنا",
+    "third_card_button": "اكتشف المزيد"
+},
+    "about_us": "عنا",
+    "small_cards": {
+      "prjects_in_development": "مشاريع قيد التطوير",
+      "square_feet_of_property": " قدم مربع من العقارات",
+      "total_projects_cost": " إجمالي تكلفة المشاريع"
+    },
     "title": "من نحن",
     "description": "نقود التغيير العقاري برؤية واضحة ورسالة راسخة",
     "vision_title": "رؤيتنا",

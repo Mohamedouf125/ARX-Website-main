@@ -489,10 +489,6 @@ const ProjectPage: React.FC = () => {
             {/* Amenities Grid */}
             <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 gap-y-20">
               {filteredAmenities.map((item, index) => {
-                // Get icon based on index or use default
-                const IconComponent =
-                  featureIcons[index % featureIcons.length] || ShieldCheck;
-
                 return (
                   <li
                     key={item.id}
@@ -514,7 +510,26 @@ const ProjectPage: React.FC = () => {
                       </svg>
                     </div>
                     <div className="icon flex font-[400] items-center justify-center absolute top-[-50px] left-1/2 -translate-x-1/2 bg-[#dba426] text-white rounded-full z-10 p-4 border-10 border-white group-hover:scale-110 transition-all duration-300">
-                      <IconComponent className="w-10 h-10 font-[400]" />
+                      {/* Use API image if available, otherwise fallback to default icon */}
+                      {item.image && item.image !== "https://arx-test.com/" ? (
+                        <Image
+                          src={item.image} 
+                          alt={item.title}
+                          className="w-10 h-10 object-contain"
+                          // onError={(e) => {
+                          //   // Fallback to default icon if image fails to load
+                          //   const IconComponent = featureIcons[index % featureIcons.length] || ShieldCheck;
+                          //   // e.target.style.display = 'none';
+                          //   // e.target.parentNode.innerHTML = `<div class="w-10 h-10 flex items-center justify-center">${IconComponent}</div>`;
+                          // }}
+                        />
+                      ) : (
+                        // Fallback to default icon if no valid image URL
+                        (() => {
+                          const IconComponent = featureIcons[index % featureIcons.length] || ShieldCheck;
+                          return <IconComponent className="w-10 h-10 font-[400]" />;
+                        })()
+                      )}
                     </div>
                     <div className="content z-10 mt-8">
                       <h3 className="text-[23px] font-[600] mb-2">

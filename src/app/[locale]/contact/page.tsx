@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaMapMarkerAlt,
   FaPhoneAlt,
@@ -13,15 +13,60 @@ import "react-phone-number-input/style.css";
 import { useTranslations, useLocale } from "next-intl";
 import PageHero from "@/components/PageHero";
 import { AnimatedElement } from "@/components/animations/AnimationType";
+import { getData } from "@/libs/axios/server";
+import { AxiosHeaders } from "axios";
 
 const inputStyle = "bg-gray-100 p-6 w-full focus:outline-none rounded-full";
+
+interface ContactBanner {
+  image: string;
+}
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
 
 const ContactPage = () => {
   const [phone, setPhone] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [contactBanner, setContactBanner] = useState<ContactBanner | null>(null);
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const t = useTranslations("contact");
   const locale = useLocale();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getData(
+          "contact-us-banner",
+          {},
+          new AxiosHeaders({ lang: locale })
+        );
+
+        const data = response?.data;
+        setContactBanner(data || null);
+      } catch (error) {
+        console.error("Error fetching contact banner:", error);
+        setContactBanner(null); // fallback to prevent errors
+      }
+    };
+
+    fetchData();
+  }, [locale]);
+
+  // Contact data configuration
   const contactData = [
     {
       id: 1,
@@ -30,7 +75,7 @@ const ContactPage = () => {
       btn: t("email_us"),
       description: "info@arxeg.com",
       link: "mailto:info@arxeg.com",
-      animation: "slideUp",
+      animation: "slideUp" as const,
     },
     {
       id: 2,
@@ -39,7 +84,7 @@ const ContactPage = () => {
       btn: t("call_us"),
       description: "16591",
       link: "tel:16591",
-      animation: "slideUp",
+      animation: "slideUp" as const,
       delay: 0.2,
     },
     {
@@ -50,21 +95,80 @@ const ContactPage = () => {
       description:
         "New Cairo - south 90 St- top 90 building\nNew Damietta - the 3rd district – 15th St",
       link: "https://maps.app.goo.gl/VYVirReCxBxe4zQC9",
-      animation: "slideUp",
+      animation: "slideUp" as const,
       delay: 0.4,
     },
   ];
 
+  // Subject options configuration
+  const subjectOptions = [
+    { value: "", label: t("form.subject_options.interested") },
+    { value: "commercial", label: t("form.subject_options.commercial") },
+    { value: "housing", label: t("form.subject_options.housing") },
+    { value: "administrative", label: t("form.subject_options.administrative") },
+    { value: "medical", label: t("form.subject_options.medical") },
+  ];
+
+  // Slider navigation functions
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % contactData.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + contactData.length) % contactData.length);
+    setCurrentSlide(
+      (prev) => (prev - 1 + contactData.length) % contactData.length
+    );
   };
 
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
+  };
+
+  // Form handling functions
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handlePhoneChange = (value: string | undefined) => {
+    const phoneValue = value || "";
+    setPhone(phoneValue);
+    setFormData(prev => ({
+      ...prev,
+      phone: phoneValue
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    try {
+      // Add your form submission logic here
+      console.log("Form submitted:", { ...formData, phone });
+      
+      // Reset form after successful submission
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
+      setPhone("");
+      
+      // Show success message (you can implement toast notifications here)
+      alert("Message sent successfully!");
+      
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Error sending message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -77,7 +181,7 @@ const ContactPage = () => {
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
           { label: t("title") },
         ]}
-        backgroundImage="/header__contact__us.webp"
+        backgroundImage={contactBanner?.image}
         height="medium"
         showDescription={false}
       />
@@ -86,33 +190,34 @@ const ContactPage = () => {
       <div className="bg-white z-10 relative px-6 py-40 rounded-3xl">
         <div className="max-w-7xl mx-auto">
           <div className="list">
-            {/* Desktop Grid - unchanged */}
+            {/* Desktop Grid */}
             <ul className="hidden md:grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
               {contactData.map((item) => (
-                <li key={item.id} className="">
+                <li key={item.id}>
                   <AnimatedElement
-                    key={item.id}
-                    type={
-                      item.animation as "slideUp" | "slideLeft" | "slideRight"
-                    }
+                    type={item.animation}
                     duration={1}
                     delay={item.delay}
                     className="w-full h-full"
                   >
                     <div className="p-4 lg:p-6 xl:p-10 border border-gray-200 rounded-3xl space-y-8 flex flex-col justify-between h-full">
-                      <div className="icon text-2xl">{item.icon}</div>
+                      <div className="icon text-2xl text-[#dba426]">{item.icon}</div>
                       <div className="content">
-                        <h3 className="text-[20px] lg:text-[25px] font-[600]">
+                        <h3 className="text-[20px] lg:text-[25px] font-[600] mb-2">
                           {item.title}
                         </h3>
-                        <p className="text-[16px] lg:text-[20px] font-[500] opacity-60 ">
+                        <p className="text-[16px] lg:text-[20px] font-[500] opacity-60 whitespace-pre-line">
                           {item.description}
                         </p>
                       </div>
 
                       <div className="w-full">
-                        <a href={item.link} target="_blank">
-                          <button className="bg-[#dba426] hover:bg-black w-full text-white px-6 py-4 rounded-full font-[600] hover:bg-opacity-90 transition-all duration-300">
+                        <a 
+                          href={item.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          <button className="bg-[#dba426] hover:bg-black w-full text-white px-6 py-4 rounded-full font-[600] transition-all duration-300">
                             {item.btn}
                           </button>
                         </a>
@@ -126,25 +231,22 @@ const ContactPage = () => {
             {/* Mobile Slider */}
             <div className="md:hidden relative">
               <div className="overflow-hidden">
-                <div 
+                <div
                   className="flex transition-transform duration-300 ease-in-out"
                   style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                 >
                   {contactData.map((item) => (
                     <div key={item.id} className="w-full flex-shrink-0 px-4">
                       <AnimatedElement
-                        key={item.id}
-                        type={
-                          item.animation as "slideUp" | "slideLeft" | "slideRight"
-                        }
+                        type={item.animation}
                         duration={1}
                         delay={item.delay}
                         className="w-full h-full"
                       >
-                        <div className="p-4 lg:p-6 xl:p-10 border border-gray-200 rounded-3xl space-y-8 flex flex-col justify-between h-full">
-                          <div className="icon text-2xl">{item.icon}</div>
+                        <div className="p-4 lg:p-6 xl:p-10 border border-gray-200 rounded-3xl space-y-8 flex flex-col justify-between h-full min-h-[300px]">
+                          <div className="icon text-2xl text-[#dba426]">{item.icon}</div>
                           <div className="content">
-                            <h3 className="text-[20px] lg:text-[25px] font-[600]">
+                            <h3 className="text-[20px] lg:text-[25px] font-[600] mb-2">
                               {item.title}
                             </h3>
                             <p className="text-[16px] lg:text-[20px] font-[500] opacity-60 whitespace-pre-line">
@@ -153,8 +255,12 @@ const ContactPage = () => {
                           </div>
 
                           <div className="w-full">
-                            <a href={item.link} target="_blank" rel="noopener noreferrer">
-                              <button className="bg-[#dba426] hover:bg-black w-full text-white px-6 py-4 rounded-full font-[600] hover:bg-opacity-90 transition-all duration-300">
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <button className="bg-[#dba426] hover:bg-black w-full text-white px-6 py-4 rounded-full font-[600] transition-all duration-300">
                                 {item.btn}
                               </button>
                             </a>
@@ -174,7 +280,7 @@ const ContactPage = () => {
               >
                 <FaChevronLeft className="w-4 h-4 text-gray-600" />
               </button>
-              
+
               <button
                 onClick={nextSlide}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-200 rounded-full p-2 shadow-lg hover:bg-gray-50 transition-all duration-200 z-10"
@@ -190,9 +296,9 @@ const ContactPage = () => {
                     key={index}
                     onClick={() => goToSlide(index)}
                     className={`w-3 h-3 rounded-full transition-all duration-200 ${
-                      index === currentSlide 
-                        ? 'bg-[#dba426]' 
-                        : 'bg-gray-300 hover:bg-gray-400'
+                      index === currentSlide
+                        ? "bg-[#dba426]"
+                        : "bg-gray-300 hover:bg-gray-400"
                     }`}
                     aria-label={`Go to slide ${index + 1}`}
                   />
@@ -201,28 +307,38 @@ const ContactPage = () => {
             </div>
           </div>
 
+          {/* Form and Map Section */}
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6 mt-20">
-            {/* Left Side - Info */}
+            {/* Left Side - Contact Form */}
             <div className="space-y-6 mb-10 lg:mb-0">
               <h3 className="text-[30px] lg:text-[50px] font-[700]">
                 {t("send_message")}
               </h3>
-              <form className="space-y-8">
+              
+              <form onSubmit={handleSubmit} className="space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5">
                   <div>
                     <input
                       id="name"
+                      name="name"
                       type="text"
+                      value={formData.name}
+                      onChange={handleInputChange}
                       placeholder={t("form.name")}
                       className={inputStyle}
+                      required
                     />
                   </div>
                   <div>
                     <input
                       id="email"
+                      name="email"
                       type="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
                       placeholder={t("form.email")}
                       className={inputStyle}
+                      required
                     />
                   </div>
                 </div>
@@ -233,22 +349,25 @@ const ContactPage = () => {
                       international
                       defaultCountry="EG"
                       value={phone}
-                      onChange={(value) => setPhone(value || "")}
-                      id="phone"
+                      onChange={handlePhoneChange}
                       placeholder={t("form.phone")}
-                      className="w-full bg-gray-100 p-6 rounded-full"
-                      inputClass="phone-input"
+                      className="w-full bg-gray-100 p-6 rounded-full [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:border-0 [&_.PhoneInputInput]:outline-0 [&_.PhoneInputInput]:text-base"
                     />
                   </div>
                   <div>
-                    <select id="interest" className={inputStyle}>
-                      <option>{t("form.subject_options.interested")}</option>
-                      <option>{t("form.subject_options.commercial")}</option>
-                      <option>{t("form.subject_options.housing")}</option>
-                      <option>
-                        {t("form.subject_options.administrative")}
-                      </option>
-                      <option>{t("form.subject_options.medical")}</option>
+                    <select 
+                      id="subject" 
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleInputChange}
+                      className={inputStyle}
+                      required
+                    >
+                      {subjectOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -256,25 +375,28 @@ const ContactPage = () => {
                 <div>
                   <textarea
                     id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleInputChange}
                     placeholder={t("form.message")}
-                    className={
-                      "bg-gray-100 p-6 w-full focus:outline-none rounded-3xl"
-                    }
+                    className="bg-gray-100 p-6 w-full focus:outline-none rounded-3xl resize-none"
                     rows={8}
-                  ></textarea>
+                    required
+                  />
                 </div>
 
-                <div className="">
+                <div>
                   <button
                     type="submit"
-                    className="group flex items-center bg-white justify-center p-2 pl-5 rounded-full border border-gray-300 hover:bg-black  hover:border-black transition-all duration-300"
+                    disabled={isSubmitting}
+                    className="group flex items-center bg-white justify-center p-2 pl-5 rounded-full border border-gray-300 hover:bg-black hover:border-black transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <span className="inline-flex gap-2 items-center font-medium text-[#dba426] group-hover:text-white transition-all duration-300 rounded-full cursor-pointer">
                       <span className="text-[16px] font-[600] mx-2">
-                        {t("form.send")}
+                        {isSubmitting ? "Sending..." : t("form.send")}
                       </span>
                       <svg
-                        className="w-10 h-10 bg-[#dba426]  rounded-full p-1 text-white group-hover:rotate-305 transition-all duration-300"
+                        className="w-10 h-10 bg-[#dba426] rounded-full p-1 text-white group-hover:rotate-[360deg] transition-all duration-300"
                         fill="currentColor"
                         viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
@@ -291,17 +413,17 @@ const ContactPage = () => {
               </form>
             </div>
 
-            {/* Map */}
+            {/* Right Side - Map */}
             <div className="w-full h-[300px] md:h-[100%] lg:h-[100%] xl:h-[700px] relative rounded-3xl">
-              {/* Map image from import */}
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55292.51054158744!2d31.717864784673285!3d29.985697098329215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1457f37ff900ea15%3A0x79af3ad6eb5c0452!2sARX%20Development!5e0!3m2!1sen!2seg!4v1750696675452!5m2!1sen!2seg"
                 width="100%"
                 height="100%"
-                className="rounded-3xl"
+                className="rounded-3xl border-0"
                 loading="lazy"
                 allowFullScreen
                 referrerPolicy="no-referrer-when-downgrade"
+                title="ARX Development Location"
               />
             </div>
           </div>

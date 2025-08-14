@@ -32,6 +32,8 @@ export interface ProjectType {
     id: number;
     type: string;
     title: string;
+      image: string;
+
   }>;
   property_floor_plans: Array<{
     id: number;

@@ -1,6 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
-import Image from "next/image";
+import React, { useEffect, useState } from "react";
+
+// import Image from "next/image";
 
 import { useLocale, useTranslations } from "next-intl";
 import PageHero from "@/components/PageHero";
@@ -14,17 +15,48 @@ import { getTestimonials } from "@/libs/helpers/testimonials";
 import SupportersPage from "@/components/home/Supporters";
 import { TestimonialType } from "@/libs/types/types";
 import { AnimatedElement } from "@/components/animations/AnimationType";
+import { getData } from "@/libs/axios/server";
+import { AxiosHeaders } from "axios";
+
+// Define the correct type for aboutBanner
+interface AboutBannerType {
+  data: {
+    bannerHeader?: {
+      image: string;
+    };
+    bannerInside?: {
+      image: string;
+    };
+    bannerOurImPact?: {
+      image: string;
+    };
+    bannerCoreValue?: {
+      image: string;
+    };
+  };
+}
 
 const AboutPage = () => {
   const t = useTranslations("about");
   const locale = useLocale();
   const [testimonials, setTestimonials] = React.useState<TestimonialType>({});
 
+  // Updated state type to match API response
+  const [aboutBanner, setAboutBanner] = useState<AboutBannerType>({
+    data: {
+      bannerHeader: { image: "" },
+      bannerInside: { image: "" },
+      bannerOurImPact: { image: "" },
+      bannerCoreValue: { image: "" },
+    },
+  });
+
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
         const data = await getTestimonials(locale);
         setTestimonials(data);
+        
       } catch (err) {
         console.error("Failed to fetch testimonials:", err);
       } finally {
@@ -34,17 +66,34 @@ const AboutPage = () => {
     fetchTestimonials();
   }, [locale]);
 
+  useEffect(() => {
+    const fetchAboutBanner = async () => {
+      try {
+        const data = await getData(
+          "about-us-banners",
+          {},
+          new AxiosHeaders({ lang: locale })
+        );
+        setAboutBanner(data);
+      } catch (err) {
+        console.error("Failed to fetch about banner:", err);
+      }
+    };
+
+    fetchAboutBanner();
+  }, [locale]);
+
   return (
     <div className="text-gray-800 mx-auto overflow-hidden">
       {/* Hero Section */}
       <PageHero
         title={t("title")}
-        // description={t("description")}
+        hideDescription={true}
         breadcrumbs={[
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
           { label: t("title") },
         ]}
-        backgroundImage={"/header__about__us.webp"}
+        backgroundImage={aboutBanner?.data?.bannerHeader?.image}
         height="medium"
       />
 
@@ -89,7 +138,12 @@ const AboutPage = () => {
         </section>
 
         <section className="h-full md:h-[650px] w-full max-w-7xl mx-auto flex items-end justify-end mb-10">
-          <div className="bg-[url('/about-top-image.jpg')] bg-cover bg-center w-full h-full rounded-3xl p-3 flex items-end relative pt-60 md:pt-0 pb-10 md:pb-3">
+          <div
+            style={{
+              backgroundImage: `url(${aboutBanner?.data?.bannerInside?.image})`,
+            }}
+            className=" bg-cover bg-center w-full h-full rounded-3xl p-3 flex items-end relative pt-60 md:pt-0 pb-10 md:pb-3"
+          >
             {/* shapes */}
             <div className="cover z-10 absolute top-0 left-0 w-full h-full">
               <div
@@ -315,26 +369,38 @@ const AboutPage = () => {
                 background: "bg-[#020202]",
                 animation: "slideRight",
                 href: "/services",
+                top: false,
               },
               {
                 span: "02.",
                 title: t("big_cards.our_impact"),
                 description: t("big_cards.second_card_description"),
                 button: t("big_cards.second_card_button"),
-                background: "bg-[#dba426]",
-                top: true,
-                image: "/build.png",
-                animation: "slideUp",
-                href: "/projects",
+                backgroundImage: aboutBanner?.data?.bannerOurImPact?.image,
+                animation: "slideLeft",
+                href: "/core-values",
+                top: false,
               },
+              // {
+              //   span: "02.",
+              //   title: t("big_cards.our_impact"),
+              //   description: t("big_cards.second_card_description"),
+              //   button: t("big_cards.second_card_button"),
+              //   background: "bg-[#dba426]",
+              //   top: true,
+              //   image: aboutBanner?.data?.bannerOurImPact?.image,
+              //   animation: "slideUp",
+              //   href: "/projects",
+              // },
               {
                 span: "03.",
                 title: t("big_cards.core_values"),
                 description: t("big_cards.third_card_description"),
                 button: t("big_cards.third_card_button"),
-                backgroundImage: "bg-[url('/bg.jpg')]",
+                backgroundImage: aboutBanner?.data?.bannerCoreValue?.image,
                 animation: "slideLeft",
                 href: "/core-values",
+                top: false,
               },
             ].map((item, index) => (
               <AnimatedElement
@@ -346,9 +412,12 @@ const AboutPage = () => {
                 <div
                   className={`group relative p-10 rounded-3xl w-full h-[500px] text-white flex flex-col overflow-hidden ${
                     item.top ? "justify-start" : "justify-between"
-                  } ${
-                    item.background || item.backgroundImage
-                  } bg-cover bg-center`}
+                  } ${item.background || ""} bg-cover bg-center`}
+                  style={{
+                    backgroundImage: item.backgroundImage
+                      ? `url(${item.backgroundImage})`
+                      : undefined,
+                  }}
                 >
                   {/* shapes */}
                   <div className="cover z-10 absolute top-0 left-0 w-full h-full">
@@ -393,16 +462,6 @@ const AboutPage = () => {
                         <span className="text-[18px] font-[500] after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-[1px] after:bg-white after:transition-all after:duration-300 after:delay-200 group-hover:after:w-full"></span>
                       </Link>
                     </div>
-
-                    {item.top && (
-                      <Image
-                        src={item.image}
-                        alt={item.title}
-                        width={100}
-                        height={100}
-                        className="absolute bottom-[-40px] left-[-40px] w-[300px] z-0"
-                      />
-                    )}
 
                     {/* floating button */}
                     <div className="floating-button absolute bottom-0 right-0 z-10">
