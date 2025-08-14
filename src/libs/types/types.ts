@@ -27,6 +27,7 @@ export interface ProjectType {
     id?: number;
     key?: string;
     value?: string;
+    image?: string;
   }>;
   amenities: Array<{
     id: number;

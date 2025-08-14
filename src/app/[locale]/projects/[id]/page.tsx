@@ -12,9 +12,9 @@ import PageHero from "@/components/PageHero";
 import Script from "next/script";
 import {
   Building,
-  CalendarCog,
-  CircleDollarSignIcon,
-  Layers,
+  // CalendarCog,
+  // CircleDollarSignIcon,
+  // Layers,
   ShieldCheck,
   Wifi,
   Users,
@@ -286,7 +286,7 @@ const ProjectPage: React.FC = () => {
       <PageHero
         title={projectData?.title || "Axiom Tower"}
         backgroundImage={projectData?.icon || ""}
-        height="small"
+        height="medium"
         hideDescription={true}
         breadcrumbs={[
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
@@ -327,41 +327,7 @@ const ProjectPage: React.FC = () => {
 
             <div className="list">
               <ul className="grid grid-cols-2 md:flex flex-wrap md:gap-18 gap-10">
-                {[
-                  {
-                    id: 1,
-                    icon: <Layers className="w-6 h-6 text-black" />,
-                    title: t("status"),
-                    description: projectData.project_status,
-                  },
-                  {
-                    id: 2,
-                    icon: <Building className="w-6 h-6 text-black" />,
-                    title: t("type"),
-                    description: projectData.project_type,
-                  },
-                  {
-                    id: 3,
-                    icon: <Globe className="w-6 h-6 text-black" />,
-                    title: t("project_area"),
-                    description: projectData?.location,
-                  },
-                  {
-                    id: 4,
-                    icon: <CalendarCog className="w-6 h-6 text-black" />,
-                    title: t("commencement_date"),
-                    description: projectData?.year_built,
-                  },
-                  {
-                    id: 5,
-                    icon: (
-                      <CircleDollarSignIcon className="w-6 h-6 text-black" />
-                    ),
-                    title: t("price_range"),
-                    description:
-                      projectData?.start_price + " - " + projectData?.end_price,
-                  },
-                ].map((item) => (
+                {projectData?.features.map((item) => (
                   <li
                     className={`flex items-center text-center ${
                       locale === "en" ? "md:text-left" : "md:text-right"
@@ -369,14 +335,25 @@ const ProjectPage: React.FC = () => {
                     key={item.id}
                   >
                     <div className="icon flex items-center justify-center p-4 rounded-full border border-gray-200">
-                      {item.icon}
+                     {item.image && item.image !== "https://arx-test.com/" ? (
+                        <Image
+                          src={item.image || ""}
+
+                          alt=""
+                          className="w-6 h-6"
+                          width={16}
+                          height={16}
+                        />
+                      ) : (
+                        <Building className="w-6 h-6 text-black" />
+                      )}
                     </div>
                     <div className="content">
                       <span className="text-[14px] md:text-[15px] font-[600] opacity-50">
-                        {item.title}
+                        {item.key}
                       </span>
                       <h3 className="text-[14px] md:text-[15px] font-[600]">
-                        {item.description}
+                        {item.value}
                       </h3>
                     </div>
                   </li>
@@ -465,7 +442,7 @@ const ProjectPage: React.FC = () => {
                       : "bg-white text-black border-gray-300 hover:border-[#dba426]"
                   }`}
                 >
-                   {t("Amenities")}
+                  {t("Amenities")}
                 </button>
                 <button
                   onClick={() => setAmenityFilter("outdoor")}
@@ -475,7 +452,7 @@ const ProjectPage: React.FC = () => {
                       : "bg-white text-black border-gray-300 hover:border-[#dba426]"
                   }`}
                 >
-                 {t("Outdoor Features")}
+                  {t("Outdoor Features")}
                 </button>
               </div>
             </div>
@@ -513,7 +490,9 @@ const ProjectPage: React.FC = () => {
                       {/* Use API image if available, otherwise fallback to default icon */}
                       {item.image && item.image !== "https://arx-test.com/" ? (
                         <Image
-                          src={item.image} 
+                          width={50}
+                          height={50}
+                          src={item.image}
                           alt={item.title}
                           className="w-10 h-10 object-contain"
                           // onError={(e) => {
@@ -526,8 +505,12 @@ const ProjectPage: React.FC = () => {
                       ) : (
                         // Fallback to default icon if no valid image URL
                         (() => {
-                          const IconComponent = featureIcons[index % featureIcons.length] || ShieldCheck;
-                          return <IconComponent className="w-10 h-10 font-[400]" />;
+                          const IconComponent =
+                            featureIcons[index % featureIcons.length] ||
+                            ShieldCheck;
+                          return (
+                            <IconComponent className="w-10 h-10 font-[400]" />
+                          );
                         })()
                       )}
                     </div>

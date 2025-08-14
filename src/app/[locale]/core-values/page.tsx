@@ -101,9 +101,13 @@ const CoreValuesPage = () => {
                       <h3 className="font-bold text-2xl capitalize">
                         {value.title}
                       </h3>
-                      <p className="text-lg mt-1 text-gray-500">
-                        {value.description}
-                      </p>
+                      {/* CHANGED THIS LINE: Use dangerouslySetInnerHTML instead of direct text */}
+                      <div 
+                        className="text-lg mt-1 text-gray-500"
+                        dangerouslySetInnerHTML={{ 
+                          __html: value.description 
+                        }}
+                      />
                     </div>
                   </div>
                 </button>
