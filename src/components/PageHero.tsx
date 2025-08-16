@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
@@ -14,7 +13,7 @@ interface PageHeroProps {
   description?: string;
   breadcrumbs: BreadcrumbItem[];
   backgroundImage?: string;
-  height?: "small" | "medium" | "large";
+  height?: "small" | "medium" | "large" | "fullpage";
   showDescription?: boolean;
   showSearch?: boolean;
   searchPlaceholder?: string;
@@ -36,19 +35,23 @@ const PageHero: React.FC<PageHeroProps> = ({
     small: "h-[35vh] md:h-[45vh]",
     medium: "h-[45vh] md:h-[65vh]",
     large: "h-[60vh] md:h-[80vh]",
+    fullpage: "h-screen", // 100vh - full viewport height
   };
 
   return (
     <section
-      className={`relative ${heightClasses[height]} w-full bg-no-repeat bg-contain z-[0]`}
-      style={{ backgroundImage: `url(${backgroundImage})` }}
+      className={`relative ${heightClasses[height]} w-full bg-no-repeat bg-center z-[0]`}
+      style={{ 
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: '100% 100%' // This will stretch the image to fill exactly
+      }}
     >
       {/* Overlay */}
       <div className="absolute bottom-0 left-0 w-full h-full bg-black/50 z-0"></div>
 
       {/* Content */}
       <div className="z-10 relative h-full">
-        {/* // Standard layout with breadcrumbs */}
+        {/* Standard layout with breadcrumbs */}
         <div className="absolute inset-0 flex flex-col items-start justify-between pt-30 md:pt-40 pb-30 mb-[-50px] px-3 md:px-8 w-full z-10">
           {/* Title */}
           <h1 className="text-[30px] sm:text-[50px] md:text-[70px] font-bold font-['Cinzel'] mb-4 text-white">

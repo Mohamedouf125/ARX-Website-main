@@ -11,7 +11,6 @@ import { notFound } from "next/navigation";
 export const dynamic = "force-dynamic";
 export const revalidate = 3600; // Revalidate every hour
 
-
 // Move data fetching outside component to prevent recreation on each render
 const fetchBlogData = async (blogSlug: string, locale: string) => {
   try {
@@ -64,8 +63,6 @@ const formatDate = (dateString: string) => {
     return "";
   }
 };
-
-
 
 const BlogPage = async ({
   params,
@@ -151,8 +148,7 @@ const BlogPage = async ({
   // Pre-format the date to avoid dynamic calculations
   const formattedDate = formatDate(blog?.created_at || "");
 
-    console.log(blog?.description);
-
+  console.log(blog?.description);
 
   return (
     <div>
@@ -169,9 +165,10 @@ const BlogPage = async ({
           { label: t("title"), href: "/blogs" },
           { label: blog?.title || "" },
         ]}
-        backgroundImage="/images/home/AxiomTower.png"
+        backgroundImage={blog?.image}
         hideDescription={true}
-        height="small"
+        height="medium"
+
       />
 
       {/* Full-Width Automatic Slider */}
