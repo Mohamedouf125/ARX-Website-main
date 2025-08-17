@@ -28,18 +28,18 @@ const BlogsPage = async ({
           lang: locale,
         })
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       throw error;
     }
   };
 
-  const { blogs: blogPosts, pagination } = await feachData();
+
+  const { blogs: blogPosts, paginate } = await feachData();
 
   // Use pagination data from API response
-  const currentPage = pagination?.current_page || 1;
-  const totalPages = pagination?.last_page || 1;
+  const currentPage = paginate?.current_page || 1;
+  const totalPages = paginate?.last_page || 1;
 
   const t = await getTranslations("blog");
 

@@ -53,6 +53,7 @@ const Pagination: React.FC<PaginationProps> = ({
 
   // Always show pagination, even for single page
 
+
   return (
     <div className="flex justify-center items-center space-x-2 mt-10">
       {/* Previous button */}
