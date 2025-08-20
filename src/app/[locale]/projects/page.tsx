@@ -38,7 +38,7 @@ const ProjectsPage = async ({
       <PageHero
         title={t("name")}
         backgroundImage={"/project__header.webp"}
-        height="small"
+        height="medium"
         hideDescription={true}
         breadcrumbs={[
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },

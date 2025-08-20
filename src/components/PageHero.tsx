@@ -13,7 +13,7 @@ interface PageHeroProps {
   description?: string;
   breadcrumbs: BreadcrumbItem[];
   backgroundImage?: string;
-  height?: "small" | "medium" | "large" | "fullpage";
+  height?: "medium";
   showDescription?: boolean;
   showSearch?: boolean;
   searchPlaceholder?: string;
@@ -32,18 +32,16 @@ const PageHero: React.FC<PageHeroProps> = ({
   const t = useTranslations("second_hero");
 
   const heightClasses = {
-    small: "h-[35vh] md:h-[45vh]",
     medium: "h-[45vh] md:h-[65vh]",
-    large: "h-[60vh] md:h-[80vh]",
     fullpage: "h-screen", // 100vh - full viewport height
   };
 
   return (
     <section
-      className={`relative ${heightClasses[height]} w-full bg-no-repeat bg-center z-[0]`}
-      style={{ 
+      className={`relative ${heightClasses[height]} w-full h-ull bg-no-repeat  z-[0]`}
+      style={{
         backgroundImage: `url(${backgroundImage})`,
-        backgroundSize: '100% 100%' // This will stretch the image to fill exactly
+        backgroundSize: "cover",
       }}
     >
       {/* Overlay */}

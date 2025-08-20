@@ -28,6 +28,8 @@ const BlogsPage = async ({
           lang: locale,
         })
       );
+      console.log(response.data.blogs);
+      
       return response.data;
     } catch (error) {
       throw error;

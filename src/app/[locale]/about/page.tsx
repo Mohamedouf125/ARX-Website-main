@@ -100,7 +100,7 @@ const AboutPage = () => {
       <div className="rounded-t-3xl bg-white flex flex-col items-center px-6 mx-auto relative z-10">
         {/* VISION / MISSION / VALUES */}
 
-        <section className="grid grid-cols-1 md:grid-cols-2 items-center pt-20 pb-20 gap-10 lg:gap-20 xl:gap-30 font-[sans-serif] max-w-7xl">
+        <section className="grid grid-cols-1 md:grid-cols-2 items-center pt-14 pb-20 gap-10 lg:gap-20 xl:gap-30 font-[sans-serif] max-w-7xl">
           {/* Left Section */}
           <div className="left-section">
             <SmallHeadSpan>{t("vision_title")}</SmallHeadSpan>
@@ -109,7 +109,7 @@ const AboutPage = () => {
               duration={1}
               className="w-full h-full"
             >
-              <h2 className="font-bold text-[50px] lg:text-[60px] xl:text-[70px] text-black leading-[1.1em] ">
+              <h2 className="font-bold text-[50px] lg:text-[60px] xl:text-[50px] text-black">
                 {t("description")}
               </h2>
             </AnimatedElement>
@@ -342,7 +342,7 @@ const AboutPage = () => {
         <section className="w-full max-w-7xl mx-auto py-30">
           <div className="head-section mb-10">
             <SmallHeadSpan>{t("vision_title")}</SmallHeadSpan>
-            <h3 className="leading-none tracking-tighter capitalize text-[40px] md:text-[70px] ">
+            <h3 className="leading-none tracking-tighter capitalize text-[30px] md:text-[50px] ">
               <AnimatedElement
                 type="slideUp"
                 duration={1}
@@ -453,7 +453,7 @@ const AboutPage = () => {
                       {item.description}
                     </p>
 
-                    <div className="read mt-6">
+                    <div className="read mx-6 mt-6">
                       <Link
                         href={`/${locale}${item.href}`}
                         className="group relative pb-1 text-[18px] font-[500] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white after:transition-all after:duration-300 hover:after:w-0"

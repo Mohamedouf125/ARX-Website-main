@@ -10,7 +10,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import { useLocale } from "next-intl";
 
-
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -30,7 +29,6 @@ const OurServices: NextPage<OurServicesProps> = ({ services }) => {
   const t = useTranslations("our_features");
   const [activeTab, setActiveTab] = useState(0);
   const locale = useLocale();
-
 
   // Helper function to strip HTML tags from description
   const stripHtmlTags = (html: string) => {
@@ -83,10 +81,20 @@ const OurServices: NextPage<OurServicesProps> = ({ services }) => {
           {service.icon}
         </div>
         <div className="text-left">
-          <h3 className={`font-bold ${locale === "ar" ? "text-right" : "text-left"} text-2xl capitalize`}>
+          <h3
+            className={`font-bold ${
+              locale === "ar" ? "text-right" : "text-left"
+            } text-2xl capitalize`}
+          >
             {service.title}
           </h3>
-          <p className={`text-md mt-1 text-gray-500 ${locale === "ar" ? "text-right" : "text-left"}`}>{service.description}</p>
+          <p
+            className={`text-md mt-1 text-gray-500 ${
+              locale === "ar" ? "text-right" : "text-left"
+            }`}
+          >
+            {service.description}
+          </p>
         </div>
       </div>
     </button>
@@ -111,9 +119,13 @@ const OurServices: NextPage<OurServicesProps> = ({ services }) => {
               duration={1}
               className="w-full h-full"
             >
-              <div className="relative mb-12">
-                <h2 className="text-[40px] lg:text-[60px] font-[700] leading-[0.9em] font-bold mt-2 font-['Helvetica']">
-                  {t("title")}
+              <div className="relative mb-12 px-4 py-6">
+                <h2 className="text-[40px] lg:text-[50px] font-[700] leading-[1.2em] font-bold mt-2 font-['Helvetica']">
+                  <span className="block mb-2">{t("title.line1")}</span>
+                  <span className="block mb-2 lg:inline">
+                    {t("title.line2")}
+                  </span>
+                  <span className="block">{t("title.line3")}</span>
                 </h2>
               </div>
             </AnimatedElement>

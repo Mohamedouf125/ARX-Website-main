@@ -82,11 +82,11 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
 
           <AnimatedElement type="fadeIn" duration={1} className="w-full h-full">
             <div className="relative mt-8">
-              {/* Left Arrow - Hidden on mobile */}
+              {/* Left Arrow - Now visible on all screens */}
               <button
                 onClick={() => scroll("left")}
                 aria-label="Previous"
-                className="hidden md:block absolute top-1/2 left-2 -translate-y-1/2 p-2 bg-black bg-opacity-30 rounded-full hover:bg-opacity-50 z-10"
+                className="absolute top-1/2 -left-2 md:left-2 -translate-y-1/2 p-2 bg-black bg-opacity-30 rounded-full hover:bg-opacity-50 z-10"
               >
                 <svg
                   width="25"
@@ -156,11 +156,11 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
                 </div>
               </div>
 
-              {/* Right Arrow - Hidden on mobile */}
+              {/* Right Arrow - Now visible on all screens */}
               <button
                 onClick={() => scroll("right")}
                 aria-label="Next"
-                className="hidden md:block absolute top-1/2 right-2 -translate-y-1/2 p-2 bg-black bg-opacity-30 rounded-full hover:bg-opacity-50 z-10"
+                className="absolute top-1/2 -right-2 md:right-2 -translate-y-1/2 p-2 bg-black bg-opacity-30 rounded-full hover:bg-opacity-50 z-10"
               >
                 <svg
                   width="25"

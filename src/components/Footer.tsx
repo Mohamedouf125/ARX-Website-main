@@ -23,16 +23,16 @@ const Footer: React.FC = () => {
     const fetchData = async () => {
       try {
         setIsLoading(true);
-        
+
         // Fetch both properties and banner data concurrently
         const [propertiesResponse, bannerResponse] = await Promise.all([
           getData("properties", {}, new AxiosHeaders({ lang: locale })),
-          getData("footer-banner", {}, new AxiosHeaders({ lang: locale }))
+          getData("footer-banner", {}, new AxiosHeaders({ lang: locale })),
         ]);
 
         // Set projects data
-        const projectsData = Array.isArray(propertiesResponse?.data?.properties) 
-          ? propertiesResponse.data.properties 
+        const projectsData = Array.isArray(propertiesResponse?.data?.properties)
+          ? propertiesResponse.data.properties
           : [];
         setProjects(projectsData);
 
@@ -40,7 +40,6 @@ const Footer: React.FC = () => {
         if (bannerResponse?.data?.image) {
           setBannerImage(bannerResponse.data.image);
         }
-
       } catch (error) {
         console.error("Error fetching footer data:", error);
         setProjects([]); // fallback to prevent errors
@@ -92,7 +91,7 @@ const Footer: React.FC = () => {
     { name: "Facebook", url: "https://www.facebook.com/Arxeg/" },
     { name: "Instagram", url: "https://www.instagram.com/arx_development/" },
     { name: "Linkedin", url: "https://eg.linkedin.com/company/arxdevelopment" },
-    { name: "Youtube", url: "https://www.youtube.com/@arxeg" },
+    { name: "Youtube", url: "https://www.youtube.com/@arxdevelopment" },
   ];
 
   // Address links configuration
@@ -112,11 +111,11 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <div 
-      className="relative footer p-20 px-5 md:px-10 lg:px-20 pt-48 mt-[-100px] pb-5 bg-cover bg-center bg-no-repeat h-full z-0" 
+    <div
+      className="relative footer p-20 px-5 md:px-10 lg:px-20 pt-48 mt-[-100px] pb-5 bg-cover bg-center bg-no-repeat h-full z-0"
       style={{
-        backgroundImage: bannerImage ? `url(${bannerImage})` : 'none',
-        backgroundColor: bannerImage ? 'transparent' : '#1a1a1a', // fallback color
+        backgroundImage: bannerImage ? `url(${bannerImage})` : "none",
+        backgroundColor: bannerImage ? "transparent" : "#1a1a1a", // fallback color
       }}
     >
       <div className="absolute top-0 left-0 w-full h-full bg-black/60 z-0"></div>
@@ -144,7 +143,8 @@ const Footer: React.FC = () => {
           <div
             className="z-[1] arx-big-text"
             style={{
-              background: "linear-gradient(to bottom, #FFFFFF,rgba(255, 255, 255, 0))",
+              background:
+                "linear-gradient(to bottom, #FFFFFF,rgba(255, 255, 255, 0))",
               backgroundClip: "text",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -174,7 +174,6 @@ const Footer: React.FC = () => {
       <AnimatedElement type="slideUp" duration={1} className="w-full h-full">
         <footer className="pt-16 pb-10 mx-auto rounded-3xl z-10 relative bg-white">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-20 px-6 lg:px-10 xl:px-20">
-            
             {/* Logo + Description + Addresses */}
             <div>
               <Image
@@ -229,17 +228,20 @@ const Footer: React.FC = () => {
                 >
                   {t("projects")}
                 </Link>
-                {!isLoading && projects.map((item) => (
-                  <Link
-                    key={`project-${item.id}`}
-                    href={`/projects/${item.id}`}
-                    className="font-[600] text-[16px] leading-[1.5] hover:text-[#DBA426] transition-all duration-300"
-                  >
-                    {item.title}
-                  </Link>
-                ))}
+                {!isLoading &&
+                  projects.map((item) => (
+                    <Link
+                      key={`project-${item.id}`}
+                      href={`/projects/${item.slug}`}
+                      className="font-[600] text-[16px] leading-[1.5] hover:text-[#DBA426] transition-all duration-300"
+                    >
+                      {item.title}
+                    </Link>
+                  ))}
                 {isLoading && (
-                  <div className="text-gray-400 text-sm">Loading projects...</div>
+                  <div className="text-gray-400 text-sm">
+                    Loading projects...
+                  </div>
                 )}
               </div>
             </div>
@@ -248,17 +250,28 @@ const Footer: React.FC = () => {
             <div className="mt-10 md:mt-0 flex flex-col justify-between">
               <ul className="text-sm font-['Switzer, Sans-serif'] flex flex-col gap-2 items-start">
                 {contactInfo.map((item) => (
-                  <li className="group relative flex justify-start" key={item.id}>
+                  <li
+                    className="group relative flex justify-start"
+                    key={item.id}
+                  >
                     <div className="flex items-center justify-start gap-2 border-b border-[#015B8D] group-hover:border-white transition-all duration-300">
                       <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#015B8D] group-hover:w-full group-hover:left-auto right-0 transition-all duration-300"></div>
                       {item.icon}
                       <a
                         href={item.link}
-                        target={item.link.startsWith('http') ? '_blank' : undefined}
-                        rel={item.link.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        target={
+                          item.link.startsWith("http") ? "_blank" : undefined
+                        }
+                        rel={
+                          item.link.startsWith("http")
+                            ? "noopener noreferrer"
+                            : undefined
+                        }
                         className="transition flex items-center gap-2 text-[0px] md:text-[20px] lg:text-[25px] font-['Switzer, Sans-serif'] font-[550]"
                       >
-                        <span>{item.title}</span>
+                        <span className="text-black text-lg">
+                          {item.title}
+                        </span>
                       </a>
                     </div>
                   </li>
@@ -270,9 +283,9 @@ const Footer: React.FC = () => {
                 {socialLinks.map((social, index) => (
                   <React.Fragment key={social.name}>
                     <li>
-                      <a 
-                        href={social.url} 
-                        target="_blank" 
+                      <a
+                        href={social.url}
+                        target="_blank"
                         rel="noopener noreferrer"
                       >
                         <span className="opacity-60 hover:opacity-100 transition-all duration-300">

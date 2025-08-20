@@ -34,7 +34,7 @@ const TeamMemberPage = ({ params }: TeamMemberPageProps) => {
           { label: member.name[locale as keyof typeof member.name] },
         ]}
         backgroundImage="/images/home/team-bc.jpg"
-        height="small"
+        height="medium"
         hideDescription={true}
       />
 

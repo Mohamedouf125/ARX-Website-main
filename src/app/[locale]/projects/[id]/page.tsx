@@ -326,19 +326,16 @@ const ProjectPage: React.FC = () => {
             </div>
 
             <div className="list">
-              <ul className="grid grid-cols-2 md:flex flex-wrap md:gap-18 gap-10">
+              <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 text-center">
                 {projectData?.features.map((item) => (
                   <li
-                    className={`flex items-center text-center ${
-                      locale === "en" ? "md:text-left" : "md:text-right"
-                    } flex-col md:flex-row gap-2`}
                     key={item.id}
+                    className="flex flex-col items-center justify-center gap-3"
                   >
                     <div className="icon flex items-center justify-center p-4 rounded-full border border-gray-200">
-                     {item.image && item.image !== "https://arx-test.com/" ? (
+                      {item.image && item.image !== "https://arx-test.com/" ? (
                         <Image
                           src={item.image || ""}
-
                           alt=""
                           className="w-6 h-6"
                           width={16}
@@ -349,7 +346,7 @@ const ProjectPage: React.FC = () => {
                       )}
                     </div>
                     <div className="content">
-                      <span className="text-[14px] md:text-[15px] font-[600] opacity-50">
+                      <span className="block text-[14px] md:text-[15px] font-[600] opacity-50">
                         {item.key}
                       </span>
                       <h3 className="text-[14px] md:text-[15px] font-[600]">
@@ -397,21 +394,29 @@ const ProjectPage: React.FC = () => {
                       id: 1,
                       key: t("space"),
                       value: projectData?.home_area,
+                      icon: "/space area.png",
+
                     },
                     {
                       id: 2,
                       key: t("year_built"),
                       value: projectData?.year_built,
+                      icon: "/project year.png",
                     },
                     {
                       id: 3,
                       key: t("location"),
                       value: projectData?.location,
+                      icon: "/location .png",
                     },
                   ].map((item) => (
                     <li key={item.id} className="flex items-center gap-2">
                       <div className="icon flex items-center justify-center p-4 rounded-full border border-gray-200">
-                        <ShieldCheck className="w-6 h-6 text-black" />
+                        <img
+                          src={item.icon}
+                          alt={item.key}
+                          className="w-6 h-6"
+                        />
                       </div>
                       <div className="content">
                         <span className="text-[15px] font-[600] opacity-50">
@@ -459,8 +464,8 @@ const ProjectPage: React.FC = () => {
 
             {/* Results Count */}
             <div className="mb-16 text-gray-600">
-              Showing {filteredAmenities.length} of{" "}
-              {projectData?.amenities?.length || 0} features
+              {t("Showing")} {filteredAmenities.length} {t("of")}{" "}
+              {projectData?.amenities?.length || 0} {t("features")}
             </div>
 
             {/* Amenities Grid */}
@@ -559,7 +564,7 @@ const ProjectPage: React.FC = () => {
                   }`}
                 >
                   <span className="fill-white!">{tab.icon}</span>
-                  <span className=" uppercase text-sm">{tab.name}</span>
+                  <span className=" uppercase text-sm">{t(tab.name)}</span>
                 </button>
               ))}
             </div>

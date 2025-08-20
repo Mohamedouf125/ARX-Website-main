@@ -20,7 +20,10 @@
         "units_sold": "Units Sold",
         "total_constructions": "Total Constructions",
         "total_clients": "Total Clients",
-        "offices_worldwide": "offices worldwide",
+        "offices_worldwide_1": "total of years experience",
+        "offices_worldwide_2": "units sold",
+        "offices_worldwide_3": "total constructions",
+        "offices_worldwide_4": "total clients",
         "years_of_experience": "years of experience",
         "projects_completed": "projects completed",
         "our_impact": "our impact",
@@ -106,7 +109,11 @@
     },
     "our_features": {
         "span": "Our Main Focus",
-        "title": "Your Premier Destination for Sustainable Real Estate Growth",
+  "title": {
+    "line1": "Your Premier Destination for Sustainable",
+    "line2": "Real Estate",
+    "line3": "Growth"
+  },
         "page_title": "Our Services",
         "description": "We take immense pride in our commitment to providing unparalleled service excellence to our valued customers.",
         "read_more": "Read More",
@@ -149,6 +156,14 @@
         "subscribe_description": "Subscribe to our weekly newsletter and receive updates via Email"
     },
     "projects": {
+        "plan": "Plan",
+        "Brochure": "Brochure",
+        "videos": "Videos",
+        "photos": "Photos",
+        "Showing": "Showing",
+        "of": "of",
+        "features": "features",
+        "year_built": "Year Built",
         "type": "Type",
         "Coast": "Coast",
         "University": "University",

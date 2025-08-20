@@ -1,5 +1,8 @@
 {
   "header": {
+    "our-team": "فريقنا",
+    "our-services": "خدماتنا",
+    "core-values": "مبادئنا",
     "our_services": "خدماتنا",
     "core_values": "مبادئنا",
     "home": "الصفحة الرئيسية",
@@ -17,7 +20,10 @@
     "units_sold": "الوحدات المباعة",
     "total_constructions": "إجمالي المشاريع",
     "total_clients": "إجمالي العملاء",
-    "offices_worldwide": "مكاتب في جميع أنحاء العالم",
+    "offices_worldwide_1": "إجمالي سنوات الخبرة",
+    "offices_worldwide_2": "الوحدات المباعة",
+    "offices_worldwide_3": "إجمالي المشاريع",
+    "offices_worldwide_4": "إجمالي العملاء",
     "years_of_experience": "سنوات الخبرة",
     "projects_completed": "مشاريع مكتملة",
     "our_impact": "تأثيرنا"
@@ -65,16 +71,16 @@
   },
   "about": {
     "big_cards": {
-    "what_we_do": "ما نقوم به",
-    "our_impact": "أثرنا",
-    "core_values": "قيمنا الأساسية",
-    "first_card_description": "نحافظ على ذلك من خلال ضمان الشفافية والسلوك المهني في كل جانب.",
-    "second_card_description": "نسعى جاهدين لخلق معالم بارزة تُحدث أثرًا إيجابيًا.",
-    "third_card_description": "قيمنا هي الركيزة التي نبني عليها نجاحاتنا، ونقود بها مستقبل التطوير العقاري.",
-    "first_card_button": "خدماتنا",
-    "second_card_button": "مشاريعنا",
-    "third_card_button": "اكتشف المزيد"
-},
+      "what_we_do": "ما نقوم به",
+      "our_impact": "أثرنا",
+      "core_values": "قيمنا الأساسية",
+      "first_card_description": "نحافظ على ذلك من خلال ضمان الشفافية والسلوك المهني في كل جانب.",
+      "second_card_description": "نسعى جاهدين لخلق معالم بارزة تُحدث أثرًا إيجابيًا.",
+      "third_card_description": "قيمنا هي الركيزة التي نبني عليها نجاحاتنا، ونقود بها مستقبل التطوير العقاري.",
+      "first_card_button": "خدماتنا",
+      "second_card_button": "يبقى تأثيرنا",
+      "third_card_button": "اكتشف المزيد"
+    },
     "about_us": "عنا",
     "small_cards": {
       "prjects_in_development": "مشاريع قيد التطوير",
@@ -107,7 +113,11 @@
   },
   "our_features": {
     "span": "وجهتك الأولى للنمو العقاري المستدام",
-    "title": "شريك حقيقي في كل جانب من جوانب التطوير",
+  "title": {
+    "line1": "وجهتك الأولى للنمو المستدام",
+    "line2": "في العقارات الاستثمارية",
+    "line3": ""
+  },
     "page_title": "خدماتنا",
     "description": "نحن نهتم بتقديم خدمات عالية الجودة لعملائنا الموفرين.",
     "read_more": "اقرأ المزيد",
@@ -150,6 +160,15 @@
     "subscribe_description": "اشترك في نشرتنا الإخبارية الأسبوعية واحصل على التحديثات عبر البريد الإلكتروني"
   },
   "projects": {
+    "Showing": "عرض",
+    "of": "من",
+    "features": "ميزات",
+    "Brochure": "بروشور",
+    "videos": "فيديوهات",
+    "photos": "صور",
+    "space": "مساحة",
+    "plan": "خطط",
+    "year_built": "سنة البناء",
     "location": "الموقع",
     "type": "نوع",
     "Coast": "الساحل",

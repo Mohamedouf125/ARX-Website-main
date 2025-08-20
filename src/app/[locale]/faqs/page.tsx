@@ -25,7 +25,7 @@ export default function FAQ() {
             lang: locale,
           })
         );
-        setFaqs(response.data);
+                setFaqs(response.data.faqs);
       } catch (error) {
         console.error("Error fetching FAQs:", error);
         // Fallback to static FAQs if API fails

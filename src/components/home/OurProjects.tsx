@@ -170,11 +170,10 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                           {/* Project Title with Bottom Border */}
                           <div className="mb-4">
                             <Link href={`${locale}/projects/${project.slug}`}>
-                            <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                              {project.title}
-                            </h2>
+                              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                                {project.title}
+                              </h2>
                             </Link>
-
 
                             <div className="description">
                               <p
@@ -182,7 +181,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                                 dangerouslySetInnerHTML={{
                                   __html: `${project.description.slice(
                                     0,
-                                    100
+                                    locale === "ar" ? 250 : 150
                                   )}...`,
                                 }}
                               ></p>

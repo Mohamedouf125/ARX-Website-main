@@ -48,11 +48,7 @@ const CoreValuesPage = () => {
         </section>
 
         <section className="h-full md:h-[650px] w-full max-w-7xl mx-auto flex items-end justify-end">
-          <AnimatedElement
-            type="fadeIn"
-            duration={1}
-            className="w-full h-full"
-          >
+          <AnimatedElement type="fadeIn" duration={1} className="w-full h-full">
             <div className="bg-[url('/about-top-image.jpg')] bg-cover bg-center w-full h-full rounded-3xl p-3 flex items-end relative pt-60 md:pt-0 pb-10 md:pb-3">
               {/* shapes */}
               <div className="cover z-10 absolute top-0 left-0 w-full h-full">
@@ -79,41 +75,38 @@ const CoreValuesPage = () => {
         <section className="w-full max-w-7xl mx-auto pt-20 pb-30">
           {/* Tab Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-4 items-start justify-center">
-            {OurValues().map(
-              (value, index) => (
-                <AnimatedElement
-                  key={index}
-                  type={value.animation as "slideUp" | "slideLeft" | "slideRight"}
-                  duration={1}
-                  delay={value.delay}
-                  className="w-full h-full"
-                >
+            {OurValues().map((value, index) => (
+              <AnimatedElement
+                key={index}
+                type={value.animation as "slideUp" | "slideLeft" | "slideRight"}
+                duration={1}
+                delay={value.delay}
+                className="w-full h-full"
+              >
                 <button
                   className={`p-4 rounded-lg transition-all duration-300`}
                 >
-                  <div className="">
                     <div
-                      className={`fill-[#DBA426] relative mb-3 border-b-2 border-gray-300 pb-8 after:content-[''] after:absolute after:bottom-[-1px] after:left-0 after:w-0 after:h-[2px] after:bg-[#035B8D] after:transition-all after:duration-300`}
+                      className={`fill-[#DBA426] relative mb-3 border-b-2 border-gray-300 pb-8 `}
                     >
                       {value.icon}
                     </div>
+
                     <div className="text-left">
                       <h3 className="font-bold text-2xl capitalize">
                         {value.title}
                       </h3>
                       {/* CHANGED THIS LINE: Use dangerouslySetInnerHTML instead of direct text */}
-                      <div 
+                      <div
                         className="text-lg mt-1 text-gray-500"
-                        dangerouslySetInnerHTML={{ 
-                          __html: value.description 
+                        dangerouslySetInnerHTML={{
+                          __html: value.description,
                         }}
                       />
                     </div>
-                  </div>
                 </button>
-                </AnimatedElement>
-              )
-            )}
+              </AnimatedElement>
+            ))}
           </div>
         </section>
       </div>
