@@ -37,9 +37,11 @@ import {
   Video,
   Route,
   BookImage,
+  Construction,
 } from "lucide-react";
 import PlansSwiper from "./components/PlansSwiper";
 import SectionButton from "@/components/SharedComponent/SectionButton";
+import Link from "next/link";
 
 interface TabContent {
   id: string;
@@ -395,7 +397,6 @@ const ProjectPage: React.FC = () => {
                       key: t("space"),
                       value: projectData?.home_area,
                       icon: "/space area.png",
-
                     },
                     {
                       id: 2,
@@ -567,6 +568,16 @@ const ProjectPage: React.FC = () => {
                   <span className=" uppercase text-sm">{t(tab.name)}</span>
                 </button>
               ))}
+              <Link
+                href={`./${projectData?.title}/construction_photos`}
+              >
+                <div className="flex  border-2 items-center gap-2 p-4 px-6 rounded-full  bg-white text-black transition-all duration-300">
+                  <Construction className="w-4 h-4" />
+                  <span className="uppercase text-sm">
+                    {t("constructionphotos")}
+                  </span>
+                </div>
+              </Link>
             </div>
           </div>
 

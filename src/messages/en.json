@@ -74,6 +74,7 @@
     "osama_describe": "Managing financial operations and investment strategies."
   },
   "projects": {
+    "constructionphotos": "Construction Photos",
     "year_built": "Year Built",
     "title": "Our Projects",
     "description": "Explore our diverse portfolio of residential and commercial developments across Egypt.",
@@ -91,4 +92,4 @@
     "title": "Frequently Asked Questions",
     "description": "Find answers to common questions about our projects, services, and real estate development."
   }
-} 
+}

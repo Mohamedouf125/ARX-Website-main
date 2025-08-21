@@ -1,4 +1,30 @@
 {
+  "photoGallery": {
+    "title": "صور البناء",
+    "subtitle": "تصفح صور البناء الخاصة بك",
+    "loading": "جارٍ تحميل صور البناء...",
+    "photosFound": "{count, plural, =0 {لم يتم العثور على صور} =1 {تم العثور على صورة واحدة} =2 {تم العثور على صورتين} other {تم العثور على # صور}}",
+    "imageTitle": "صورة البناء {number}",
+    "noPhotos": {
+      "title": "لا توجد صور بناء متاحة بعد",
+      "subtitle": "ستظهر الصور هنا بمجرد رفعها"
+    },
+    "errors": {
+      "loadFailed": "فشل في تحميل الصور",
+      "loadFailedRetry": "فشل في تحميل الصور. يرجى المحاولة مرة أخرى.",
+      "imageNotAvailable": "الصورة غير متاحة"
+    },
+    "buttons": {
+      "tryAgain": "حاول مرة أخرى",
+      "viewFullSize": "عرض بالحجم الكامل"
+    },
+    "modal": {
+      "closeModal": "إغلاق النافذة",
+      "previousImage": "الصورة السابقة",
+      "nextImage": "الصورة التالية",
+      "imageCounter": "{current} من {total}"
+    }
+  },
   "header": {
     "our-team": "فريقنا",
     "our-services": "خدماتنا",
@@ -160,6 +186,7 @@
     "subscribe_description": "اشترك في نشرتنا الإخبارية الأسبوعية واحصل على التحديثات عبر البريد الإلكتروني"
   },
   "projects": {
+    "constructionphotos": "صور المشاريع",
     "Showing": "عرض",
     "of": "من",
     "features": "ميزات",
