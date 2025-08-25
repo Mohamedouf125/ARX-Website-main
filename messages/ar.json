@@ -95,7 +95,15 @@
     "property_valuation": "تقييم العقار",
     "under_construction": "قيد التطوير"
   },
-  "about": {
+  "test": {
+    "vision_title": "متجرنا",
+    "description": "+40 سنة من",
+    "description2": "رحلة مميزة"
+  },
+  "about": {    
+    "Property Gallery": "معرض العقارات",
+     "Our Services":"خدماتنا",
+        "Take a brief look at some of the services we offer":"عرض بعض الخدمات التي نقدمها",
     "big_cards": {
       "what_we_do": "ما نقوم به",
       "our_impact": "أثرنا",

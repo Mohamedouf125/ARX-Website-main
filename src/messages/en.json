@@ -52,6 +52,9 @@
     "our_videos": "Our New Videos"
   },
   "about": {
+      "property_gallery": "Property Gallery",
+        "Our Services":"Our Services",
+        "Take a brief look at some of the services we offer":"Take a brief look at some of the services we offer",
     "title": "About Us",
     "description": "Discover our journey, mission, and the values that drive us to create exceptional real estate developments.",
     "vision_title": "Our Vision",

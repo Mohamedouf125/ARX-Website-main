@@ -1,6 +1,12 @@
 import React from "react";
 
-const SmallHeadSpan = ({ children }: { children: React.ReactNode }) => {
+// pass color is optional
+interface SmallHeadSpanProps {
+  children: React.ReactNode;
+  color?: string;
+}
+
+const SmallHeadSpan = ({ children, color }: SmallHeadSpanProps) => {
   return (
     <div
       className="mb-5"
@@ -120,7 +126,7 @@ const SmallHeadSpan = ({ children }: { children: React.ReactNode }) => {
                       ].map((item) => (
                         <span
                           key={item.id}
-                          className="text-[14px] font-[700] uppercase tracking-wider"
+                          className={`text-[14px] text-[${color}] font-[700] uppercase tracking-wider`}
                         >
                           {item.title}
                         </span>

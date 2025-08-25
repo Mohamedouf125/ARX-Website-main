@@ -1,30 +1,35 @@
 {
-  "photoGallery": {
-    "title": "Construction Photos",
-    "subtitle": "Browse your construction photos",
-    "loading": "Loading your construction photos...",
-    "photosFound": "{count, plural, =0 {No photos found} =1 {1 photo found} other {# photos found}}",
-    "imageTitle": "Construction Photo {number}",
-    "noPhotos": {
-      "title": "No construction photos available yet",
-      "subtitle": "Photos will appear here once they are uploaded"
+    "photoGallery": {
+        "title": "Construction Photos",
+        "subtitle": "Browse your construction photos",
+        "loading": "Loading your construction photos...",
+        "photosFound": "{count, plural, =0 {No photos found} =1 {1 photo found} other {# photos found}}",
+        "imageTitle": "Construction Photo {number}",
+        "noPhotos": {
+            "title": "No construction photos available yet",
+            "subtitle": "Photos will appear here once they are uploaded"
+        },
+        "errors": {
+            "loadFailed": "Failed to load images",
+            "loadFailedRetry": "Failed to load images. Please try again.",
+            "imageNotAvailable": "Image not available"
+        },
+        "buttons": {
+            "tryAgain": "Try Again",
+            "viewFullSize": "View full size"
+        },
+        "modal": {
+            "closeModal": "Close modal",
+            "previousImage": "Previous image",
+            "nextImage": "Next image",
+            "imageCounter": "{current} of {total}"
+        }
     },
-    "errors": {
-      "loadFailed": "Failed to load images",
-      "loadFailedRetry": "Failed to load images. Please try again.",
-      "imageNotAvailable": "Image not available"
+    "test": {
+        "vision_title": "oue Store",
+        "description": "+40 years of a ",
+        "description2": "remarkable journy"
     },
-    "buttons": {
-      "tryAgain": "Try Again",
-      "viewFullSize": "View full size"
-    },
-    "modal": {
-      "closeModal": "Close modal",
-      "previousImage": "Previous image",
-      "nextImage": "Next image",
-      "imageCounter": "{current} of {total}"
-    }
-  },
     "header": {
         "our_services": "Our Services",
         "core_values": "Core Values",
@@ -97,6 +102,9 @@
         "button": "Get your free quote"
     },
     "about": {
+        "Property Gallery": "Property Gallery",
+        "Our Services":"Our Services",
+        "Take a brief look at some of the services we offer":"Take a brief look at some of the services we offer",
         "title": "About Us",
         "description": "Leading real estate transformation with a clear vision and a purpose-driven mission",
         "vision_title": "VISION",
@@ -135,11 +143,11 @@
     },
     "our_features": {
         "span": "Our Main Focus",
-  "title": {
-    "line1": "Your Premier Destination for Sustainable",
-    "line2": "Real Estate",
-    "line3": "Growth"
-  },
+        "title": {
+            "line1": "Your Premier Destination for Sustainable",
+            "line2": "Real Estate",
+            "line3": "Growth"
+        },
         "page_title": "Our Services",
         "description": "We take immense pride in our commitment to providing unparalleled service excellence to our valued customers.",
         "read_more": "Read More",
@@ -182,7 +190,7 @@
         "subscribe_description": "Subscribe to our weekly newsletter and receive updates via Email"
     },
     "projects": {
-            "constructionphotos": "Construction Photos",
+        "constructionphotos": "Construction Photos",
         "plan": "Plan",
         "Brochure": "Brochure",
         "videos": "Videos",
