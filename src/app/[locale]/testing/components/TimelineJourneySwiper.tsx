@@ -106,8 +106,8 @@ const TimelineSection: React.FC = () => {
 
     // Enhanced zones with gentler transitions
     const fixedZoneStart = sectionTop + viewportHeight * 0.35;
-    const fixedZoneEnd = sectionBottom - viewportHeight * 0.65;
-    const exitTransitionStart = sectionBottom - viewportHeight * 0.9;
+    const fixedZoneEnd = sectionBottom - viewportHeight * 0.4;
+    const exitTransitionStart = sectionBottom - viewportHeight * -0.9;
 
     // Header zones with earlier, gentler timing
     const headerFixedStart = sectionTop + viewportHeight * 0.15;

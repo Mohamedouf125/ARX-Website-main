@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { getData } from "@/libs/axios/server";
@@ -8,7 +8,7 @@ import { getData } from "@/libs/axios/server";
 interface Image {
   id: number;
   src: string;
-  title: string;
+  // title: string;
   date: string;
   month: string;
 }
@@ -18,10 +18,25 @@ interface ApiImage {
   image: string;
 }
 
+interface PaginationData {
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+  from: number;
+  to: number;
+  has_more_pages: boolean;
+  next_page_url: string | null;
+  prev_page_url: string | null;
+}
+
 interface ApiResponse {
   status: boolean;
   msg: string;
-  data: ApiImage[];
+  data: {
+    images: ApiImage[];
+    pagination: PaginationData;
+  };
 }
 
 interface ImageCardProps {
@@ -40,61 +55,99 @@ interface ModalProps {
 }
 
 const PhotoGalleryPage = () => {
-  const t = useTranslations('photoGallery');
+  const t = useTranslations('projects');
   const params = useParams();
   const [currentFilter] = useState<string>("all");
   const [filteredImages, setFilteredImages] = useState<Image[]>([]);
   const [allImages, setAllImages] = useState<Image[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [loadingMore, setLoadingMore] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [hasMorePages, setHasMorePages] = useState<boolean>(false);
+  // const [totalImages, setTotalImages] = useState<number>(0);
   
   // Modal state
   const [modalImage, setModalImage] = useState<Image | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
-  // Extract project ID from URL params
-  const projectId = params?.id as string;
+  // Extract and decode project ID from URL params
+  const rawProjectId = params?.id;
+  const projectId = rawProjectId ? decodeURIComponent(Array.isArray(rawProjectId) ? rawProjectId[0] : rawProjectId) : null;
+
+  // Debug: Log the decoded project ID
+  console.log('Raw Project ID:', rawProjectId);
+  console.log('Decoded Project ID:', projectId);
 
   // Fetch images from API
-  useEffect(() => {
-    const fetchImages = async () => {
-      if (!projectId) return;
-      
-      try {
+  const fetchImages = useCallback(async (page: number = 1, append: boolean = false) => {
+    if (!projectId) {
+      setError(t('errors.noProjectId') || 'No project ID provided');
+      setLoading(false);
+      return;
+    }
+    
+    try {
+      if (page === 1) {
         setLoading(true);
-        setError(null);
-        
-        const response: ApiResponse = await getData(`property-constrication-images/${projectId}`);
-        
-        if (response.status && response.data) {
-          // Transform API data to match our Image interface
-          const transformedImages: Image[] = response.data.map((apiImage, index) => ({
-            id: apiImage.id,
-            src: apiImage.image,
-            title: t('imageTitle', { number: index + 1 }),
-            date: new Date().toLocaleDateString('en-US', { 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            }),
-            month: new Date().toLocaleDateString('en-US', { month: 'long' }).toLowerCase()
-          }));
-          
-          setAllImages(transformedImages);
-        } else {
-          setError(t('errors.loadFailed'));
-        }
-      } catch (err) {
-        console.error("Error fetching images:", err);
-        setError(t('errors.loadFailedRetry'));
-      } finally {
-        setLoading(false);
+      } else {
+        setLoadingMore(true);
       }
-    };
+      setError(null);
+      
+      // Use the decoded project ID for API call with pagination
+      const response: ApiResponse = await getData(`property-constrication-images/${encodeURIComponent(projectId)}?page=${page}`);
+      
+      if (response.status && response.data && response.data.images) {
+        // Transform API data to match our Image interface
+        const transformedImages: Image[] = response.data.images.map((apiImage) => ({
+          id: apiImage.id,
+          src: apiImage.image,
+          // title: t('imageTitle', { number: (page - 1) * (response.data.pagination?.per_page || 10) + index + 1 }) || `Image ${(page - 1) * (response.data.pagination?.per_page || 10) + index + 1}`,
+          date: new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          }),
+          month: new Date().toLocaleDateString('en-US', { month: 'long' }).toLowerCase()
+        }));
+        
+        if (append) {
+          setAllImages(prev => [...prev, ...transformedImages]);
+        } else {
+          setAllImages(transformedImages);
+        }
 
-    fetchImages();
+        // Update pagination info
+        if (response.data.pagination) {
+          setHasMorePages(response.data.pagination.has_more_pages);
+          // setTotalImages(response.data.pagination.total);
+          setCurrentPage(response.data.pagination.current_page);
+        }
+      } else {
+        setError(t('errors.loadFailed') || 'Failed to load images');
+      }
+    } catch (err) {
+      console.error("Error fetching images:", err);
+      setError(t('errors.loadFailedRetry') || 'Failed to load images. Please try again.');
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
   }, [projectId, t]);
+
+  // Handle load more button click
+  const handleLoadMore = () => {
+    if (hasMorePages && !loadingMore) {
+      fetchImages(currentPage + 1, true);
+    }
+  };
+
+  // Initial fetch
+  useEffect(() => {
+    fetchImages(1, false);
+  }, [fetchImages]);
 
   // Filter images based on selected month
   useEffect(() => {
@@ -180,57 +233,59 @@ const PhotoGalleryPage = () => {
         <button
           onClick={onClose}
           className="absolute top-4 right-4 z-10 p-3 text-white hover:text-gray-300 transition-colors  bg-opacity-50 rounded-full hover:bg-opacity-70"
-          aria-label={t('modal.closeModal')}
+          aria-label={t('modal.closeModal') || 'Close modal'}
         >
           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
 
-        {/* Navigation arrows */}
-        {currentIndex > 0 && (
-          <button
-            onClick={onPrev}
-            className="absolute left-4 top-1/2 transform -translate-y-1/2 z-10 p-3 text-white hover:text-gray-300 transition-colors  bg-opacity-50 rounded-full hover:bg-opacity-70"
-            aria-label={t('modal.previousImage')}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-        )}
+        {/* Image container with navigation arrows */}
+        <div className="relative max-w-[95vw] max-h-[95vh] flex flex-col items-center group">
+          <div className="relative">
+            <img
+              src={image.src}
+              // alt={image.title}
+              className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23374151'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23d1d5db'%3E" + encodeURIComponent(t('errors.imageNotAvailable') || 'Image not available') + "%3C/text%3E%3C/svg%3E";
+              }}
+            />
+            
+            {/* Navigation arrows positioned on image edges */}
+            {currentIndex > 0 && (
+              <button
+                onClick={onPrev}
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 z-10 p-2 sm:p-3 bg-[#dba426] text-white hover:text-gray-300 transition-all duration-300  bg-opacity-30 hover:bg-opacity-70 rounded-full opacity-0 group-hover:opacity-100 hover:scale-110"
+                aria-label={t('modal.previousImage') || 'Previous image'}
+              >
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+            )}
 
-        {currentIndex < totalImages - 1 && (
-          <button
-            onClick={onNext}
-            className="absolute right-4 top-1/2 transform -translate-y-1/2 z-10 p-3 text-white hover:text-gray-300 transition-colors  bg-opacity-50 rounded-full hover:bg-opacity-70"
-            aria-label={t('modal.nextImage')}
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        )}
-
-        {/* Image container */}
-        <div className="relative max-w-[95vw] max-h-[95vh] flex flex-col items-center">
-          <img
-            src={image.src}
-            alt={image.title}
-            className="max-w-full max-h-[80vh] object-contain rounded-lg shadow-2xl"
-            onError={(e) => {
-              const target = e.target as HTMLImageElement;
-              target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23374151'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23d1d5db'%3E" + encodeURIComponent(t('errors.imageNotAvailable')) + "%3C/text%3E%3C/svg%3E";
-            }}
-          />
+            {currentIndex < totalImages - 1 && (
+              <button
+                onClick={onNext}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 z-10 p-2 sm:p-3 text-white hover:text-gray-300 transition-all duration-300 bg-[#dba426]  bg-opacity-30 hover:bg-opacity-70 rounded-full opacity-0 group-hover:opacity-100 hover:scale-110"
+                aria-label={t('modal.nextImage') || 'Next image'}
+              >
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            )}
+          </div>
           
           {/* Image info */}
           <div className="mt-4 text-center text-white  bg-opacity-50 px-6 py-3 rounded-lg backdrop-blur-sm">
-            <h3 className="text-lg font-semibold mb-1">{image.title}</h3>
+            {/* <h3 className="text-lg font-semibold mb-1">{image.title}</h3> */}
             <p className="text-sm opacity-80">{image.date}</p>
-            <p className="text-xs opacity-60 mt-1">
-              {t('modal.imageCounter', { current: currentIndex + 1, total: totalImages })}
-            </p>
+            {/* <p className="text-xs opacity-60 mt-1">
+              {t('modal.imageCounter', { current: currentIndex + 1, total: totalImages }) || `${currentIndex + 1} of ${totalImages}`}
+            </p> */}
           </div>
         </div>
 
@@ -238,7 +293,7 @@ const PhotoGalleryPage = () => {
         <div 
           className="absolute inset-0 -z-10" 
           onClick={onClose}
-          aria-label={t('modal.closeModal')}
+          aria-label={t('modal.closeModal') || 'Close modal'}
         />
       </div>
     );
@@ -249,13 +304,13 @@ const PhotoGalleryPage = () => {
       <div className="relative overflow-hidden">
         <img
           src={image.src}
-          alt={image.title}
+          // alt={image.title}
           className="w-full h-48 sm:h-56 lg:h-64 object-cover transition-transform duration-300 group-hover:scale-110 cursor-pointer"
           loading="lazy"
           onClick={() => onOpenModal(image)}
           onError={(e) => {
             const target = e.target as HTMLImageElement;
-            target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%236b7280'%3E" + encodeURIComponent(t('errors.imageNotAvailable')) + "%3C/text%3E%3C/svg%3E";
+            target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='250' viewBox='0 0 400 250'%3E%3Crect width='400' height='250' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%236b7280'%3E" + encodeURIComponent(t('errors.imageNotAvailable') || 'Image not available') + "%3C/text%3E%3C/svg%3E";
           }}
         />
         
@@ -272,7 +327,7 @@ const PhotoGalleryPage = () => {
         <button
           onClick={() => onOpenModal(image)}
           className="absolute top-2 right-2 bg-white bg-opacity-90 hover:bg-opacity-100 text-gray-700 p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0"
-          aria-label={t('buttons.viewFullSize')}
+          aria-label={t('buttons.viewFullSize') || 'View full size'}
         >
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
@@ -282,7 +337,7 @@ const PhotoGalleryPage = () => {
       
       <div className="p-3 sm:p-4 lg:p-5">
         <h3 className="text-lg sm:text-xl font-semibold mb-1 sm:mb-2 line-clamp-1 text-gray-800">
-          {image.title}
+          {/* {image.title} */}
         </h3>
         <p className="text-xs sm:text-sm text-gray-600 mb-2">{image.date}</p>
         <span className="inline-block bg-gray-100 px-2 sm:px-3 py-1 rounded-full text-xs font-medium text-gray-700">
@@ -299,11 +354,16 @@ const PhotoGalleryPage = () => {
         <div className="max-w-7xl mx-auto pt-[clamp(7rem,7vw,6rem)] relative z-10">
           <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-2">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 text-gray-800">
-              📸 {t('title')}
+              📸 {t('title') || 'Photo Gallery'}
             </h1>
+            {projectId && (
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-600">
+                {projectId}
+              </h2>
+            )}
             <div className="w-24 h-1 bg-gray-300 mx-auto mb-4 rounded-full"></div>
             <p className="text-sm sm:text-base lg:text-lg text-gray-600 font-medium">
-              {t('loading')}
+              {t('loading') || 'Loading...'}
             </p>
           </div>
           
@@ -332,8 +392,13 @@ const PhotoGalleryPage = () => {
         <div className="max-w-7xl mx-auto pt-[clamp(7rem,7vw,6rem)] relative z-10">
           <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-2">
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 text-gray-800">
-              📸 {t('title')}
+              📸 {t('title') || 'Photo Gallery'}
             </h1>
+            {projectId && (
+              <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-600">
+                {projectId}
+              </h2>
+            )}
             <div className="w-24 h-1 bg-gray-300 mx-auto mb-4 rounded-full"></div>
           </div>
           
@@ -341,10 +406,14 @@ const PhotoGalleryPage = () => {
             <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">⚠️</div>
             <p className="mb-4">{error}</p>
             <button 
-              onClick={() => window.location.reload()} 
+              onClick={() => {
+                setCurrentPage(1);
+                setAllImages([]);
+                fetchImages(1, false);
+              }} 
               className="bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors"
             >
-              {t('buttons.tryAgain')}
+              {t('buttons.tryAgain') || 'Try Again'}
             </button>
           </div>
         </div>
@@ -363,35 +432,83 @@ const PhotoGalleryPage = () => {
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8 lg:mb-10 px-2">
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2 sm:mb-4 text-gray-800">
-            📸 {t('title')}
+            📸 {t('title') || 'Photo Gallery'}
           </h1>
+          {/* Show decoded project name */}
+          {projectId && (
+            <h2 className="text-xl sm:text-2xl font-semibold mb-4 text-gray-600">
+              {projectId}
+            </h2>
+          )}
           <div className="w-24 h-1 bg-gray-300 mx-auto mb-4 rounded-full"></div>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 font-medium">
-            {allImages.length > 0 
-              ? t('photosFound', { count: allImages.length })
-              : t('subtitle')
-            }
-          </p>
+          
         </div>
 
         {/* Gallery */}
         {filteredImages.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
-            {filteredImages.map((image, index) => (
-              <div
-                key={image.id}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 100}ms` }}
-              >
-                <ImageCard image={image} onOpenModal={openModal} />
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-3 sm:gap-4 lg:gap-6">
+              {filteredImages.map((image, index) => (
+                <div
+                  key={image.id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${(index % 20) * 100}ms` }}
+                >
+                  <ImageCard image={image} onOpenModal={openModal} />
+                </div>
+              ))}
+            </div>
+
+            {/* Load More Button */}
+            {hasMorePages && (
+              <div className="flex justify-center mt-8 sm:mt-12">
+                <button
+                  onClick={handleLoadMore}
+                  disabled={loadingMore}
+                  className={`
+                    inline-flex items-center px-6 sm:px-8 py-3 sm:py-4 
+                    text-sm sm:text-base font-semibold rounded-full 
+                    transition-all duration-300 shadow-lg hover:shadow-xl
+                    ${loadingMore 
+                      ? 'bg-gray-400 text-white cursor-not-allowed' 
+                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white hover:scale-105 transform'
+                    }
+                  `}
+                >
+                  {loadingMore ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
+                      {t('loadingMore') || 'Loading more...'}
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                      {t('loadMore') || 'Load More Photos'}
+                    </>
+                  )}
+                </button>
               </div>
-            ))}
-          </div>
+            )}
+
+            {/* All loaded message */}
+            {!hasMorePages && allImages.length > 0 && (
+              <div className="text-center hidden mt-8 sm:mt-12">
+                <div className="inline-flex items-center px-6 py-3 bg-green-100 text-green-800 rounded-full text-sm font-medium">
+                  <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  {t('allPhotosLoaded') || 'All photos loaded'}
+                </div>
+              </div>
+            )}
+          </>
         ) : (
           <div className="text-center text-gray-600 text-lg sm:text-xl mt-8 sm:mt-12 px-4">
             <div className="text-4xl sm:text-6xl mb-3 sm:mb-4">📷</div>
-            <p>{t('noPhotos.title')}</p>
-            <p className="text-sm mt-2 opacity-75">{t('noPhotos.subtitle')}</p>
+            <p>{t('noPhotos.title') || 'No photos available yet'}</p>
+            <p className="text-sm mt-2 opacity-75">{t('noPhotos.subtitle') || 'Check back later for updates'}</p>
           </div>
         )}
       </div>

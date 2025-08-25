@@ -103,8 +103,8 @@
     },
     "about": {
         "Property Gallery": "Property Gallery",
-        "Our Services":"Our Services",
-        "Take a brief look at some of the services we offer":"Take a brief look at some of the services we offer",
+        "Our Services": "Our Services",
+        "Take a brief look at some of the services we offer": "Take a brief look at some of the services we offer",
         "title": "About Us",
         "description": "Leading real estate transformation with a clear vision and a purpose-driven mission",
         "vision_title": "VISION",
@@ -190,6 +190,7 @@
         "subscribe_description": "Subscribe to our weekly newsletter and receive updates via Email"
     },
     "projects": {
+        "loadMore": "Load More",
         "constructionphotos": "Construction Photos",
         "plan": "Plan",
         "Brochure": "Brochure",
