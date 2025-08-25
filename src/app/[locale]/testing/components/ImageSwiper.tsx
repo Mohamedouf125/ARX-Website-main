@@ -7,7 +7,7 @@ interface ImageType {
   alt: string;
 }
 
-const SwiperImage = () => {
+const PropertySwiper = () => {
   const [expandedImage, setExpandedImage] = useState<number | null>(1);
 
   const images: ImageType[] = [
@@ -126,4 +126,4 @@ const SwiperImage = () => {
   );
 };
 
-export default SwiperImage;
+export default PropertySwiper;

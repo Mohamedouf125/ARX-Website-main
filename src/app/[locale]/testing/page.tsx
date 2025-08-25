@@ -12,7 +12,7 @@ import { AxiosHeaders } from "axios";
 import LeasingApplicationForm from "./components/LeasingApplicationForm";
 import TimelineJourneySwiper from "./components/TimelineJourneySwiper";
 import ServiceCard from "./components/projects"; // Import the new reusable component
-import SwiperImage from "./components/ImageSwiper";
+import PropertySwiper from "./components/ImageSwiper";
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -236,7 +236,7 @@ const AboutPage = () => {
         <TimelineJourneySwiper />
       </div>
       {/*  */}
-      <SwiperImage />
+      <PropertySwiper />
       <section className="w-full h-full ">
         <LeasingApplicationForm />
       </section>
