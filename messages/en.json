@@ -190,6 +190,10 @@
         "subscribe_description": "Subscribe to our weekly newsletter and receive updates via Email"
     },
     "projects": {
+        "noPhotos": {
+            "title": "No Photos",
+            "subtitle": "No photos available for this project"
+        },
         "loadMore": "Load More",
         "constructionphotos": "Construction Photos",
         "plan": "Plan",

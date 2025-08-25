@@ -569,7 +569,7 @@ const ProjectPage: React.FC = () => {
                 </button>
               ))}
               <Link
-                href={`./${projectData?.title}/construction_photos`}
+                href={`./${projectData?.slug}/construction_photos`}
               >
                 <div className="flex  border-2 items-center gap-2 p-4 px-6 rounded-full  bg-white text-black transition-all duration-300">
                   <Construction className="w-4 h-4" />
