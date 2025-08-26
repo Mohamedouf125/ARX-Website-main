@@ -40,6 +40,7 @@ export default async function Home({
 
   return (
     <div>
+      
       <Hero banners={HomeData?.sliders} />
       <WhoWeAre bannerWho={HomeData?.bannerWho?.image} />
       <AboutHome bannerAbout={HomeData?.bannerAbout?.image} />
