@@ -95,5 +95,89 @@
   "faqs": {
     "title": "الأسئلة الشائعة",
     "description": "اعثر على إجابات للأسئلة الشائعة حول مشاريعنا وخدماتنا والتطوير العقاري."
+  },
+  "title": "طلب إستئجار موقع",
+  "successMessage": "تم إرسال الطلب بنجاح!",
+  "errorMessage": "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.",
+  "submit": "إرسال الطلب",
+  "submitting": "جاري المعالجة...",
+
+  "sections": {
+    "companyInfo": "معلومات الشركة",
+    "contactPerson": "الشخص المسؤول",
+    "brandInfo": "معلومات العلامة التجارية",
+    "businessCategories": "تصنيف النشاط",
+    "targetMarket": "السوق المستهدف",
+    "locationInfo": "معلومات الموقع",
+    "requiredDocuments": "الوثائق المطلوبة"
+  },
+
+  "fields": {
+    "companyName": "إسم الشركة",
+    "website": "الموقع الإلكتروني",
+    "postalAddress": "العنوان البريدي",
+    "phone": "التليفون",
+    "fax": "الفاكس",
+    "responsiblePerson": "إسم المسئول",
+    "position": "الوظيفة",
+    "mobile": "الموبايل",
+    "email": "البريد الإلكتروني",
+    "agencyBrandName": "إسم الوكالة / العلامة التجارية",
+    "franchiseOwner": "هل أنتم أصحاب الإمتياز؟",
+    "countryOfOrigin": "بلد المنشأ",
+    "branchesInEgypt": "عدد الفروع داخل مصر ومواقعها",
+    "branchesOutsideEgypt": "عدد الفروع خارج مصر ومواقعها",
+    "furniture": "مفروشات / أجهزة",
+    "services": "خدمات",
+    "others": "أخرى",
+    "productPrice": "سعر المنتج",
+    "targetedCustomers": "الشريحة المستهدفة",
+    "customerIncome": "فئة دخل الشريحة المستهدفة",
+    "requiredLocation": "الموقع المطلوب (اسم المول)",
+    "shopNo": "محل رقم",
+    "floorNo": "رقم الدور",
+    "areaNo": "منطقة رقم",
+    "requiredArea": "المساحة المطلوبة (م²)",
+    "otherConditions": "شروط خاصة بالمحل"
+  },
+
+  "options": {
+    "select": "اختر",
+    "yes": "نعم",
+    "no": "لا",
+    "low": "منخفض",
+    "average": "متوسط",
+    "high": "مرتفع",
+    "aboveAverage": "فوق المتوسط"
+  },
+
+  "categories": {
+    "clothes": "أزياء",
+    "accessories": "إكسسوارات",
+    "shoesLeather": "أحذية وجلديات",
+    "jewellsWatches": "مجوهرات وساعات",
+    "jewellsWatches_en": "Jewels & Watches",
+    "women": "نسائي",
+    "women_en": "Women",
+    "gents": "رجالي",
+    "gents_en": "Gents",
+    "kids": "أطفال",
+    "kids_en": "Kids",
+    "family": "عائلي",
+    "family_en": "Family"
+  },
+
+  "placeholders": {
+    "specify": "من فضلك حدد...",
+    "anyRequirements": "أي متطلبات خاصة..."
+  },
+
+  "documents": {
+    "companyProfile": "ملف الشركة",
+    "companyProfileDesc": "Company's Profile",
+    "brandPresentation": "ملف الوكالة / العلامة التجارية",
+    "brandPresentationDesc": "Brand Presentation",
+    "shopPhotos": "صور من المحلات الحالية",
+    "shopPhotosDesc": "Shop Photos"
   }
 }

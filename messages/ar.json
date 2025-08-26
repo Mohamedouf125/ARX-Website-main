@@ -404,5 +404,89 @@
     "footer_address": "برج المنصورة، شارع الجيش - تقاطع شارع الشريف الرضي",
     "footer_address_2": "دمياط الجديدة، الحي الثالث، شارع 15",
     "footer_address_3": "القاهرة الجديدة - شارع 90، مبنى توب 90"
+  },
+  "LeasingApplicationForm": {
+    "title": "طلب إستئجار موقع",
+    "subtitle": "Leasing Application Form",
+    "sections": {
+      "companyInformation": "معلومات الشركة",
+      "contactPerson": "الشخص المسؤول",
+      "brandInformation": "معلومات العلامة التجارية",
+      "businessCategories": "تصنيف النشاط",
+      "targetMarket": "السوق المستهدف",
+      "locationInformation": "معلومات الموقع",
+      "requiredDocuments": "الوثائق المطلوبة"
+    },
+    "placeholders": {
+      "companyName": "إسم الشركة",
+      "postalAddress": "العنوان البريدي",
+      "website": "الموقع الإلكتروني",
+      "phone": "التليفون",
+      "fax": "الفاكس",
+      "responsiblePerson": "إسم المسئول",
+      "position": "الوظيفة",
+      "mobile": "الموبايل",
+      "email": "البريد الإلكتروني",
+      "agencyBrandName": "إسم الوكالة / العلامة التجارية",
+      "franchiseOwner": "هل انتم أصحاب الإمتياز؟",
+      "countryOfOrigin": "بلد المنشأ",
+      "branchesInEgypt": "عدد الفروع داخل مصر ومواقعها",
+      "branchesOutsideEgypt": "عدد الفروع خارج مصر ومواقعها",
+      "furniture": "مفروشات / أجهزة",
+      "services": "خدمات",
+      "others": "أخرى",
+      "requiredLocation": "الموقع المطلوب (اسم المول)",
+      "shopNo": "محل رقم",
+      "floorNo": "رقم الدور",
+      "areaNo": "منطقة رقم",
+      "requiredArea": "المساحة المطلوبة (م²)",
+      "otherConditions": "شروط خاصة بالمحل"
+    },
+    "categories": {
+      "clothes": "أزياء",
+      "accessories": "إكسسوارات",
+      "shoesLeather": "أحذية وجلديات",
+      "perfumesBeauty": "عطور وتجميل",
+      "restaurants": "مطاعم",
+      "jewellsWatches": "مجوهرات وساعات",
+      "furniture": "مفروشات / أجهزة",
+      "services": "خدمات",
+      "others": "أخرى"
+    },
+    "subcategories": {
+      "women": "نسائي",
+      "gents": "رجالي",
+      "kids": "أطفال",
+      "family": "عائلي"
+    },
+    "options": {
+      "yes": "نعم",
+      "no": "لا",
+      "low": "منخفض",
+      "average": "متوسط",
+      "high": "مرتفع",
+      "aboveAverage": "فوق المتوسط"
+    },
+    "labels": {
+      "productPrice": "سعر المنتج",
+      "targetedCustomers": "الشريحة المستهدفة",
+      "customerIncome": "فئة دخل الشريحة المستهدفة"
+    },
+    "documents": {
+      "companyProfile": "ملف الشركة",
+      "brandPresentation": "ملف الوكالة / العلامة التجارية",
+      "shopPhotos": "صور من المحلات الحالية"
+    },
+    "buttons": {
+      "submit": "إرسال الطلب",
+      "processing": "جاري المعالجة..."
+    },
+    "footer": {
+      "note": "يرجى التأكد من ملء جميع الحقول المطلوبة"
+    },
+    "messages": {
+      "submitSuccess": "تم تقديم الطلب بنجاح!",
+      "submitError": "خطأ في إرسال الطلب. يرجى المحاولة مرة أخرى."
+    }
   }
 }

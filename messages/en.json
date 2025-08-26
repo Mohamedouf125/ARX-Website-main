@@ -400,5 +400,89 @@
         "footer_address": "Mansoura Tower,El-Geish Street-Intersection of El-Sherif El-Radi",
         "footer_address_2": "New Damietta, Third District, Street 15",
         "footer_address_3": "New Cairo-st 90, Top 90 Building"
+    },
+  "LeasingApplicationForm": {
+    "title": "Leasing Application Form",
+    "subtitle": "طلب إستئجار موقع",
+    "sections": {
+      "companyInformation": "Company Information",
+      "contactPerson": "Contact Person",
+      "brandInformation": "Brand Information",
+      "businessCategories": "Business Categories",
+      "targetMarket": "Target Market",
+      "locationInformation": "Location Information",
+      "requiredDocuments": "Required Documents"
+    },
+    "placeholders": {
+      "companyName": "Company Name",
+      "postalAddress": "Postal Address",
+      "website": "Website",
+      "phone": "Phone",
+      "fax": "Fax",
+      "responsiblePerson": "Responsible Person",
+      "position": "Position",
+      "mobile": "Mobile",
+      "email": "Email",
+      "agencyBrandName": "Agency / Brand Name",
+      "franchiseOwner": "Franchise Owner?",
+      "countryOfOrigin": "Country of Origin",
+      "branchesInEgypt": "Branches in Egypt",
+      "branchesOutsideEgypt": "Branches Outside Egypt",
+      "furniture": "Furniture",
+      "services": "Services",
+      "others": "Others",
+      "requiredLocation": "Required Location (Mall Name)",
+      "shopNo": "Shop No.",
+      "floorNo": "Floor No.",
+      "areaNo": "Area No.",
+      "requiredArea": "Required Area (m²)",
+      "otherConditions": "Other Conditions"
+    },
+    "categories": {
+      "clothes": "Clothes",
+      "accessories": "Accessories",
+      "shoesLeather": "Shoes & Leather",
+      "perfumesBeauty": "Perfumes & Beauty",
+      "restaurants": "Restaurants",
+      "jewellsWatches": "Jewells & Watches",
+      "furniture": "Furniture",
+      "services": "Services",
+      "others": "Others"
+    },
+    "subcategories": {
+      "women": "Women",
+      "gents": "Gents",
+      "kids": "Kids",
+      "family": "Family"
+    },
+    "options": {
+      "yes": "Yes",
+      "no": "No",
+      "low": "Low",
+      "average": "Average",
+      "high": "High",
+      "aboveAverage": "Above Average"
+    },
+    "labels": {
+      "productPrice": "Product Price",
+      "targetedCustomers": "Targeted Customers",
+      "customerIncome": "Income Level"
+    },
+    "documents": {
+      "companyProfile": "Company's Profile",
+      "brandPresentation": "Brand Presentation",
+      "shopPhotos": "Shop Photos"
+    },
+    "buttons": {
+      "submit": "Submit Application",
+      "processing": "Processing..."
+    },
+    "footer": {
+      "note": "Please ensure all required fields are completed"
+    },
+    "messages": {
+      "submitSuccess": "Application submitted successfully!",
+      "submitError": "Error submitting application. Please try again."
     }
+  }
 }

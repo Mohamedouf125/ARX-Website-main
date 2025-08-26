@@ -2,6 +2,7 @@
 
 import { AnimatedElement } from '../../../../components/animations/AnimationType'; // Updated import
 import React, { useState, FormEvent } from 'react';
+import { useTranslations } from 'next-intl';
 
 // Form Types
 interface CategoryOptions {
@@ -48,11 +49,11 @@ interface FormData {
 
 interface CategoryItem {
   key: keyof CategoryOptions;
-  arLabel: string;
-  enLabel: string;
+  labelKey: string;
 }
 
 const ModernLeasingForm: React.FC = () => {
+  const t = useTranslations('LeasingApplicationForm');
   const [formData, setFormData] = useState<FormData>({
     companyName: '',
     postalAddress: '',
@@ -118,20 +119,20 @@ const ModernLeasingForm: React.FC = () => {
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
       console.log('Form submitted:', formData);
-      alert('Application submitted successfully!');
+      alert(t('messages.submitSuccess'));
     } catch (error) {
       console.error('Submission error:', error);
-      alert('Error submitting application. Please try again.');
+      alert(t('messages.submitError'));
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const categoryItems: CategoryItem[] = [
-    { key: 'women', arLabel: 'نسائي', enLabel: 'Women' },
-    { key: 'gents', arLabel: 'رجالي', enLabel: 'Gents' },
-    { key: 'kids', arLabel: 'أطفال', enLabel: 'Kids' },
-    { key: 'family', arLabel: 'عائلي', enLabel: 'Family' }
+    { key: 'women', labelKey: 'subcategories.women' },
+    { key: 'gents', labelKey: 'subcategories.gents' },
+    { key: 'kids', labelKey: 'subcategories.kids' },
+    { key: 'family', labelKey: 'subcategories.family' }
   ];
 
   return (
@@ -142,10 +143,9 @@ const ModernLeasingForm: React.FC = () => {
         <AnimatedElement type="fadeIn" delay={0.2} duration={0.8}>
           <div className="text-center mb-10">
             <h1 className="text-3xl font-bold text-gray-900 mb-2" dir="rtl">
-              طلب إستئجار موقع
+              {t('title')}
             </h1>
-            <p className="text-lg text-gray-600">Leasing Application Form</p>
-            <div className="mt-4 h-1 w-20 bg-[#DBA426] rounded-full mx-auto"></div>
+            <div className="mt-4 h-1 w-20 bg-yellow-600 rounded-full mx-auto"></div>
           </div>
         </AnimatedElement>
 
@@ -155,7 +155,7 @@ const ModernLeasingForm: React.FC = () => {
           <AnimatedElement type="slideRight" delay={0.3} duration={0.6}>
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                Company Information / معلومات الشركة
+                {t('sections.companyInformation')} 
               </h3>
 
               <div className="grid md:grid-cols-2 gap-6">
@@ -164,8 +164,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="text"
                     value={formData.companyName}
                     onChange={(e) => handleInputChange('companyName', e.target.value)}
-                    placeholder="إسم الشركة / Company Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.companyName')}`}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
                   />
                 </div>
@@ -175,8 +175,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="url"
                     value={formData.website}
                     onChange={(e) => handleInputChange('website', e.target.value)}
-                    placeholder="الموقع الإلكتروني / Website"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.website')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   />
                 </div>
 
@@ -185,8 +185,8 @@ const ModernLeasingForm: React.FC = () => {
                     value={formData.postalAddress}
                     onChange={(e) => handleInputChange('postalAddress', e.target.value)}
                     rows={3}
-                    placeholder="العنوان البريدي / Postal Address"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right resize-none"
+                    placeholder={`${t('placeholders.postalAddress')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right resize-none"
                     required
                   />
                 </div>
@@ -196,8 +196,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
-                    placeholder="التليفون / Phone"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.phone')}`}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
                   />
                 </div>
@@ -207,8 +207,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="tel"
                     value={formData.fax}
                     onChange={(e) => handleInputChange('fax', e.target.value)}
-                    placeholder="الفاكس / Fax"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.fax')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   />
                 </div>
               </div>
@@ -219,7 +219,7 @@ const ModernLeasingForm: React.FC = () => {
           <AnimatedElement type="slideLeft" delay={0.3} duration={0.6}>
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                Contact Person / الشخص المسؤول
+                {t('sections.contactPerson')}
               </h3>
 
               <div className="grid md:grid-cols-2 gap-6">
@@ -228,8 +228,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="text"
                     value={formData.responsiblePerson}
                     onChange={(e) => handleInputChange('responsiblePerson', e.target.value)}
-                    placeholder="إسم المسئول / Responsible Person"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.responsiblePerson')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
                   />
                 </div>
@@ -239,8 +239,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="text"
                     value={formData.position}
                     onChange={(e) => handleInputChange('position', e.target.value)}
-                    placeholder="الوظيفة / Position"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.position')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
                   />
                 </div>
@@ -250,8 +250,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="tel"
                     value={formData.mobile}
                     onChange={(e) => handleInputChange('mobile', e.target.value)}
-                    placeholder="الموبايل / Mobile"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.mobile')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
                   />
                 </div>
@@ -261,8 +261,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="email"
                     value={formData.email}
                     onChange={(e) => handleInputChange('email', e.target.value)}
-                    placeholder="البريد الإلكتروني / Email"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.email')}`}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
                   />
                 </div>
@@ -274,7 +274,7 @@ const ModernLeasingForm: React.FC = () => {
           <AnimatedElement type="slideUp" delay={0.4} duration={0.6}>
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                Brand Information / معلومات العلامة التجارية
+                {t('sections.brandInformation')}
               </h3>
 
               <div className="space-y-6">
@@ -283,8 +283,8 @@ const ModernLeasingForm: React.FC = () => {
                     type="text"
                     value={formData.agencyBrandName}
                     onChange={(e) => handleInputChange('agencyBrandName', e.target.value)}
-                    placeholder="إسم الوكالة / العلامة التجارية / Agency / Brand Name"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.agencyBrandName')}`}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
                   />
                 </div>
@@ -294,12 +294,12 @@ const ModernLeasingForm: React.FC = () => {
                     <select
                       value={formData.franchiseOwner}
                       onChange={(e) => handleInputChange('franchiseOwner', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:[#DBA426] focus:border-transparent text-right"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                       required
                     >
-                      <option value="">هل انتم أصحاب الإمتياز؟ / Franchise Owner?</option>
-                      <option value="yes">نعم / Yes</option>
-                      <option value="no">لا / No</option>
+                      <option value="">{t('placeholders.franchiseOwner')}</option>
+                      <option value="yes">{t('options.yes')} </option>
+                      <option value="no">{t('options.no')}</option>
                     </select>
                   </div>
 
@@ -308,8 +308,8 @@ const ModernLeasingForm: React.FC = () => {
                       type="text"
                       value={formData.countryOfOrigin}
                       onChange={(e) => handleInputChange('countryOfOrigin', e.target.value)}
-                      placeholder="بلد المنشأ / Country of Origin"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring[#DBA426] focus:border-transparent text-right"
+                      placeholder={`${t('placeholders.countryOfOrigin')}`}
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                       required
                     />
                   </div>
@@ -320,8 +320,8 @@ const ModernLeasingForm: React.FC = () => {
                     value={formData.branchesInEgypt}
                     onChange={(e) => handleInputChange('branchesInEgypt', e.target.value)}
                     rows={2}
-                    placeholder="عدد الفروع داخل مصر ومواقعها / Branches in Egypt"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right resize-none"
+                    placeholder={`${t('placeholders.branchesInEgypt')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right resize-none"
                   />
                 </div>
 
@@ -330,8 +330,8 @@ const ModernLeasingForm: React.FC = () => {
                     value={formData.branchesOutsideEgypt}
                     onChange={(e) => handleInputChange('branchesOutsideEgypt', e.target.value)}
                     rows={2}
-                    placeholder="عدد الفروع خارج مصر ومواقعها / Branches Outside Egypt"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right resize-none"
+                    placeholder={`${t('placeholders.branchesOutsideEgypt')}`}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right resize-none"
                   />
                 </div>
               </div>
@@ -342,26 +342,26 @@ const ModernLeasingForm: React.FC = () => {
           <AnimatedElement type="slideRight" delay={0.4} duration={0.6}>
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                Business Categories / تصنيف النشاط
+                {t('sections.businessCategories')}
               </h3>
 
               <div className="space-y-8">
                 {/* Clothes */}
                 <div>
                   <h4 className="text-md font-medium text-gray-800 mb-4">
-                    <span dir="rtl">أزياء</span> / Clothes
+                    {t('categories.clothes')}
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {categoryItems.map(item => (
-                      <label key={item.key} className="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-orange-50">
+                      <label key={item.key} className={`flex items-center cursor-pointer p-3 rounded-lg border ${formData.clothes[item.key] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
                         <input
                           type="checkbox"
                           checked={formData.clothes[item.key]}
                           onChange={(e) => handleCategoryChange('clothes', item.key, e.target.checked)}
-                          className="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
+                          className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
                         />
                         <span className="ml-3 text-sm font-medium">
-                          <span dir="rtl">{item.arLabel}</span> / {item.enLabel}
+                          {t(item.labelKey)} 
                         </span>
                       </label>
                     ))}
@@ -371,19 +371,19 @@ const ModernLeasingForm: React.FC = () => {
                 {/* Accessories */}
                 <div>
                   <h4 className="text-md font-medium text-gray-800 mb-4">
-                    <span dir="rtl">إكسسوارات</span> / Accessories
+                    {t('categories.accessories')}
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {categoryItems.map(item => (
-                      <label key={item.key} className="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-orange-50">
+                      <label key={item.key} className={`flex items-center cursor-pointer p-3 rounded-lg border ${formData.accessories[item.key] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
                         <input
                           type="checkbox"
                           checked={formData.accessories[item.key]}
                           onChange={(e) => handleCategoryChange('accessories', item.key, e.target.checked)}
-                          className="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
+                          className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
                         />
                         <span className="ml-3 text-sm font-medium">
-                          <span dir="rtl">{item.arLabel}</span> / {item.enLabel}
+                          {t(item.labelKey)}
                         </span>
                       </label>
                     ))}
@@ -393,19 +393,19 @@ const ModernLeasingForm: React.FC = () => {
                 {/* Shoes & Leather */}
                 <div>
                   <h4 className="text-md font-medium text-gray-800 mb-4">
-                    <span dir="rtl">أحذية وجلديات</span> / Shoes & Leather
+                    {t('categories.shoesLeather')} 
                   </h4>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                     {categoryItems.map(item => (
-                      <label key={item.key} className="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-orange-50">
+                      <label key={item.key} className={`flex items-center cursor-pointer p-3 rounded-lg border ${formData.shoesLeather[item.key] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
                         <input
                           type="checkbox"
                           checked={formData.shoesLeather[item.key]}
                           onChange={(e) => handleCategoryChange('shoesLeather', item.key, e.target.checked)}
-                          className="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
+                          className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
                         />
                         <span className="ml-3 text-sm font-medium">
-                          <span dir="rtl">{item.arLabel}</span> / {item.enLabel}
+                          {t(item.labelKey)} 
                         </span>
                       </label>
                     ))}
@@ -414,39 +414,15 @@ const ModernLeasingForm: React.FC = () => {
 
                 {/* Other Categories */}
                 <div className="grid md:grid-cols-3 gap-6 pt-4 border-t border-gray-200">
-                  <label className="flex items-center cursor-pointer p-4 bg-gray-50 rounded-xl hover:bg-orange-50">
-                    <input
-                      type="checkbox"
-                      checked={formData.perfumesBeauty}
-                      onChange={(e) => handleInputChange('perfumesBeauty', e.target.checked)}
-                      className="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
-                    />
-                    <span className="ml-3 text-sm font-medium">
-                      <span dir="rtl">عطور وتجميل</span> / Perfumes & Beauty
-                    </span>
-                  </label>
-
-                  <label className="flex items-center cursor-pointer p-4 bg-gray-50 rounded-xl hover:bg-orange-50">
-                    <input
-                      type="checkbox"
-                      checked={formData.restaurants}
-                      onChange={(e) => handleInputChange('restaurants', e.target.checked)}
-                      className="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
-                    />
-                    <span className="ml-3 text-sm font-medium">
-                      <span dir="rtl">مطاعم</span> / Restaurants
-                    </span>
-                  </label>
-
-                  <label className="flex items-center cursor-pointer p-4 bg-gray-50 rounded-xl hover:bg-orange-50">
+                  <label className={`flex items-center cursor-pointer p-4 rounded-xl border ${formData.jewellsWatches ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
                     <input
                       type="checkbox"
                       checked={formData.jewellsWatches}
                       onChange={(e) => handleInputChange('jewellsWatches', e.target.checked)}
-                      className="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500"
+                      className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
                     />
                     <span className="ml-3 text-sm font-medium">
-                      <span dir="rtl">مجوهرات وساعات</span> / Jewells & Watches
+                      {t('categories.jewellsWatches')} 
                     </span>
                   </label>
                 </div>
@@ -457,22 +433,22 @@ const ModernLeasingForm: React.FC = () => {
                     type="text"
                     value={formData.furniture}
                     onChange={(e) => handleInputChange('furniture', e.target.value)}
-                    placeholder="مفروشات / أجهزة / Furniture"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426]  focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.furniture')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   />
                   <input
                     type="text"
                     value={formData.services}
                     onChange={(e) => handleInputChange('services', e.target.value)}
-                    placeholder="خدمات / Services"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.services')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   />
                   <input
                     type="text"
                     value={formData.others}
                     onChange={(e) => handleInputChange('others', e.target.value)}
-                    placeholder="أخرى / Others"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#DBA426] focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.others')}`}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   />
                 </div>
               </div>
@@ -483,31 +459,31 @@ const ModernLeasingForm: React.FC = () => {
           <AnimatedElement type="slideLeft" delay={0.4} duration={0.6}>
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                Target Market / السوق المستهدف
+                {t('sections.targetMarket')}
               </h3>
 
               {/* Product Price */}
               <div className="mb-6">
                 <h4 className="text-md font-medium text-gray-800 mb-4">
-                  <span dir="rtl">سعر المنتج</span> / Product Price
+                  {t('labels.productPrice')} 
                 </h4>
                 <div className="grid grid-cols-3 gap-4">
                   {[
-                    { value: 'low', arLabel: 'منخفض', enLabel: 'Low' },
-                    { value: 'average', arLabel: 'متوسط', enLabel: 'Average' },
-                    { value: 'high', arLabel: 'مرتفع', enLabel: 'High' }
+                    { value: 'low', labelKey: 'options.low' },
+                    { value: 'average', labelKey: 'options.average' },
+                    { value: 'high', labelKey: 'options.high' }
                   ].map(item => (
-                    <label key={item.value} className={`flex items-center cursor-pointer p-4 rounded-xl border ${formData.productPrice === item.value ? 'border-[#DBA426] bg-[#FDF6E3]' : 'border-gray-200 hover:border-[#DBA426]'}`}>
+                    <label key={item.value} className={`flex items-center cursor-pointer p-4 rounded-xl border ${formData.productPrice === item.value ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
                       <input
                         type="radio"
                         name="productPrice"
                         value={item.value}
                         checked={formData.productPrice === item.value}
                         onChange={(e) => handleInputChange('productPrice', e.target.value)}
-                        className="w-4 h-4 text-teal-600 border-gray-300 focus:ring-[#DBA426]"
+                        className="w-4 h-4 text-yellow-600 border-gray-300 focus:ring-yellow-500 focus:ring-offset-1"
                       />
                       <span className="ml-3 text-sm font-medium">
-                        <span dir="rtl">{item.arLabel}</span> / {item.enLabel}
+                        {t(item.labelKey)} 
                       </span>
                     </label>
                   ))}
@@ -517,19 +493,19 @@ const ModernLeasingForm: React.FC = () => {
               {/* Targeted Customers */}
               <div className="mb-6">
                 <h4 className="text-md font-medium text-gray-800 mb-4">
-                  <span dir="rtl">الشريحة المستهدفة</span> / Targeted Customers
+                  {t('labels.targetedCustomers')}
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   {categoryItems.map(item => (
-                    <label key={item.key} className="flex items-center cursor-pointer p-3 bg-gray-50 rounded-lg hover:bg-teal-50">
+                    <label key={item.key} className={`flex items-center cursor-pointer p-3 rounded-lg border ${formData.targetedCustomers[item.key] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
                       <input
                         type="checkbox"
                         checked={formData.targetedCustomers[item.key]}
                         onChange={(e) => handleCategoryChange('targetedCustomers', item.key, e.target.checked)}
-                        className="w-4 h-4 text-teal-600 border-gray-300 rounded focus:ring-teal-500"
+                        className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
                       />
                       <span className="ml-3 text-sm font-medium">
-                        <span dir="rtl">{item.arLabel}</span> / {item.enLabel}
+                        {t(item.labelKey)}
                       </span>
                     </label>
                   ))}
@@ -539,25 +515,25 @@ const ModernLeasingForm: React.FC = () => {
               {/* Customer Income */}
               <div>
                 <h4 className="text-md font-medium text-gray-800 mb-4">
-                  <span dir="rtl">فئة دخل الشريحة المستهدفة</span> / Income Level
+                  {t('labels.customerIncome')}
                 </h4>
                 <div className="grid grid-cols-3 gap-4">
                   {[
-                    { value: 'average', arLabel: 'متوسط', enLabel: 'Average' },
-                    { value: 'above-average', arLabel: 'فوق المتوسط', enLabel: 'Above Average' },
-                    { value: 'high', arLabel: 'مرتفع', enLabel: 'High' }
+                    { value: 'average', labelKey: 'options.average' },
+                    { value: 'above-average', labelKey: 'options.aboveAverage' },
+                    { value: 'high', labelKey: 'options.high' }
                   ].map(item => (
-                    <label key={item.value} className={`flex items-center cursor-pointer p-4 rounded-xl border ${formData.customerIncome === item.value ? 'border-teal-400 bg-teal-50' : 'border-gray-200 hover:border-teal-200'}`}>
+                    <label key={item.value} className={`flex items-center cursor-pointer p-4 rounded-xl border ${formData.customerIncome === item.value ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
                       <input
                         type="radio"
                         name="customerIncome"
                         value={item.value}
                         checked={formData.customerIncome === item.value}
                         onChange={(e) => handleInputChange('customerIncome', e.target.value)}
-                        className="w-4 h-4 text-teal-600 border-gray-300 focus:ring-teal-500"
+                        className="w-4 h-4 text-yellow-600 border-gray-300 focus:ring-yellow-500 focus:ring-offset-1"
                       />
                       <span className="ml-3 text-sm font-medium">
-                        <span dir="rtl">{item.arLabel}</span> / {item.enLabel}
+                        {t(item.labelKey)}
                       </span>
                     </label>
                   ))}
@@ -570,7 +546,7 @@ const ModernLeasingForm: React.FC = () => {
           <AnimatedElement type="slideUp" delay={0.5} duration={0.6}>
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                Location Information / معلومات الموقع
+                {t('sections.locationInformation')} 
               </h3>
 
               <div className="space-y-6">
@@ -578,8 +554,8 @@ const ModernLeasingForm: React.FC = () => {
                   type="text"
                   value={formData.requiredLocation}
                   onChange={(e) => handleInputChange('requiredLocation', e.target.value)}
-                  placeholder="الموقع المطلوب (اسم المول) / Required Location (Mall Name)"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-right"
+                  placeholder={`${t('placeholders.requiredLocation')}`}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   required
                 />
 
@@ -588,29 +564,29 @@ const ModernLeasingForm: React.FC = () => {
                     type="text"
                     value={formData.shopNo}
                     onChange={(e) => handleInputChange('shopNo', e.target.value)}
-                    placeholder="محل رقم / Shop No."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.shopNo')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   />
                   <input
                     type="text"
                     value={formData.floorNo}
                     onChange={(e) => handleInputChange('floorNo', e.target.value)}
-                    placeholder="رقم الدور / Floor No."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.floorNo')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   />
                   <input
                     type="text"
                     value={formData.areaNo}
                     onChange={(e) => handleInputChange('areaNo', e.target.value)}
-                    placeholder="منطقة رقم / Area No."
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.areaNo')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   />
                   <input
                     type="number"
                     value={formData.requiredArea}
                     onChange={(e) => handleInputChange('requiredArea', e.target.value)}
-                    placeholder="المساحة المطلوبة (م²) / Required Area (m²)"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-right"
+                    placeholder={`${t('placeholders.requiredArea')} `}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     min="0"
                   />
                 </div>
@@ -619,8 +595,8 @@ const ModernLeasingForm: React.FC = () => {
                   value={formData.otherConditions}
                   onChange={(e) => handleInputChange('otherConditions', e.target.value)}
                   rows={3}
-                  placeholder="شروط خاصة بالمحل / Other Conditions"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-right resize-none"
+                  placeholder={`${t('placeholders.otherConditions')} `}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right resize-none"
                 />
               </div>
             </div>
@@ -630,28 +606,25 @@ const ModernLeasingForm: React.FC = () => {
           <AnimatedElement type="fadeIn" delay={0.5} duration={0.7}>
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                Required Documents / الوثائق المطلوبة
+                {t('sections.requiredDocuments')} 
               </h3>
               <ul className="space-y-3 text-gray-700">
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2 mt-0.5">•</span>
+                  <span className="text-yellow-600 mr-2 mt-0.5">•</span>
                   <div>
-                    <span dir="rtl" className="font-medium">ملف الشركة</span>{' '}
-                    <span className="text-gray-600">/ Company&apos;s Profile</span>
+                    <span dir="rtl" className="font-medium">{t('documents.companyProfile')}</span>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2 mt-0.5">•</span>
+                  <span className="text-yellow-600 mr-2 mt-0.5">•</span>
                   <div>
-                    <span dir="rtl" className="font-medium">ملف الوكالة / العلامة التجارية</span>{' '}
-                    <span className="text-gray-600">/ Brand Presentation</span>
+                    <span dir="rtl" className="font-medium">{t('documents.brandPresentation')}</span>
                   </div>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-blue-600 mr-2 mt-0.5">•</span>
+                  <span className="text-yellow-600 mr-2 mt-0.5">•</span>
                   <div>
-                    <span dir="rtl" className="font-medium">صور من المحلات الحالية</span>{' '}
-                    <span className="text-gray-600">/ Shop Photos</span>
+                    <span dir="rtl" className="font-medium">{t('documents.shopPhotos')}</span>
                   </div>
                 </li>
               </ul>
@@ -665,8 +638,8 @@ const ModernLeasingForm: React.FC = () => {
                 type="submit"
                 disabled={isSubmitting}
                 className={`
-                  px-10 py-3 bg-blue-600 text-white font-medium rounded-xl text-lg shadow-md
-                  hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300
+                  px-10 py-3 bg-yellow-600 text-white font-medium rounded-xl text-lg shadow-md
+                  hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 focus:ring-offset-2
                   transition-all duration-200
                   ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}
                 `}
@@ -677,14 +650,11 @@ const ModernLeasingForm: React.FC = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Processing...
+                    {t('buttons.processing')}
                   </span>
                 ) : (
                   <span className="flex items-center">
-                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                    <span dir="rtl">إرسال الطلب</span> / Submit Application
+                    <span dir="rtl">{t('buttons.submit')}</span>
                   </span>
                 )}
               </button>
@@ -694,7 +664,7 @@ const ModernLeasingForm: React.FC = () => {
           {/* Footer Note */}
           <AnimatedElement type="fadeIn" delay={0.7} duration={0.6}>
             <div className="text-center text-sm text-gray-500 mt-6">
-              <p dir="rtl">يرجى التأكد من ملء جميع الحقول المطلوبة</p>
+              <p dir="rtl">{t('footer.note')}</p>
               <p>Please ensure all required fields are completed</p>
             </div>
           </AnimatedElement>
