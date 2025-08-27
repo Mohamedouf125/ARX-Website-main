@@ -100,7 +100,10 @@
     "description": "+40 سنة من",
     "description2": "رحلة مميزة"
   },
-  "about": {    
+  "about": {
+    "OUR_STORY": "القصة",
+    "40+":"40+ سنوات من",
+    "remarkable journey":"رحلة مميزة",
     "Property Gallery": "معرض العقارات",
      "Our Services":"خدماتنا",
         "Take a brief look at some of the services we offer":"عرض بعض الخدمات التي نقدمها",
@@ -194,6 +197,8 @@
     "subscribe_description": "اشترك في نشرتنا الإخبارية الأسبوعية واحصل على التحديثات عبر البريد الإلكتروني"
   },
   "projects": {
+    "loadingMore": "جار التحميل المزيد...",
+    "loading": "جار التحميل...",
     "noPhotos": {
       "title": "لا توجد صور للمشاريع",
       "subtitle": "لا توجد صور للمشاريع في الوقت الحالي"

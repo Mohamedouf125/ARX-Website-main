@@ -102,6 +102,9 @@
         "button": "Get your free quote"
     },
     "about": {
+        "OUR_STORY": "OUR STORY",
+        "40+":"40+ years of a",
+        "remarkable journey":"remarkable journey",
         "Property Gallery": "Property Gallery",
         "Our Services": "Our Services",
         "Take a brief look at some of the services we offer": "Take a brief look at some of the services we offer",
@@ -190,6 +193,8 @@
         "subscribe_description": "Subscribe to our weekly newsletter and receive updates via Email"
     },
     "projects": {
+        "loadingMore": "Loading more...",
+        "loading": "Loading...",
         "noPhotos": {
             "title": "No Photos",
             "subtitle": "No photos available for this project"

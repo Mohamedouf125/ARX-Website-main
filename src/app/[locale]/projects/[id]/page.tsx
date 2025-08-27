@@ -272,7 +272,19 @@ const ProjectPage: React.FC = () => {
       ),
     },
   ];
-
+const getEmbedUrl = (locationLink?: string): string => {
+  if (!locationLink) {
+    return ""; // Return empty string as fallback
+  }
+  
+  // Extract coordinates from the Google Maps URL
+  const match = locationLink.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+  if (match) {
+    const [, lat, lng] = match;
+    return `https://maps.google.com/maps?q=${lat},${lng}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  }
+  return ""; // Return empty string if no match found
+};
   if (!projectData) {
     return <div>Loading...</div>;
   }
@@ -692,7 +704,7 @@ const ProjectPage: React.FC = () => {
             <div className="w-full h-[300px] md:h-[500px] lg:h-[600px] xl:h-full relative rounded-3xl">
               {/* Map image from import */}
               <iframe
-                src={projectData?.location_link || ""}
+                src={getEmbedUrl(projectData?.location_link)}
                 width="100%"
                 height="100%"
                 className="rounded-3xl"

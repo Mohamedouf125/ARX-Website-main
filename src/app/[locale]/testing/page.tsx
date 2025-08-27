@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
-
-// import Image from "next/image";
+import React, { useEffect, useRef, useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import type { Swiper as SwiperType } from "swiper";
 
 import { useLocale, useTranslations } from "next-intl";
 import PageHero from "@/components/PageHero";
@@ -10,9 +10,9 @@ import { AnimatedElement } from "@/components/animations/AnimationType";
 import { getData } from "@/libs/axios/server";
 import { AxiosHeaders } from "axios";
 import LeasingApplicationForm from "./components/LeasingApplicationForm";
-import TimelineJourneySwiper from "./components/TimelineJourneySwiper";
-import ServiceCard from "./components/projects"; // Import the new reusable component
+import ServiceCard from "./components/projects";
 import PropertySwiper from "./components/ImageSwiper";
+import "swiper/css";
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -40,9 +40,20 @@ interface ServiceItem {
   description: string;
 }
 
+interface TimelineItem {
+  year: string;
+  title: string;
+  image: string;
+}
+
 const AboutPage = () => {
   const t = useTranslations("about");
   const locale = useLocale();
+
+  // Swiper refs and states
+  const swiperRef = useRef<SwiperType | null>(null);
+  const centerSectionRef = useRef<HTMLDivElement | null>(null);
+  const [mounted, setMounted] = useState(false);
 
   // Updated state type to match API response
   const [aboutBanner, setAboutBanner] = useState<AboutBannerType>({
@@ -53,6 +64,46 @@ const AboutPage = () => {
       bannerCoreValue: { image: "" },
     },
   });
+
+  // Timeline data for the scroll-controlled swiper
+  const timelineData: TimelineItem[] = [
+    {
+      year: "1983",
+      title:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+      image: "/pngimg.png",
+    },
+    {
+      year: "1996",
+      title:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+      image: "/pngimg.png",
+    },
+    {
+      year: "2005",
+      title:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+      image: "/pngimg.png",
+    },
+    {
+      year: "2010",
+      title:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+      image: "/pngimg.png",
+    },
+    {
+      year: "2014",
+      title:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+      image: "/pngimg.png",
+    },
+    {
+      year: "2018",
+      title:
+        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+      image: "/pngimg.png",
+    },
+  ];
 
   // Dummy services data
   const servicesData: ServiceItem[] = [
@@ -101,6 +152,57 @@ const AboutPage = () => {
   ];
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+  useEffect(() => {
+    if (!mounted || !centerSectionRef.current || !swiperRef.current) return;
+
+    const handleScroll = () => {
+      const centerSection = centerSectionRef.current;
+      const swiper = swiperRef.current;
+
+      if (!centerSection || !swiper) return;
+
+      const rect = centerSection.getBoundingClientRect();
+      const sectionHeight = centerSection.offsetHeight;
+      const windowHeight = window.innerHeight;
+
+      // Calculate scroll progress through the center section
+      const scrollProgress = Math.max(
+        0,
+        Math.min(
+          1,
+          (windowHeight - rect.top) / (windowHeight + sectionHeight * 1.2)
+        )
+      );
+
+      // Total slides: 1 start space + timeline items + 1 quote card + 1 end space
+      const totalSlides = 1 + timelineData.length + 1 + 1; // start + timeline + quote + end
+
+      // Calculate target slide based on scroll progress
+      // We want to show the full range including spacing
+      const targetSlide = Math.floor(scrollProgress * (totalSlides - 1));
+
+      // Clamp the target slide to valid range
+      const clampedTargetSlide = Math.max(
+        0,
+        Math.min(totalSlides - 1, targetSlide)
+      );
+
+      if (swiper.activeIndex !== clampedTargetSlide) {
+        swiper.slideTo(clampedTargetSlide, 200);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Initial call
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [mounted, timelineData.length]);
+
+  useEffect(() => {
     const fetchAboutBanner = async () => {
       try {
         const data = await getData(
@@ -122,8 +224,12 @@ const AboutPage = () => {
     // Handle service card click - navigate to service page, open modal, etc.
   };
 
+  if (!mounted) {
+    return <div className="min-h-screen bg-gray-100" />;
+  }
+
   return (
-    <div className="text-gray-800 mx-auto overflow-hidden">
+    <div className="text-gray-800 mx-auto">
       {/* Hero Section */}
       <PageHero
         title={t("title")}
@@ -136,14 +242,12 @@ const AboutPage = () => {
         height="medium"
       />
 
-      <div className="rounded-t-3xl bg-white flex flex-col items-center px-6 mx-auto relative z-10">
+      <div className="rounded-t-3xl bg-white flex flex-col items-center px-6 mx-auto relative z-10 overflow-hidden">
         {/* VISION / MISSION / VALUES */}
         <section className="grid grid-cols-1 md:grid-cols-2 items-center pt-14 pb-20 gap-10 lg:gap-20 xl:gap-30 font-[sans-serif] max-w-7xl">
           {/* Left Section */}
           <div className="left-section px-4 sm:px-6 lg:px-8">
-            <SmallHeadSpan>
-              {t("vision_title")}
-            </SmallHeadSpan>
+            <SmallHeadSpan>{t("vision_title")}</SmallHeadSpan>
             <AnimatedElement
               type="slideUp"
               duration={1}
@@ -232,10 +336,194 @@ const AboutPage = () => {
         </div>
       </section>
 
-      <div className="w-full bg-[#f6f3ec] flex items-center mx-auto justify-center ">
-        <TimelineJourneySwiper />
-      </div>
-      {/*  */}
+      {/* Integrated ScrollControlledSwiper Content */}
+      {/* Center Section with Sticky Swiper */}
+      <section
+        ref={centerSectionRef}
+        className="h-[300vh] max-w-[1920px] mx-auto relative "
+      >
+        <div className="sticky  top-20 h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 bg-white z-20">
+          {/* Header */}
+          <div
+            className={`${
+              locale === "ar" ? "text-right" : "text-left"
+            } pb-26 w-full  max-w-7xl mx-auto`}
+          >
+            <SmallHeadSpan>{t("OUR_STORY")}</SmallHeadSpan>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black ">
+              {t("40+")}<br />
+              <span className="text-gray-900">{t("remarkable journey")}</span>
+            </h1>
+          </div>
+
+          {/* Swiper Container */}
+          <div className="w-full relative">
+            <Swiper
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+              slidesPerView={4}
+              spaceBetween={60}
+              allowTouchMove={false}
+              centeredSlides={false}
+              breakpoints={{
+                320: {
+                  slidesPerView: 1,
+                  spaceBetween: 16,
+                },
+                640: {
+                  slidesPerView: 1.5,
+                  spaceBetween: 24,
+                },
+                768: {
+                  slidesPerView: 2,
+                  spaceBetween: 32,
+                },
+                1024: {
+                  slidesPerView: 3,
+                  spaceBetween: 40,
+                },
+                1280: {
+                  slidesPerView: 4,
+                  spaceBetween: 60,
+                },
+              }}
+              className="w-full relative z-10"
+            >
+              {/* Empty slide at the beginning for spacing */}
+              <SwiperSlide key="start-space">
+                <div className="w-full h-full flex items-center justify-center px-2">
+                  {/* Empty space slide */}
+                  <div className="flex flex-col items-center max-w-xs mx-auto opacity-0">
+                    <div className="text-6xl sm:text-7xl lg:text-8xl font-bold text-transparent -ml-4 sm:-ml-8 -mb-8 sm:-mb-12">
+                      &nbsp;
+                    </div>
+                    <div className="relative mb-16 sm:mb-20">
+                      <div className="w-full h-32 sm:h-40 lg:h-48 flex items-center rounded-md justify-center">
+                        {/* Empty space */}
+                      </div>
+                    </div>
+                    <div className="relative z-20 flex items-center justify-center">
+                      <div className="w-7 sm:w-9 h-7 sm:h-9 bg-transparent rounded-full relative z-10"></div>
+                    </div>
+                    <div className="mb-3 sm:mb-4"></div>
+                  </div>
+                </div>
+              </SwiperSlide>
+
+              {timelineData.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <div className="w-full h-full flex items-center justify-center px-2">
+                    {/* Timeline Item */}
+                    <div className="flex flex-col items-center max-w-xs mx-auto">
+                      {/* Year */}
+                      <div className="text-6xl sm:text-5xl lg:text-7xl font-bold text-[#e4ed64] -ml-4 sm:-ml-8 -mb-8 sm:-mb-12">
+                        {item.year}
+                      </div>
+
+                      {/* Building/House Image */}
+                      <div className="relative mb-16 sm:mb-20">
+                        <div className="w-full h-32 sm:h-40 lg:h-38 flex items-center rounded-md justify-center">
+                          <img
+                            src={item.image}
+                            alt={`Building ${item.year}`}
+                            className="max-w-full min-w-[100px] sm:min-w-[140px] lg:min-w-[180px] max-h-full object-contain filter drop-shadow-2xl"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Indicator Dot with connecting line */}
+                      <div className="relative z-20  flex items-center justify-center">
+                        {/* Left line segment */}
+                        {index > 0 && (
+                          <div
+                            className="absolute right-1/2 w-full h-1 bg-gradient-to-r from-[#e4ed64] to-[#e4ed64] hidden sm:block"
+                            style={{ width: "calc(25vw - 50px)" }}
+                          ></div>
+                        )}
+
+                        {/* Right line segment */}
+                        {index < timelineData.length && (
+                          <div
+                            className="absolute  left-1/2 w-full h-1 bg-gradient-to-r from-[#e4ed64] to-[#e4ed64] hidden sm:block"
+                            style={{ width: "calc(30vw - 50px)" }}
+                          ></div>
+                        )}
+
+                        {/* The dot */}
+                        <div className="w-7 sm:w-9 h-7 sm:h-9 bg-[#e4ed64] rounded-full shadow-lg border-2 sm:border-4 border-white relative z-10"></div>
+                      </div>
+                      <div className="mb-3 sm:mb-4"></div>
+
+                      {/* Description */}
+                      <div className="text-center max-w-xs px-2">
+                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                          {item.title}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </SwiperSlide>
+              ))}
+
+              {/* Quote Card */}
+              <SwiperSlide key="quote-card">
+                <div className="w-full h-full flex items-center justify-center px-2">
+                  {/* Quote Card */}
+                  <div className="flex flex-col items-center max-w-xs mx-auto">
+                    {/* Empty space where year would be */}
+                    <div className="text-6xl sm:text-7xl lg:text-8xl font-bold text-transparent -ml-4 sm:-ml-8 -mb-8 sm:-mb-12">
+                      &nbsp;
+                    </div>
+
+                    {/* Empty space where building image would be */}
+                    <div className="relative mb-16 sm:mb-20">
+                      <div className="w-full h-32 sm:h-40 lg:h-48 flex items-center rounded-md justify-center">
+                        {/* Empty space */}
+                      </div>
+                    </div>
+
+                    {/* Bigger Indicator Dot */}
+                    <div className="relative z-20 flex items-center justify-center">
+                      {/* The bigger dot */}
+                      <div className="w-30 sm:w-34 h-30 sm:h-34 -top-[6vw] bg-[#e4ed64] rounded-full  relative z-10 flex items-center justify-center">
+                        <span className="text-black font-bold text-sm sm:text-base text-center leading-tight px-2">
+                          Get your
+                          <br />
+                          free quote
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide>
+
+              {/* Empty slide at the end for spacing */}
+              <SwiperSlide key="end-space">
+                <div className="w-full h-full flex items-center justify-center px-2">
+                  {/* Empty space slide */}
+                  <div className="flex flex-col items-center max-w-xs mx-auto opacity-0">
+                    <div className="text-6xl sm:text-7xl lg:text-8xl font-bold text-transparent -ml-4 sm:-ml-8 -mb-8 sm:-mb-12">
+                      &nbsp;
+                    </div>
+                    <div className="relative mb-16 sm:mb-20">
+                      <div className="w-full h-32 sm:h-40 lg:h-48 flex items-center rounded-md justify-center">
+                        {/* Empty space */}
+                      </div>
+                    </div>
+                    <div className="relative z-20 flex items-center justify-center">
+                      <div className="w-7 sm:w-9 h-7 sm:h-9 bg-transparent rounded-full relative z-10"></div>
+                    </div>
+                    <div className="mb-3 sm:mb-4"></div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            </Swiper>
+          </div>
+        </div>
+      </section>
+
+      {/* swiper hear  */}
       <PropertySwiper />
       <section className="w-full h-full ">
         <LeasingApplicationForm />
