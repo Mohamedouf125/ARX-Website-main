@@ -1,10 +1,22 @@
-'use client';
+"use client";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useTranslations } from "next-intl";
+import { FaArrowRight, FaArrowLeft, FaCheck } from "react-icons/fa";
+import { useLocale } from "next-intl";
 
-import { AnimatedElement } from '../../../../components/animations/AnimationType'; // Updated import
-import React, { useState, FormEvent } from 'react';
-import { useTranslations } from 'next-intl';
+interface ContactFormProps {
+  handleReloadAnimation?: () => void;
+}
 
-// Form Types
 interface CategoryOptions {
   women: boolean;
   gents: boolean;
@@ -12,478 +24,820 @@ interface CategoryOptions {
   family: boolean;
 }
 
-interface FormData {
-  companyName: string;
-  postalAddress: string;
-  website: string;
-  phone: string;
-  fax: string;
-  responsiblePerson: string;
-  position: string;
-  mobile: string;
-  email: string;
-  agencyBrandName: string;
-  franchiseOwner: string;
-  countryOfOrigin: string;
-  branchesInEgypt: string;
-  branchesOutsideEgypt: string;
-  clothes: CategoryOptions;
-  accessories: CategoryOptions;
-  shoesLeather: CategoryOptions;
-  perfumesBeauty: boolean;
-  restaurants: boolean;
-  jewellsWatches: boolean;
-  furniture: string;
-  services: string;
-  others: string;
-  productPrice: string;
-  targetedCustomers: CategoryOptions;
-  customerIncome: string;
-  requiredLocation: string;
-  shopNo: string;
-  floorNo: string;
-  areaNo: string;
-  requiredArea: string;
-  otherConditions: string;
-}
+const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
+  const t = useTranslations("home");
+  const [currentStep, setCurrentStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [formData, setFormData] = useState({
+    // Basic Contact Info (Step 1)
+    name: "",
+    email: "",
+    phone: "",
+    companyName: "",
+    postalAddress: "",
+    website: "",
+    fax: "",
 
-interface CategoryItem {
-  key: keyof CategoryOptions;
-  labelKey: string;
-}
+    // Contact Person Details (Step 2)
+    responsiblePerson: "",
+    position: "",
+    mobile: "",
 
-const ModernLeasingForm: React.FC = () => {
-  const t = useTranslations('LeasingApplicationForm');
-  const [formData, setFormData] = useState<FormData>({
-    companyName: '',
-    postalAddress: '',
-    website: '',
-    phone: '',
-    fax: '',
-    responsiblePerson: '',
-    position: '',
-    mobile: '',
-    email: '',
-    agencyBrandName: '',
-    franchiseOwner: '',
-    countryOfOrigin: '',
-    branchesInEgypt: '',
-    branchesOutsideEgypt: '',
-    clothes: { women: false, gents: false, kids: false, family: false },
-    accessories: { women: false, gents: false, kids: false, family: false },
-    shoesLeather: { women: false, gents: false, kids: false, family: false },
+    // Brand Information (Step 3)
+    agencyBrandName: "",
+    franchiseOwner: "",
+    countryOfOrigin: "",
+    branchesInEgypt: "",
+    branchesOutsideEgypt: "",
+
+    // Business Categories (Step 4)
+    clothes: {
+      women: false,
+      gents: false,
+      kids: false,
+      family: false,
+    } as CategoryOptions,
+    accessories: {
+      women: false,
+      gents: false,
+      kids: false,
+      family: false,
+    } as CategoryOptions,
+    shoesLeather: {
+      women: false,
+      gents: false,
+      kids: false,
+      family: false,
+    } as CategoryOptions,
     perfumesBeauty: false,
     restaurants: false,
     jewellsWatches: false,
-    furniture: '',
-    services: '',
-    others: '',
-    productPrice: '',
-    targetedCustomers: { women: false, gents: false, kids: false, family: false },
-    customerIncome: '',
-    requiredLocation: '',
-    shopNo: '',
-    floorNo: '',
-    areaNo: '',
-    requiredArea: '',
-    otherConditions: ''
+    furniture: "",
+    services: "",
+    others: "",
+
+    // Target Market (Step 5)
+    productPrice: "",
+    targetedCustomers: {
+      women: false,
+      gents: false,
+      kids: false,
+      family: false,
+    } as CategoryOptions,
+    customerIncome: "",
+
+    // Location Information (Step 6)
+    requiredLocation: "",
+    shopNo: "",
+    floorNo: "",
+    areaNo: "",
+    requiredArea: "",
+    otherConditions: "",
+
+    // Original inquiry field
+    inquiry: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const locale = useLocale();
+  const totalSteps = 6;
 
-  const handleInputChange = (field: keyof FormData, value: string | boolean): void => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSelectChange = (field: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleCategoryChange = (
-    category: 'clothes' | 'accessories' | 'shoesLeather' | 'targetedCustomers',
+    category: "clothes" | "accessories" | "shoesLeather" | "targetedCustomers",
     subcategory: keyof CategoryOptions,
     checked: boolean
-  ): void => {
-    setFormData(prev => ({
+  ) => {
+    setFormData((prev) => ({
       ...prev,
       [category]: {
         ...prev[category],
-        [subcategory]: checked
-      }
+        [subcategory]: checked,
+      },
     }));
   };
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      console.log('Form submitted:', formData);
-      alert(t('messages.submitSuccess'));
-    } catch (error) {
-      console.error('Submission error:', error);
-      alert(t('messages.submitError'));
-    } finally {
-      setIsSubmitting(false);
+  const handleNext = () => {
+    if (currentStep < totalSteps) {
+      setIsTransitioning(true);
+
+      setTimeout(() => {
+        setCurrentStep(currentStep + 1);
+        setIsTransitioning(false);
+
+        if (handleReloadAnimation) {
+          handleReloadAnimation();
+        }
+      }, 300);
     }
   };
 
-  const categoryItems: CategoryItem[] = [
-    { key: 'women', labelKey: 'subcategories.women' },
-    { key: 'gents', labelKey: 'subcategories.gents' },
-    { key: 'kids', labelKey: 'subcategories.kids' },
-    { key: 'family', labelKey: 'subcategories.family' }
+  const handlePrevious = () => {
+    if (currentStep > 1) {
+      setIsTransitioning(true);
+
+      setTimeout(() => {
+        setCurrentStep(currentStep - 1);
+        setIsTransitioning(false);
+
+        if (handleReloadAnimation) {
+          handleReloadAnimation();
+        }
+      }, 300);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      console.log("Form submitted:", formData);
+      setCurrentStep(1);
+    }, 2000);
+  };
+
+  // Validation functions for each step
+  const isStep1Valid = () => {
+    return (
+      formData.name.trim() !== "" &&
+      formData.email.trim() !== "" &&
+      formData.phone.trim() !== ""
+    );
+  };
+
+  const isStep2Valid = () => {
+    return (
+      formData.responsiblePerson.trim() !== "" &&
+      formData.position.trim() !== ""
+    );
+  };
+
+  const isStep3Valid = () => {
+    return (
+      formData.agencyBrandName.trim() !== "" &&
+      formData.countryOfOrigin.trim() !== ""
+    );
+  };
+
+  const isStep4Valid = () => {
+    return true; // Optional fields
+  };
+
+  const isStep5Valid = () => {
+    return formData.productPrice !== "" && formData.customerIncome !== "";
+  };
+
+  const isStep6Valid = () => {
+    return formData.requiredLocation.trim() !== "";
+  };
+
+  const isCurrentStepValid = () => {
+    switch (currentStep) {
+      case 1:
+        return isStep1Valid();
+      case 2:
+        return isStep2Valid();
+      case 3:
+        return isStep3Valid();
+      case 4:
+        return isStep4Valid();
+      case 5:
+        return isStep5Valid();
+      case 6:
+        return isStep6Valid();
+      default:
+        return false;
+    }
+  };
+
+  const getStepTitle = () => {
+    switch (currentStep) {
+      case 1:
+        return "Company & Contact Information";
+      case 2:
+        return "Responsible Person Details";
+      case 3:
+        return "Brand Information";
+      case 4:
+        return "Business Categories";
+      case 5:
+        return "Target Market";
+      case 6:
+        return "Location Requirements";
+      default:
+        return "";
+    }
+  };
+
+  const categoryItems = [
+    { key: "women" as keyof CategoryOptions, label: "Women" },
+    { key: "gents" as keyof CategoryOptions, label: "Men" },
+    { key: "kids" as keyof CategoryOptions, label: "Kids" },
+    { key: "family" as keyof CategoryOptions, label: "Family" },
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
+    <div className="  w-full">
+      {/* Header Badge */}
+      <div className="text-center mb-8">
+        <div className="inline-flex items-center gap-2 px-6 py-3 mt-6 bg-gray-100 rounded-full text-sm font-medium text-gray-600 mb-8 transform transition-all duration-300 hover:scale-105">
+          <span className="w-3 h-3 bg-[#035B8D] rounded-full animate-ping"></span>
+          {t("property")}
+          <span className="mx-2">•</span>
+          {t("quick_enquiry")}
+        </div>
 
-        {/* Header */}
-        <AnimatedElement type="fadeIn" delay={0.2} duration={0.8}>
-          <div className="text-center mb-10">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2" dir="rtl">
-              {t('title')}
-            </h1>
-            <div className="mt-4 h-1 w-20 bg-yellow-600 rounded-full mx-auto"></div>
-          </div>
-        </AnimatedElement>
+        {/* <ProgressIndicator /> */}
 
-        <form onSubmit={handleSubmit} className="space-y-8">
+        <div className="overflow-hidden">
+          <h2
+            className={`text-xl lg:text-2xl font-bold text-gray-900 mb-2 transition-all duration-500 transform ${
+              isTransitioning
+                ? "translate-y-4 opacity-0"
+                : "translate-y-0 opacity-100"
+            }`}
+          >
+            {getStepTitle()}
+          </h2>
+        </div>
+        <p
+          className={`text-gray-600 text-sm transition-all duration-300 ${
+            isTransitioning ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          Step {currentStep} of {totalSteps}
+        </p>
+      </div>
 
-          {/* Company Information */}
-          <AnimatedElement type="slideRight" delay={0.3} duration={0.6}>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                {t('sections.companyInformation')} 
-              </h3>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <input
+      <form onSubmit={handleSubmit} className="space-y-8 w-full ">
+        <div className="relative w-[35vw] min-h-[500px] ">
+          {/* Step 1: Company & Contact Information */}
+          <div
+            className={`absolute inset-0 transition-all duration-500 transform ${
+              currentStep === 1
+                ? "translate-x-0 opacity-100 pointer-events-auto"
+                : currentStep > 1
+                ? "-translate-x-full opacity-0 pointer-events-none"
+                : "translate-x-full opacity-0 pointer-events-none"
+            }`}
+          >
+            <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div
+                  className={`transition-all duration-700 delay-100 transform ${
+                    currentStep === 1 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="companyName"
                     type="text"
-                    value={formData.companyName}
-                    onChange={(e) => handleInputChange('companyName', e.target.value)}
-                    placeholder={`${t('placeholders.companyName')}`}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
+                    value={formData.companyName}
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Company Name"
                   />
                 </div>
-
-                <div>
-                  <input
+                <div
+                  className={`transition-all duration-700 delay-150 transform ${
+                    currentStep === 1 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="name"
+                    type="text"
+                    required
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder={t("your_name")}
+                  />
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-200 transform ${
+                    currentStep === 1 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="email"
+                    type="email"
+                    required
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder={t("your_email")}
+                  />
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-250 transform ${
+                    currentStep === 1 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="phone"
+                    type="tel"
+                    required
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder={t("your_phone")}
+                  />
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-300 transform ${
+                    currentStep === 1 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="website"
                     type="url"
                     value={formData.website}
-                    onChange={(e) => handleInputChange('website', e.target.value)}
-                    placeholder={`${t('placeholders.website')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Website"
                   />
                 </div>
-
-                <div className="md:col-span-2">
-                  <textarea
-                    value={formData.postalAddress}
-                    onChange={(e) => handleInputChange('postalAddress', e.target.value)}
-                    rows={3}
-                    placeholder={`${t('placeholders.postalAddress')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right resize-none"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
-                    placeholder={`${t('placeholders.phone')}`}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <input
+                <div
+                  className={`transition-all duration-700 delay-350 transform ${
+                    currentStep === 1 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="fax"
                     type="tel"
                     value={formData.fax}
-                    onChange={(e) => handleInputChange('fax', e.target.value)}
-                    placeholder={`${t('placeholders.fax')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Fax"
                   />
                 </div>
               </div>
+              <div
+                className={`transition-all duration-700 delay-400 transform ${
+                  currentStep === 1 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <textarea
+                  name="postalAddress"
+                  value={formData.postalAddress}
+                  onChange={handleInputChange}
+                  rows={3}
+                  className="w-full px-6 py-4 bg-gray-50 border-0 rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
+                  placeholder="Postal Address"
+                />
+              </div>
+              <div
+                className={`flex justify-end transition-all duration-700 delay-450 transform ${
+                  currentStep === 1 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={!isCurrentStepValid() || isTransitioning}
+                  className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-10 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+                >
+                  <span>Next</span>
+                  <FaArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
-          </AnimatedElement>
+          </div>
 
-          {/* Contact Person */}
-          <AnimatedElement type="slideLeft" delay={0.3} duration={0.6}>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                {t('sections.contactPerson')}
-              </h3>
-
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <input
+          {/* Step 2: Responsible Person Details */}
+          <div
+            className={`absolute inset-0 transition-all duration-500 transform ${
+              currentStep === 2
+                ? "translate-x-0 opacity-100 pointer-events-auto"
+                : currentStep > 2
+                ? "-translate-x-full opacity-0 pointer-events-none"
+                : "translate-x-full opacity-0 pointer-events-none"
+            }`}
+          >
+            <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div
+                  className={`transition-all duration-700 delay-100 transform ${
+                    currentStep === 2 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="responsiblePerson"
                     type="text"
+                    required
                     value={formData.responsiblePerson}
-                    onChange={(e) => handleInputChange('responsiblePerson', e.target.value)}
-                    placeholder={`${t('placeholders.responsiblePerson')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
-                    required
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Responsible Person"
                   />
                 </div>
-
-                <div>
-                  <input
+                <div
+                  className={`transition-all duration-700 delay-150 transform ${
+                    currentStep === 2 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="position"
                     type="text"
-                    value={formData.position}
-                    onChange={(e) => handleInputChange('position', e.target.value)}
-                    placeholder={`${t('placeholders.position')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
+                    value={formData.position}
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Position"
                   />
                 </div>
-
-                <div>
-                  <input
+                <div
+                  className={`transition-all duration-700 delay-200 transform ${
+                    currentStep === 2 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="mobile"
                     type="tel"
                     value={formData.mobile}
-                    onChange={(e) => handleInputChange('mobile', e.target.value)}
-                    placeholder={`${t('placeholders.mobile')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
-                    placeholder={`${t('placeholders.email')}`}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
-                    required
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Mobile"
                   />
                 </div>
               </div>
+              <div
+                className={`flex justify-between transition-all duration-700 delay-250 transform ${
+                  currentStep === 2 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <Button
+                  type="button"
+                  onClick={handlePrevious}
+                  disabled={isTransitioning}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-8 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center gap-3"
+                >
+                  <FaArrowLeft className="w-4 h-4" />
+                  <span>Previous</span>
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={!isCurrentStepValid() || isTransitioning}
+                  className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-10 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+                >
+                  <span>Next</span>
+                  <FaArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
-          </AnimatedElement>
+          </div>
 
-          {/* Brand Information */}
-          <AnimatedElement type="slideUp" delay={0.4} duration={0.6}>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                {t('sections.brandInformation')}
-              </h3>
-
-              <div className="space-y-6">
-                <div>
-                  <input
+          {/* Step 3: Brand Information */}
+          <div
+            className={`absolute inset-0 transition-all duration-500 transform ${
+              currentStep === 3
+                ? "translate-x-0 opacity-100 pointer-events-auto"
+                : currentStep > 3
+                ? "-translate-x-full opacity-0 pointer-events-none"
+                : "translate-x-full opacity-0 pointer-events-none"
+            }`}
+          >
+            <div className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-4">
+                <div
+                  className={`transition-all duration-700 delay-100 transform ${
+                    currentStep === 3 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="agencyBrandName"
                     type="text"
-                    value={formData.agencyBrandName}
-                    onChange={(e) => handleInputChange('agencyBrandName', e.target.value)}
-                    placeholder={`${t('placeholders.agencyBrandName')}`}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                     required
+                    value={formData.agencyBrandName}
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Brand Name"
                   />
                 </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>
-                    <select
-                      value={formData.franchiseOwner}
-                      onChange={(e) => handleInputChange('franchiseOwner', e.target.value)}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
-                      required
-                    >
-                      <option value="">{t('placeholders.franchiseOwner')}</option>
-                      <option value="yes">{t('options.yes')} </option>
-                      <option value="no">{t('options.no')}</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <input
-                      type="text"
-                      value={formData.countryOfOrigin}
-                      onChange={(e) => handleInputChange('countryOfOrigin', e.target.value)}
-                      placeholder={`${t('placeholders.countryOfOrigin')}`}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
-                      required
-                    />
-                  </div>
+                <div
+                  className={`transition-all duration-700 delay-150 transform ${
+                    currentStep === 3 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Select
+                    dir={locale === "ar" ? "rtl" : "ltr"}
+                    value={formData.franchiseOwner}
+                    onValueChange={(value) =>
+                      handleSelectChange("franchiseOwner", value)
+                    }
+                  >
+                    <SelectTrigger className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 w-full transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105">
+                      <SelectValue placeholder="Franchise Owner?" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white border border-gray-200 rounded-xl shadow-2xl">
+                      <SelectItem value="yes">Yes</SelectItem>
+                      <SelectItem value="no">No</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
-
-                <div>
-                  <textarea
-                    value={formData.branchesInEgypt}
-                    onChange={(e) => handleInputChange('branchesInEgypt', e.target.value)}
-                    rows={2}
-                    placeholder={`${t('placeholders.branchesInEgypt')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right resize-none"
-                  />
-                </div>
-
-                <div>
-                  <textarea
-                    value={formData.branchesOutsideEgypt}
-                    onChange={(e) => handleInputChange('branchesOutsideEgypt', e.target.value)}
-                    rows={2}
-                    placeholder={`${t('placeholders.branchesOutsideEgypt')}`}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right resize-none"
+                <div
+                  className={`transition-all duration-700 delay-200 transform ${
+                    currentStep === 3 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="countryOfOrigin"
+                    type="text"
+                    required
+                    value={formData.countryOfOrigin}
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Country of Origin"
                   />
                 </div>
               </div>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div
+                  className={`transition-all duration-700 delay-250 transform ${
+                    currentStep === 3 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <textarea
+                    name="branchesInEgypt"
+                    value={formData.branchesInEgypt}
+                    onChange={handleInputChange}
+                    rows={3}
+                    className="w-full px-6 py-4 bg-gray-50 border-0 rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
+                    placeholder="Branches in Egypt"
+                  />
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-300 transform ${
+                    currentStep === 3 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <textarea
+                    name="branchesOutsideEgypt"
+                    value={formData.branchesOutsideEgypt}
+                    onChange={handleInputChange}
+                    rows={3}
+                    className="w-full px-6 py-4 bg-gray-50 border-0 rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
+                    placeholder="Branches Outside Egypt"
+                  />
+                </div>
+              </div>
+              <div
+                className={`flex justify-between transition-all duration-700 delay-350 transform ${
+                  currentStep === 3 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <Button
+                  type="button"
+                  onClick={handlePrevious}
+                  disabled={isTransitioning}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-8 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center gap-3"
+                >
+                  <FaArrowLeft className="w-4 h-4" />
+                  <span>Previous</span>
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={!isCurrentStepValid() || isTransitioning}
+                  className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-10 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+                >
+                  <span>Next</span>
+                  <FaArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
-          </AnimatedElement>
+          </div>
 
-          {/* Business Categories */}
-          <AnimatedElement type="slideRight" delay={0.4} duration={0.6}>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                {t('sections.businessCategories')}
-              </h3>
-
-              <div className="space-y-8">
-                {/* Clothes */}
-                <div>
-                  <h4 className="text-md font-medium text-gray-800 mb-4">
-                    {t('categories.clothes')}
-                  </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {categoryItems.map(item => (
-                      <label key={item.key} className={`flex items-center cursor-pointer p-3 rounded-lg border ${formData.clothes[item.key] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
-                        <input
-                          type="checkbox"
-                          checked={formData.clothes[item.key]}
-                          onChange={(e) => handleCategoryChange('clothes', item.key, e.target.checked)}
-                          className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
-                        />
-                        <span className="ml-3 text-sm font-medium">
-                          {t(item.labelKey)} 
-                        </span>
-                      </label>
-                    ))}
-                  </div>
+          {/* Step 4: Business Categories */}
+          <div
+            className={`absolute inset-0 transition-all duration-500 transform ${
+              currentStep === 4
+                ? "translate-x-0 opacity-100 pointer-events-auto"
+                : currentStep > 4
+                ? "-translate-x-full opacity-0 pointer-events-none"
+                : "translate-x-full opacity-0 pointer-events-none"
+            }`}
+          >
+            <div className="space-y-6">
+              {/* Clothes Category */}
+              <div
+                className={`transition-all duration-700 delay-100 transform ${
+                  currentStep === 4 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <h4 className="text-md font-medium text-gray-800 mb-4">
+                  Clothes
+                </h4>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {categoryItems.map((item) => (
+                    <label
+                      key={item.key}
+                      className={`flex items-center cursor-pointer p-3 rounded-xl border transition-all duration-300 ${
+                        formData.clothes[item.key]
+                          ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
+                          : "border-gray-200 hover:border-[#DEA228]/50"
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        checked={formData.clothes[item.key]}
+                        onChange={(e) =>
+                          handleCategoryChange(
+                            "clothes",
+                            item.key,
+                            e.target.checked
+                          )
+                        }
+                        className="w-4 h-4 text-[#DEA228] border-gray-300 rounded focus:ring-[#DEA228]"
+                      />
+                      <span className="ml-3 text-sm font-medium">
+                        {item.label}
+                      </span>
+                    </label>
+                  ))}
                 </div>
+              </div>
 
-                {/* Accessories */}
-                <div>
-                  <h4 className="text-md font-medium text-gray-800 mb-4">
-                    {t('categories.accessories')}
-                  </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {categoryItems.map(item => (
-                      <label key={item.key} className={`flex items-center cursor-pointer p-3 rounded-lg border ${formData.accessories[item.key] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
-                        <input
-                          type="checkbox"
-                          checked={formData.accessories[item.key]}
-                          onChange={(e) => handleCategoryChange('accessories', item.key, e.target.checked)}
-                          className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
-                        />
-                        <span className="ml-3 text-sm font-medium">
-                          {t(item.labelKey)}
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Shoes & Leather */}
-                <div>
-                  <h4 className="text-md font-medium text-gray-800 mb-4">
-                    {t('categories.shoesLeather')} 
-                  </h4>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    {categoryItems.map(item => (
-                      <label key={item.key} className={`flex items-center cursor-pointer p-3 rounded-lg border ${formData.shoesLeather[item.key] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
-                        <input
-                          type="checkbox"
-                          checked={formData.shoesLeather[item.key]}
-                          onChange={(e) => handleCategoryChange('shoesLeather', item.key, e.target.checked)}
-                          className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
-                        />
-                        <span className="ml-3 text-sm font-medium">
-                          {t(item.labelKey)} 
-                        </span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Other Categories */}
-                <div className="grid md:grid-cols-3 gap-6 pt-4 border-t border-gray-200">
-                  <label className={`flex items-center cursor-pointer p-4 rounded-xl border ${formData.jewellsWatches ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
-                    <input
-                      type="checkbox"
-                      checked={formData.jewellsWatches}
-                      onChange={(e) => handleInputChange('jewellsWatches', e.target.checked)}
-                      className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
-                    />
-                    <span className="ml-3 text-sm font-medium">
-                      {t('categories.jewellsWatches')} 
-                    </span>
-                  </label>
-                </div>
-
-                {/* Specify Fields */}
-                <div className="grid md:grid-cols-3 gap-6 pt-6 border-t border-gray-200">
-                  <input
+              {/* Other Categories */}
+              <div className="grid md:grid-cols-3 gap-4">
+                <div
+                  className={`transition-all duration-700 delay-200 transform ${
+                    currentStep === 4 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="furniture"
                     type="text"
                     value={formData.furniture}
-                    onChange={(e) => handleInputChange('furniture', e.target.value)}
-                    placeholder={`${t('placeholders.furniture')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Furniture (specify)"
                   />
-                  <input
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-250 transform ${
+                    currentStep === 4 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="services"
                     type="text"
                     value={formData.services}
-                    onChange={(e) => handleInputChange('services', e.target.value)}
-                    placeholder={`${t('placeholders.services')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Services (specify)"
                   />
-                  <input
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-300 transform ${
+                    currentStep === 4 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="others"
                     type="text"
                     value={formData.others}
-                    onChange={(e) => handleInputChange('others', e.target.value)}
-                    placeholder={`${t('placeholders.others')}`}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Others (specify)"
                   />
                 </div>
               </div>
+
+              <div
+                className={`flex justify-between transition-all duration-700 delay-350 transform ${
+                  currentStep === 4 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <Button
+                  type="button"
+                  onClick={handlePrevious}
+                  disabled={isTransitioning}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-8 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center gap-3"
+                >
+                  <FaArrowLeft className="w-4 h-4" />
+                  <span>Previous</span>
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={!isCurrentStepValid() || isTransitioning}
+                  className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-10 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+                >
+                  <span>Next</span>
+                  <FaArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
-          </AnimatedElement>
+          </div>
 
-          {/* Target Market */}
-          <AnimatedElement type="slideLeft" delay={0.4} duration={0.6}>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                {t('sections.targetMarket')}
-              </h3>
-
+          {/* Step 5: Target Market */}
+          <div
+            className={`absolute inset-0 transition-all duration-500 transform ${
+              currentStep === 5
+                ? "translate-x-0 opacity-100 pointer-events-auto"
+                : currentStep > 5
+                ? "-translate-x-full opacity-0 pointer-events-none"
+                : "translate-x-full opacity-0 pointer-events-none"
+            }`}
+          >
+            <div className="space-y-6">
               {/* Product Price */}
-              <div className="mb-6">
+              <div
+                className={`transition-all duration-700 delay-100 transform ${
+                  currentStep === 5 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
                 <h4 className="text-md font-medium text-gray-800 mb-4">
-                  {t('labels.productPrice')} 
+                  Product Price Range
                 </h4>
                 <div className="grid grid-cols-3 gap-4">
                   {[
-                    { value: 'low', labelKey: 'options.low' },
-                    { value: 'average', labelKey: 'options.average' },
-                    { value: 'high', labelKey: 'options.high' }
-                  ].map(item => (
-                    <label key={item.value} className={`flex items-center cursor-pointer p-4 rounded-xl border ${formData.productPrice === item.value ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
+                    { value: "low", label: "Low" },
+                    { value: "average", label: "Average" },
+                    { value: "high", label: "High" },
+                  ].map((item) => (
+                    <label
+                      key={item.value}
+                      className={`flex items-center cursor-pointer p-4 rounded-xl border transition-all duration-300 ${
+                        formData.productPrice === item.value
+                          ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
+                          : "border-gray-200 hover:border-[#DEA228]/50"
+                      }`}
+                    >
                       <input
                         type="radio"
                         name="productPrice"
                         value={item.value}
                         checked={formData.productPrice === item.value}
-                        onChange={(e) => handleInputChange('productPrice', e.target.value)}
-                        className="w-4 h-4 text-yellow-600 border-gray-300 focus:ring-yellow-500 focus:ring-offset-1"
+                        onChange={(e) =>
+                          handleSelectChange("productPrice", e.target.value)
+                        }
+                        className="w-4 h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
                       />
                       <span className="ml-3 text-sm font-medium">
-                        {t(item.labelKey)} 
+                        {item.label}
                       </span>
                     </label>
                   ))}
@@ -491,21 +845,40 @@ const ModernLeasingForm: React.FC = () => {
               </div>
 
               {/* Targeted Customers */}
-              <div className="mb-6">
+              <div
+                className={`transition-all duration-700 delay-200 transform ${
+                  currentStep === 5 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
                 <h4 className="text-md font-medium text-gray-800 mb-4">
-                  {t('labels.targetedCustomers')}
+                  Targeted Customers
                 </h4>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  {categoryItems.map(item => (
-                    <label key={item.key} className={`flex items-center cursor-pointer p-3 rounded-lg border ${formData.targetedCustomers[item.key] ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {categoryItems.map((item) => (
+                    <label
+                      key={item.key}
+                      className={`flex items-center cursor-pointer p-3 rounded-xl border transition-all duration-300 ${
+                        formData.targetedCustomers[item.key]
+                          ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
+                          : "border-gray-200 hover:border-[#DEA228]/50"
+                      }`}
+                    >
                       <input
                         type="checkbox"
                         checked={formData.targetedCustomers[item.key]}
-                        onChange={(e) => handleCategoryChange('targetedCustomers', item.key, e.target.checked)}
-                        className="w-4 h-4 text-yellow-600 border-gray-300 rounded focus:ring-yellow-500 focus:ring-offset-1"
+                        onChange={(e) =>
+                          handleCategoryChange(
+                            "targetedCustomers",
+                            item.key,
+                            e.target.checked
+                          )
+                        }
+                        className="w-4 h-4 text-[#DEA228] border-gray-300 rounded focus:ring-[#DEA228]"
                       />
                       <span className="ml-3 text-sm font-medium">
-                        {t(item.labelKey)}
+                        {item.label}
                       </span>
                     </label>
                   ))}
@@ -513,166 +886,231 @@ const ModernLeasingForm: React.FC = () => {
               </div>
 
               {/* Customer Income */}
-              <div>
+              <div
+                className={`transition-all duration-700 delay-300 transform ${
+                  currentStep === 5 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
                 <h4 className="text-md font-medium text-gray-800 mb-4">
-                  {t('labels.customerIncome')}
+                  Customer Income Level
                 </h4>
                 <div className="grid grid-cols-3 gap-4">
                   {[
-                    { value: 'average', labelKey: 'options.average' },
-                    { value: 'above-average', labelKey: 'options.aboveAverage' },
-                    { value: 'high', labelKey: 'options.high' }
-                  ].map(item => (
-                    <label key={item.value} className={`flex items-center cursor-pointer p-4 rounded-xl border ${formData.customerIncome === item.value ? 'border-yellow-400 bg-yellow-50' : 'border-gray-200 hover:border-yellow-200'}`}>
+                    { value: "average", label: "Average" },
+                    { value: "above-average", label: "Above Average" },
+                    { value: "high", label: "High" },
+                  ].map((item) => (
+                    <label
+                      key={item.value}
+                      className={`flex items-center cursor-pointer p-4 rounded-xl border transition-all duration-300 ${
+                        formData.customerIncome === item.value
+                          ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
+                          : "border-gray-200 hover:border-[#DEA228]/50"
+                      }`}
+                    >
                       <input
                         type="radio"
                         name="customerIncome"
                         value={item.value}
                         checked={formData.customerIncome === item.value}
-                        onChange={(e) => handleInputChange('customerIncome', e.target.value)}
-                        className="w-4 h-4 text-yellow-600 border-gray-300 focus:ring-yellow-500 focus:ring-offset-1"
+                        onChange={(e) =>
+                          handleSelectChange("customerIncome", e.target.value)
+                        }
+                        className="w-4 h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
                       />
                       <span className="ml-3 text-sm font-medium">
-                        {t(item.labelKey)}
+                        {item.label}
                       </span>
                     </label>
                   ))}
                 </div>
               </div>
+
+              <div
+                className={`flex justify-between transition-all duration-700 delay-400 transform ${
+                  currentStep === 5 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <Button
+                  type="button"
+                  onClick={handlePrevious}
+                  disabled={isTransitioning}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-8 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center gap-3"
+                >
+                  <FaArrowLeft className="w-4 h-4" />
+                  <span>Previous</span>
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={!isCurrentStepValid() || isTransitioning}
+                  className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-10 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+                >
+                  <span>Next</span>
+                  <FaArrowRight className="w-4 h-4" />
+                </Button>
+              </div>
             </div>
-          </AnimatedElement>
+          </div>
 
-          {/* Location Information */}
-          <AnimatedElement type="slideUp" delay={0.5} duration={0.6}>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                {t('sections.locationInformation')} 
-              </h3>
-
-              <div className="space-y-6">
-                <input
+          {/* Step 6: Location Requirements */}
+          <div
+            className={`absolute inset-0 transition-all duration-500 transform ${
+              currentStep === 6
+                ? "translate-x-0 opacity-100 pointer-events-auto"
+                : "translate-x-full opacity-0 pointer-events-none"
+            }`}
+          >
+            <div className="space-y-6">
+              <div
+                className={`transition-all duration-700 delay-100 transform ${
+                  currentStep === 6 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <Input
+                  name="requiredLocation"
                   type="text"
-                  value={formData.requiredLocation}
-                  onChange={(e) => handleInputChange('requiredLocation', e.target.value)}
-                  placeholder={`${t('placeholders.requiredLocation')}`}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
                   required
+                  value={formData.requiredLocation}
+                  onChange={handleInputChange}
+                  className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                  placeholder="Required Location"
                 />
+              </div>
 
-                <div className="grid md:grid-cols-2 gap-6">
-                  <input
+              <div className="grid md:grid-cols-2 gap-4">
+                <div
+                  className={`transition-all duration-700 delay-150 transform ${
+                    currentStep === 6 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="shopNo"
                     type="text"
                     value={formData.shopNo}
-                    onChange={(e) => handleInputChange('shopNo', e.target.value)}
-                    placeholder={`${t('placeholders.shopNo')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Shop Number (Optional)"
                   />
-                  <input
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-200 transform ${
+                    currentStep === 6 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="floorNo"
                     type="text"
                     value={formData.floorNo}
-                    onChange={(e) => handleInputChange('floorNo', e.target.value)}
-                    placeholder={`${t('placeholders.floorNo')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Floor Number (Optional)"
                   />
-                  <input
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-250 transform ${
+                    currentStep === 6 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="areaNo"
                     type="text"
                     value={formData.areaNo}
-                    onChange={(e) => handleInputChange('areaNo', e.target.value)}
-                    placeholder={`${t('placeholders.areaNo')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Area Number (Optional)"
                   />
-                  <input
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-300 transform ${
+                    currentStep === 6 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="requiredArea"
                     type="number"
                     value={formData.requiredArea}
-                    onChange={(e) => handleInputChange('requiredArea', e.target.value)}
-                    placeholder={`${t('placeholders.requiredArea')} `}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right"
+                    onChange={handleInputChange}
+                    className="h-16 bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Required Area (sq meters)"
                     min="0"
                   />
                 </div>
+              </div>
 
+              <div
+                className={`transition-all duration-700 delay-350 transform ${
+                  currentStep === 6 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
                 <textarea
+                  name="otherConditions"
                   value={formData.otherConditions}
-                  onChange={(e) => handleInputChange('otherConditions', e.target.value)}
-                  rows={3}
-                  placeholder={`${t('placeholders.otherConditions')} `}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 focus:ring-offset-2 text-right resize-none"
+                  onChange={handleInputChange}
+                  rows={4}
+                  className="w-full px-6 py-4 bg-gray-50 border-0 rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
+                  placeholder="Other Conditions or Requirements"
                 />
               </div>
-            </div>
-          </AnimatedElement>
 
-          {/* Required Documents */}
-          <AnimatedElement type="fadeIn" delay={0.5} duration={0.7}>
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-6 border-b pb-3">
-                {t('sections.requiredDocuments')} 
-              </h3>
-              <ul className="space-y-3 text-gray-700">
-                <li className="flex items-start">
-                  <span className="text-yellow-600 mr-2 mt-0.5">•</span>
-                  <div>
-                    <span dir="rtl" className="font-medium">{t('documents.companyProfile')}</span>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-yellow-600 mr-2 mt-0.5">•</span>
-                  <div>
-                    <span dir="rtl" className="font-medium">{t('documents.brandPresentation')}</span>
-                  </div>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-yellow-600 mr-2 mt-0.5">•</span>
-                  <div>
-                    <span dir="rtl" className="font-medium">{t('documents.shopPhotos')}</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </AnimatedElement>
-
-          {/* Submit Button */}
-          <AnimatedElement type="scaleIn" delay={0.6} duration={0.7}>
-            <div className="flex justify-center py-6">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className={`
-                  px-10 py-3 bg-yellow-600 text-white font-medium rounded-xl text-lg shadow-md
-                  hover:bg-yellow-700 focus:outline-none focus:ring-4 focus:ring-yellow-300 focus:ring-offset-2
-                  transition-all duration-200
-                  ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}
-                `}
+              <div
+                className={`flex justify-between transition-all duration-700 delay-400 transform ${
+                  currentStep === 6 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
               >
-                {isSubmitting ? (
-                  <span className="flex items-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    {t('buttons.processing')}
-                  </span>
-                ) : (
-                  <span className="flex items-center">
-                    <span dir="rtl">{t('buttons.submit')}</span>
-                  </span>
-                )}
-              </button>
+                <Button
+                  type="button"
+                  onClick={handlePrevious}
+                  disabled={isTransitioning}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-8 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center gap-3"
+                >
+                  <FaArrowLeft className="w-4 h-4" />
+                  <span>Previous</span>
+                </Button>
+                <Button
+                  type="submit"
+                  disabled={
+                    !isCurrentStepValid() || isSubmitting || isTransitioning
+                  }
+                  className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-10 py-4 rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-3"
+                >
+                  {isSubmitting ? (
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Processing...</span>
+                    </div>
+                  ) : (
+                    <>
+                      <span>Submit Application</span>
+                      <FaCheck className="w-4 h-4" />
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
-          </AnimatedElement>
-
-          {/* Footer Note */}
-          <AnimatedElement type="fadeIn" delay={0.7} duration={0.6}>
-            <div className="text-center text-sm text-gray-500 mt-6">
-              <p dir="rtl">{t('footer.note')}</p>
-              <p>Please ensure all required fields are completed</p>
-            </div>
-          </AnimatedElement>
-
-        </form>
-      </div>
+          </div>
+        </div>
+      </form>
     </div>
   );
 };
 
-export default ModernLeasingForm;
+export default ContactFormProject;

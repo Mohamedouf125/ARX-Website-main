@@ -9,10 +9,11 @@ import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
 import { AnimatedElement } from "@/components/animations/AnimationType";
 import { getData } from "@/libs/axios/server";
 import { AxiosHeaders } from "axios";
-import LeasingApplicationForm from "./components/LeasingApplicationForm";
+// import LeasingApplicationForm from "./components/LeasingApplicationForm";
 import ServiceCard from "./components/projects";
 import PropertySwiper from "./components/ImageSwiper";
 import "swiper/css";
+import HomeContact from "@/components/home/HomeContact";
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -336,7 +337,6 @@ const AboutPage = () => {
         </div>
       </section>
 
-      {/* Integrated ScrollControlledSwiper Content */}
       {/* Center Section with Sticky Swiper */}
       <section
         ref={centerSectionRef}
@@ -525,8 +525,9 @@ const AboutPage = () => {
 
       {/* swiper hear  */}
       <PropertySwiper />
-      <section className="w-full h-full ">
-        <LeasingApplicationForm />
+      <section className="w-full h-full py-[10vw] ">
+          <HomeContact contact="/about.jpg" />
+
       </section>
     </div>
   );

@@ -1,18 +1,36 @@
+"use client";
+import ContactFormProject from "@/app/[locale]/testing/components/LeasingApplicationForm";
 import { AnimatedElement } from "../animations/AnimationType";
 import ContactForm from "./ContactForm";
-import "@/app/globals.css"
-  
+import "@/app/globals.css";
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useLocale } from "next-intl";
+
 interface ContactSectionProps {
   contact: string;
 }
 
-const ContactSection = ({contact}: ContactSectionProps) => {
+const ContactSection = ({ contact }: ContactSectionProps) => {
+  const [reloadKey, setReloadKey] = useState(0);
+  const pathname = usePathname();
+  const locale = useLocale();
+
+  const handleReloadAnimation = () => {
+    setReloadKey((prev) => prev + 1);
+  };
+
+  // Check if we're on the home page
+ const isHomePage = pathname === `/${locale}`
   return (
     <section className="relative flex items-center justify-center p-2 px-10 lg:px-20">
       {/* Background Image with Overlay */}
-      <div className="bg-cover bg-center bg-no-repeat relative p-30 px-5 sm:px-10 xl:px-40 rounded-3xl w-full" style={{
-        backgroundImage: `url(${contact || '/bg-12.jpg'})`,
-      }}>
+      <div
+        className="bg-cover bg-center bg-no-repeat relative p-30 px-5 sm:px-10 xl:px-40 rounded-3xl w-full"
+        style={{
+          backgroundImage: `url(${contact || "/bg-12.jpg"})`,
+        }}
+      >
         <div className="absolute inset-0 bg-black/40 rounded-3xl"></div>
         {/* shapes */}
         <div className="cover z-10 absolute top-0 left-0 w-full h-full">
@@ -35,6 +53,7 @@ const ContactSection = ({contact}: ContactSectionProps) => {
           <div className="flex justify-center">
             <div className="absolute bottom-[-10px] left-[-10px] z-[-1]">
               <AnimatedElement
+                key={`right-shape-${reloadKey}`}
                 type="slideRight"
                 duration={3}
                 className="w-full h-full"
@@ -45,6 +64,7 @@ const ContactSection = ({contact}: ContactSectionProps) => {
 
             <div className="absolute bottom-[-10px] right-[-20px] z-[-1]">
               <AnimatedElement
+                key={`right-shape-${reloadKey}`}
                 type="slideLeft"
                 duration={3}
                 className="w-full h-full"
@@ -63,7 +83,12 @@ const ContactSection = ({contact}: ContactSectionProps) => {
                 duration={3}
                 className="w-full h-full"
               >
-                <ContactForm />
+                {/* Conditional rendering based on current page */}
+                {isHomePage ? (
+                  <ContactForm />
+                ) : (
+                  <ContactFormProject handleReloadAnimation={handleReloadAnimation} />
+                )}
               </AnimatedElement>
             </div>
           </div>
