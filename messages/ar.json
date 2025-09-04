@@ -46,17 +46,17 @@
     "units_sold": "الوحدات المباعة",
     "total_constructions": "إجمالي المشاريع",
     "total_clients": "إجمالي العملاء",
-    "offices_worldwide_1": "إجمالي سنوات الخبرة",
-    "offices_worldwide_2": "الوحدات المباعة",
-    "offices_worldwide_3": "إجمالي المشاريع",
-    "offices_worldwide_4": "إجمالي العملاء",
+    "offices_worldwide_1": " سنوات الخبرة",
+    "offices_worldwide_2": "الوحدات ",
+    "offices_worldwide_3": " المشاريع",
+    "offices_worldwide_4": " العملاء",
     "years_of_experience": "سنوات الخبرة",
     "projects_completed": "مشاريع مكتملة",
     "our_impact": "تأثيرنا"
   },
   "second_hero": {
     "title": "نحن هنا لمساعدتك في بناء منزلك المثالي",
-    "description": "سواء كنت تبني أو تجديف أو تشتري أو تبيع، نقدم تنفيذ المشروعات بسلاسة تحت واحد.",
+    "description": "سواء كنت تشتري او تستثمر نقدم لك  تنفيذ المشروعات بسلاسة",
     "button": "احصل على عرض مجاني"
   },
   "home": {
@@ -102,11 +102,11 @@
   },
   "about": {
     "OUR_STORY": "القصة",
-    "40+":"40+ سنوات من",
-    "remarkable journey":"رحلة مميزة",
+    "40+": "40+ سنوات من",
+    "remarkable journey": "رحلة مميزة",
     "Property Gallery": "معرض العقارات",
-     "Our Services":"خدماتنا",
-        "Take a brief look at some of the services we offer":"عرض بعض الخدمات التي نقدمها",
+    "Our Services": "خدماتنا",
+    "Take a brief look at some of the services we offer": "عرض بعض الخدمات التي نقدمها",
     "big_cards": {
       "what_we_do": "ما نقوم به",
       "our_impact": "أثرنا",
@@ -150,11 +150,11 @@
   },
   "our_features": {
     "span": "وجهتك الأولى للنمو العقاري المستدام",
-  "title": {
-    "line1": "وجهتك الأولى للنمو المستدام",
-    "line2": "في العقارات الاستثمارية",
-    "line3": ""
-  },
+    "title": {
+      "line1": "وجهتك الأولى للنمو المستدام",
+      "line2": "في العقارات الاستثمارية",
+      "line3": ""
+    },
     "page_title": "خدماتنا",
     "description": "نحن نهتم بتقديم خدمات عالية الجودة لعملائنا الموفرين.",
     "read_more": "اقرأ المزيد",
@@ -203,7 +203,7 @@
       "title": "لا توجد صور للمشاريع",
       "subtitle": "لا توجد صور للمشاريع في الوقت الحالي"
     },
-            "loadMore":"تحميل المزيد",
+    "loadMore": "تحميل المزيد",
     "constructionphotos": "صور المشاريع",
     "Showing": "عرض",
     "of": "من",
@@ -275,6 +275,7 @@
     "contact us": "اتصل بنا"
   },
   "contact": {
+    "description": "دمياط الجديدة - الحي الثالث - شارع 15",
     "title": "اتصل بنا",
     "lcocation": "مواقعنا",
     "description_part_one": "نحن متاحين للتواصل مع العقارات 24/7.",

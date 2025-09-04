@@ -56,7 +56,6 @@ const AboutPage = () => {
       try {
         const data = await getTestimonials(locale);
         setTestimonials(data);
-        
       } catch (err) {
         console.error("Failed to fetch testimonials:", err);
       } finally {
@@ -109,7 +108,10 @@ const AboutPage = () => {
               duration={1}
               className="w-full h-full"
             >
-              <h2 className="font-bold text-[50px] lg:text-[60px] xl:text-[50px] text-black">
+              <h2
+                className="font-bold text-black"
+                style={{ fontSize: "clamp(30px,7vw,50px)" }}
+              >
                 {t("description")}
               </h2>
             </AnimatedElement>
@@ -315,7 +317,10 @@ const AboutPage = () => {
                         </div>
                       </div>
                       <div className="">
-                        <span className="text-[70px] font-[700] text-black flex items-center leading-none">
+                        <span
+                          className="font-[700] text-black flex items-center leading-none"
+                          style={{ fontSize: "clamp(20px,10vw,70px)" }}
+                        >
                           <CountUp
                             end={count}
                             duration={3}
@@ -323,7 +328,10 @@ const AboutPage = () => {
                             enableScrollSpy={true}
                           />
                           <span>{unit}</span>
-                          <span className="text-[30px] font-[700] text-[#dba426]">
+                          <span
+                            className="font-[700] text-[#dba426]"
+                            style={{ fontSize: "clamp(20px, 4vw, 30px)" }}
+                          >
                             +
                           </span>
                         </span>
@@ -378,7 +386,7 @@ const AboutPage = () => {
                 button: t("big_cards.second_card_button"),
                 backgroundImage: aboutBanner?.data?.bannerOurImPact?.image,
                 animation: "slideLeft",
-                href: "/core-values",
+                href: "/projects",
                 top: false,
               },
               // {

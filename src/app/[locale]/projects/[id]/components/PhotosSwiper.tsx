@@ -54,7 +54,7 @@ const PhotosSwiper = ({ projectData }: { projectData: ProjectType | null }) => {
         loop
         breakpoints={{
           0: {
-            slidesPerView: 1.5,
+            slidesPerView: 1,
             spaceBetween: 10,
           },
           991: {
@@ -67,10 +67,9 @@ const PhotosSwiper = ({ projectData }: { projectData: ProjectType | null }) => {
           },
         }}
         onSwiper={(swiper) => {
-  setTimeout(() => swiper.update(), 0);
-  window.addEventListener("resize", () => swiper.update());
-}}
-
+          setTimeout(() => swiper.update(), 0);
+          window.addEventListener("resize", () => swiper.update());
+        }}
       >
         {projectData?.property_listing_images?.map(
           (slide: { id: number; image: string }, index: number) => (

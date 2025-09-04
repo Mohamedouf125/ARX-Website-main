@@ -272,19 +272,19 @@ const ProjectPage: React.FC = () => {
       ),
     },
   ];
-const getEmbedUrl = (locationLink?: string): string => {
-  if (!locationLink) {
-    return ""; // Return empty string as fallback
-  }
-  
-  // Extract coordinates from the Google Maps URL
-  const match = locationLink.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
-  if (match) {
-    const [, lat, lng] = match;
-    return `https://maps.google.com/maps?q=${lat},${lng}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
-  }
-  return ""; // Return empty string if no match found
-};
+  const getEmbedUrl = (locationLink?: string): string => {
+    if (!locationLink) {
+      return ""; // Return empty string as fallback
+    }
+
+    // Extract coordinates from the Google Maps URL
+    const match = locationLink.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+    if (match) {
+      const [, lat, lng] = match;
+      return `https://maps.google.com/maps?q=${lat},${lng}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    }
+    return ""; // Return empty string if no match found
+  };
   if (!projectData) {
     return <div>Loading...</div>;
   }
@@ -351,9 +351,9 @@ const getEmbedUrl = (locationLink?: string): string => {
                         <Image
                           src={item.image || ""}
                           alt=""
-                          className="w-6 h-6"
-                          width={16}
-                          height={16}
+                          className="w-8 h-8"
+                          width={206}
+                          height={206}
                         />
                       ) : (
                         <Building className="w-6 h-6 text-black" />
@@ -363,8 +363,15 @@ const getEmbedUrl = (locationLink?: string): string => {
                       <span className="block text-[14px] md:text-[15px] font-[600] opacity-50">
                         {item.key}
                       </span>
-                      <h3 className="text-[14px] md:text-[15px] font-[600]">
-                        {item.value}
+                      <h3
+                        className="text-[14px] md:text-[15px] font-[600] overflow-hidden whitespace-nowrap text-ellipsis"
+                        title={item.value ?? ""}
+                      >
+                        {typeof item.value === "string"
+                          ? item.value.length >18
+                            ? `${item.value.slice(0,18)}...`
+                            : item.value
+                          : ""}
                       </h3>
                     </div>
                   </li>
@@ -375,8 +382,8 @@ const getEmbedUrl = (locationLink?: string): string => {
             <div className="image mt-10 md:mt-16">
               <Image
                 src={projectData?.hero_image}
-                alt=""
-                className="w-full h-[300px] sm:h-[400px] lg:h-[600px] xl:h-full object-cover rounded-3xl"
+                alt="Project Hero"
+                className="w-full h-[180px] sm:h-[240px] md:h-[320px] lg:h-[500px] xl:h-[600px] object-cover rounded-3xl"
                 width={1920}
                 height={1080}
               />
@@ -556,59 +563,124 @@ const getEmbedUrl = (locationLink?: string): string => {
             )}
           </div>
         </div>
-
-        <div className="w-full py-30 max-w-7xl mx-auto px-6">
-          {/* Interactive tab navigation */}
-          <div className="head lg:flex items-center justify-between mb-6">
-            <div className="title">
-              <h2 className="text-[35px] md:text-[55px] font-[600] mb-4">
-                {t("media")}
-              </h2>
-            </div>
-            <div className="flex flex-wrap justify-center gap-2">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 p-3 px-6 rounded-full border border-gray-300 transition-all duration-300 ${
-                    activeTab === tab.id
-                      ? "bg-[#dba426] text-white fil-white"
-                      : "bg-white text-black"
-                  }`}
-                >
-                  <span className="fill-white!">{tab.icon}</span>
-                  <span className=" uppercase text-sm">{t(tab.name)}</span>
-                </button>
-              ))}
-              <Link
-                href={`./${projectData?.slug}/construction_photos`}
-              >
-                <div className="flex  border-2 items-center gap-2 p-4 px-6 rounded-full  bg-white text-black transition-all duration-300">
-                  <Construction className="w-4 h-4" />
-                  <span className="uppercase text-sm">
-                    {t("constructionphotos")}
-                  </span>
-                </div>
-              </Link>
-            </div>
-          </div>
-
-          {/* Tab content */}
-          <div
-            className={`h-full ${
-              activeTab === "photos"
-                ? "2xl:ml-[-150px] lg:mr-[-700px]"
-                : activeTab === "plan"
-                ? projectData?.property_floor_plans?.length &&
-                  projectData?.property_floor_plans?.length > 0
-                  ? "lg:ml-[-150px] lg:mr-[-700px]"
-                  : "ml-[0px] mr-[0px] w-full"
-                : ""
-            }`}
-          >
-            {tabs.find((tab) => tab.id === activeTab)?.content}
-          </div>
+<div className="w-full py-30 max-w-7xl mx-auto px-6">
+  {/* Interactive tab navigation */}
+  <div className="head lg:flex items-center justify-between mb-6">
+    <div className="title">
+      <h2 className="text-[35px] md:text-[55px] font-[600] mb-4">
+        {t("media")}
+      </h2>
+    </div>
+    
+    {/* Desktop tab navigation - hidden on mobile */}
+    <div className="hidden lg:flex flex-wrap justify-center gap-2">
+      {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          onClick={() => setActiveTab(tab.id)}
+          className={`flex items-center gap-2 p-3 px-6 rounded-full border border-gray-300 transition-all duration-300 ${
+            activeTab === tab.id
+              ? "bg-[#dba426] text-white fil-white"
+              : "bg-white text-black"
+          }`}
+        >
+          <span className="fill-white!">{tab.icon}</span>
+          <span className=" uppercase text-sm">{t(tab.name)}</span>
+        </button>
+      ))}
+      <Link href={`./${projectData?.slug}/construction_photos`}>
+        <div className="flex  border-2 items-center gap-2 p-4 px-6 rounded-full  bg-white text-black transition-all duration-300">
+          <Construction className="w-4 h-4" />
+          <span className="uppercase text-sm">
+            {t("constructionphotos")}
+          </span>
         </div>
+      </Link>
+    </div>
+  </div>
+
+  {/* Mobile tab layout - visible only on mobile */}
+  <div className="lg:hidden space-y-4">
+    {tabs.map((tab) => (
+      <div key={tab.id} className="w-full">
+        {/* Tab button */}
+        <button
+          onClick={() => setActiveTab(activeTab === tab.id ? "" : tab.id)}
+          className={`w-full flex items-center justify-between p-4 px-6 rounded-t-2xl border border-gray-300 transition-all duration-300 ${
+            activeTab === tab.id
+              ? "bg-[#dba426] text-white border-b-0"
+              : "bg-white text-black rounded-2xl"
+          }`}
+        >
+          <div className="flex items-center gap-3">
+            <span className="fill-white!">{tab.icon}</span>
+            <span className="uppercase text-sm font-medium">{t(tab.name)}</span>
+          </div>
+          <svg
+            className={`w-5 h-5 transition-transform duration-300 ${
+              activeTab === tab.id ? "rotate-180" : ""
+            }`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        
+        {/* Tab content - appears directly below the active tab */}
+        {activeTab === tab.id && (
+          <div className="border border-gray-300 border-t-0 rounded-b-2xl bg-white overflow-hidden">
+            <div className="p-4">
+              <div
+                className={`h-full ${
+                  activeTab === "photos"
+                    ? "2xl:ml-[-150px] lg:mr-[-700px]"
+                    : activeTab === "plan"
+                    ? projectData?.property_floor_plans?.length &&
+                      projectData?.property_floor_plans?.length > 0
+                      ? "lg:ml-[-150px] lg:mr-[-700px]"
+                      : "ml-[0px] mr-[0px] w-full"
+                    : ""
+                }`}
+              >
+                {tab.content}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    ))}
+    
+    {/* Construction photos link for mobile */}
+    <Link href={`./${projectData?.slug}/construction_photos`}>
+      <div className="w-full flex items-center gap-2 p-4 px-6 rounded-2xl border-2 bg-white text-black transition-all duration-300">
+        <Construction className="w-4 h-4" />
+        <span className="uppercase text-sm">
+          {t("constructionphotos")}
+        </span>
+      </div>
+    </Link>
+  </div>
+
+  {/* Desktop tab content - hidden on mobile */}
+  <div className="hidden lg:block">
+    <div
+      className={`h-full ${
+        activeTab === "photos"
+          ? "2xl:ml-[-150px] lg:mr-[-700px]"
+          : activeTab === "plan"
+          ? projectData?.property_floor_plans?.length &&
+            projectData?.property_floor_plans?.length > 0
+            ? "lg:ml-[-150px] lg:mr-[-700px]"
+            : "ml-[0px] mr-[0px] w-full"
+          : ""
+      }`}
+    >
+      {tabs.find((tab) => tab.id === activeTab)?.content}
+    </div>
+  </div>
+</div>
 
         {/* Location Section with Map Image */}
         <div className="max-w-7xl mx-auto px-6">

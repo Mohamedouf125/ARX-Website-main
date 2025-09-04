@@ -38,10 +38,15 @@ const PageHero: React.FC<PageHeroProps> = ({
 
   return (
     <section
-      className={`relative ${heightClasses[height]} w-full h-ull bg-no-repeat  z-[0]`}
+      className={`relative ${heightClasses[height]} w-full bg-no-repeat z-[0]`}
       style={{
         backgroundImage: `url(${backgroundImage})`,
+        // Mobile: cover to fill container, Desktop: cover for consistent behavior
         backgroundSize: "cover",
+        // Mobile: center the image, Desktop: center as well
+        backgroundPosition: "center center",
+        // Ensure image covers the full width on mobile
+        backgroundRepeat: "no-repeat",
       }}
     >
       {/* Overlay */}

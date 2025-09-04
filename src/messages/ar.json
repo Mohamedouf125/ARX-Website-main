@@ -16,6 +16,7 @@
     "subscribe": "اشترك"
   },
   "contact": {
+    "description": "دمياط الجديدة - الحي الثالث - شارع 15",
     "title": "اتصل بنا",
     "description_part_one": "نحن متاحين للتواصل مع العقارات 24/7",
     "description_part_two": "فريقنا جاهز دائماً لمساعدتك في أي استفسار",
@@ -52,9 +53,9 @@
     "our_videos": "فيديوهاتنا الجديدة"
   },
   "about": {
-     "property_gallery": "مخطط عقاري",
-        "Our Services":"خدماتنا",
-        "Take a brief look at some of the services we offer":"قم بإلقاء نظرة موجزة على بعض الخدمات التي نقدمها",
+    "property_gallery": "مخطط عقاري",
+    "Our Services": "خدماتنا",
+    "Take a brief look at some of the services we offer": "قم بإلقاء نظرة موجزة على بعض الخدمات التي نقدمها",
     "title": "من نحن",
     "description": "اكتشف رحلتنا ومهمتنا والقيم التي تدفعنا لإنشاء مشاريع عقارية استثنائية.",
     "vision_title": "رؤيتنا",
@@ -101,7 +102,6 @@
   "errorMessage": "حدث خطأ أثناء الإرسال. يرجى المحاولة مرة أخرى.",
   "submit": "إرسال الطلب",
   "submitting": "جاري المعالجة...",
-
   "sections": {
     "companyInfo": "معلومات الشركة",
     "contactPerson": "الشخص المسؤول",
@@ -111,7 +111,6 @@
     "locationInfo": "معلومات الموقع",
     "requiredDocuments": "الوثائق المطلوبة"
   },
-
   "fields": {
     "companyName": "إسم الشركة",
     "website": "الموقع الإلكتروني",
@@ -140,7 +139,6 @@
     "requiredArea": "المساحة المطلوبة (م²)",
     "otherConditions": "شروط خاصة بالمحل"
   },
-
   "options": {
     "select": "اختر",
     "yes": "نعم",
@@ -150,7 +148,6 @@
     "high": "مرتفع",
     "aboveAverage": "فوق المتوسط"
   },
-
   "categories": {
     "clothes": "أزياء",
     "accessories": "إكسسوارات",
@@ -166,12 +163,10 @@
     "family": "عائلي",
     "family_en": "Family"
   },
-
   "placeholders": {
     "specify": "من فضلك حدد...",
     "anyRequirements": "أي متطلبات خاصة..."
   },
-
   "documents": {
     "companyProfile": "ملف الشركة",
     "companyProfileDesc": "Company's Profile",

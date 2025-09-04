@@ -51,10 +51,10 @@
         "units_sold": "Units Sold",
         "total_constructions": "Total Constructions",
         "total_clients": "Total Clients",
-        "offices_worldwide_1": "total of years experience",
-        "offices_worldwide_2": "units sold",
-        "offices_worldwide_3": "total constructions",
-        "offices_worldwide_4": "total clients",
+        "offices_worldwide_1": "years",
+        "offices_worldwide_2": "units",
+        "offices_worldwide_3": "constructions",
+        "offices_worldwide_4": "clients",
         "years_of_experience": "years of experience",
         "projects_completed": "projects completed",
         "our_impact": "our impact",
@@ -98,13 +98,13 @@
     },
     "second_hero": {
         "title": "We're here to help you build your dream home",
-        "description": "Whether you're building, remodeling, buying, or selling, we bring seamless project execution under one roof.",
+        "description": "Whether you're buying or investing, we provide you with seamless project execution",
         "button": "Get your free quote"
     },
     "about": {
         "OUR_STORY": "OUR STORY",
-        "40+":"40+ years of a",
-        "remarkable journey":"remarkable journey",
+        "40+": "40+ years of a",
+        "remarkable journey": "remarkable journey",
         "Property Gallery": "Property Gallery",
         "Our Services": "Our Services",
         "Take a brief look at some of the services we offer": "Take a brief look at some of the services we offer",
@@ -271,6 +271,7 @@
         "contact us": "Contact Us"
     },
     "contact": {
+        "description": "New Damietta - the 3rd district – 15th St",
         "title": "Contact Us",
         "lcocation": "OUR LOCATIONS",
         "description_part_one": "We're Always Available For Your Real Estate Needs 24/7.",
@@ -406,88 +407,88 @@
         "footer_address_2": "New Damietta, Third District, Street 15",
         "footer_address_3": "New Cairo-st 90, Top 90 Building"
     },
-  "LeasingApplicationForm": {
-    "title": "Leasing Application Form",
-    "subtitle": "طلب إستئجار موقع",
-    "sections": {
-      "companyInformation": "Company Information",
-      "contactPerson": "Contact Person",
-      "brandInformation": "Brand Information",
-      "businessCategories": "Business Categories",
-      "targetMarket": "Target Market",
-      "locationInformation": "Location Information",
-      "requiredDocuments": "Required Documents"
-    },
-    "placeholders": {
-      "companyName": "Company Name",
-      "postalAddress": "Postal Address",
-      "website": "Website",
-      "phone": "Phone",
-      "fax": "Fax",
-      "responsiblePerson": "Responsible Person",
-      "position": "Position",
-      "mobile": "Mobile",
-      "email": "Email",
-      "agencyBrandName": "Agency / Brand Name",
-      "franchiseOwner": "Franchise Owner?",
-      "countryOfOrigin": "Country of Origin",
-      "branchesInEgypt": "Branches in Egypt",
-      "branchesOutsideEgypt": "Branches Outside Egypt",
-      "furniture": "Furniture",
-      "services": "Services",
-      "others": "Others",
-      "requiredLocation": "Required Location (Mall Name)",
-      "shopNo": "Shop No.",
-      "floorNo": "Floor No.",
-      "areaNo": "Area No.",
-      "requiredArea": "Required Area (m²)",
-      "otherConditions": "Other Conditions"
-    },
-    "categories": {
-      "clothes": "Clothes",
-      "accessories": "Accessories",
-      "shoesLeather": "Shoes & Leather",
-      "perfumesBeauty": "Perfumes & Beauty",
-      "restaurants": "Restaurants",
-      "jewellsWatches": "Jewells & Watches",
-      "furniture": "Furniture",
-      "services": "Services",
-      "others": "Others"
-    },
-    "subcategories": {
-      "women": "Women",
-      "gents": "Gents",
-      "kids": "Kids",
-      "family": "Family"
-    },
-    "options": {
-      "yes": "Yes",
-      "no": "No",
-      "low": "Low",
-      "average": "Average",
-      "high": "High",
-      "aboveAverage": "Above Average"
-    },
-    "labels": {
-      "productPrice": "Product Price",
-      "targetedCustomers": "Targeted Customers",
-      "customerIncome": "Income Level"
-    },
-    "documents": {
-      "companyProfile": "Company's Profile",
-      "brandPresentation": "Brand Presentation",
-      "shopPhotos": "Shop Photos"
-    },
-    "buttons": {
-      "submit": "Submit Application",
-      "processing": "Processing..."
-    },
-    "footer": {
-      "note": "Please ensure all required fields are completed"
-    },
-    "messages": {
-      "submitSuccess": "Application submitted successfully!",
-      "submitError": "Error submitting application. Please try again."
+    "LeasingApplicationForm": {
+        "title": "Leasing Application Form",
+        "subtitle": "طلب إستئجار موقع",
+        "sections": {
+            "companyInformation": "Company Information",
+            "contactPerson": "Contact Person",
+            "brandInformation": "Brand Information",
+            "businessCategories": "Business Categories",
+            "targetMarket": "Target Market",
+            "locationInformation": "Location Information",
+            "requiredDocuments": "Required Documents"
+        },
+        "placeholders": {
+            "companyName": "Company Name",
+            "postalAddress": "Postal Address",
+            "website": "Website",
+            "phone": "Phone",
+            "fax": "Fax",
+            "responsiblePerson": "Responsible Person",
+            "position": "Position",
+            "mobile": "Mobile",
+            "email": "Email",
+            "agencyBrandName": "Agency / Brand Name",
+            "franchiseOwner": "Franchise Owner?",
+            "countryOfOrigin": "Country of Origin",
+            "branchesInEgypt": "Branches in Egypt",
+            "branchesOutsideEgypt": "Branches Outside Egypt",
+            "furniture": "Furniture",
+            "services": "Services",
+            "others": "Others",
+            "requiredLocation": "Required Location (Mall Name)",
+            "shopNo": "Shop No.",
+            "floorNo": "Floor No.",
+            "areaNo": "Area No.",
+            "requiredArea": "Required Area (m²)",
+            "otherConditions": "Other Conditions"
+        },
+        "categories": {
+            "clothes": "Clothes",
+            "accessories": "Accessories",
+            "shoesLeather": "Shoes & Leather",
+            "perfumesBeauty": "Perfumes & Beauty",
+            "restaurants": "Restaurants",
+            "jewellsWatches": "Jewells & Watches",
+            "furniture": "Furniture",
+            "services": "Services",
+            "others": "Others"
+        },
+        "subcategories": {
+            "women": "Women",
+            "gents": "Gents",
+            "kids": "Kids",
+            "family": "Family"
+        },
+        "options": {
+            "yes": "Yes",
+            "no": "No",
+            "low": "Low",
+            "average": "Average",
+            "high": "High",
+            "aboveAverage": "Above Average"
+        },
+        "labels": {
+            "productPrice": "Product Price",
+            "targetedCustomers": "Targeted Customers",
+            "customerIncome": "Income Level"
+        },
+        "documents": {
+            "companyProfile": "Company's Profile",
+            "brandPresentation": "Brand Presentation",
+            "shopPhotos": "Shop Photos"
+        },
+        "buttons": {
+            "submit": "Submit Application",
+            "processing": "Processing..."
+        },
+        "footer": {
+            "note": "Please ensure all required fields are completed"
+        },
+        "messages": {
+            "submitSuccess": "Application submitted successfully!",
+            "submitError": "Error submitting application. Please try again."
+        }
     }
-  }
 }

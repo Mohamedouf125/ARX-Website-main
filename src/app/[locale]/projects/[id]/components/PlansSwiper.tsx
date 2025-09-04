@@ -31,7 +31,7 @@ const PlansSwiper = ({ projectData }: { projectData: ProjectType | null }) => {
         loop
         breakpoints={{
           0: {
-            slidesPerView: 1.5,
+            slidesPerView: 1,
             spaceBetween: 10,
           },
           991: {

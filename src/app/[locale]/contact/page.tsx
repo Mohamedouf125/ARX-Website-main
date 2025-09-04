@@ -33,7 +33,9 @@ interface FormData {
 const ContactPage = () => {
   const [phone, setPhone] = useState("");
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [contactBanner, setContactBanner] = useState<ContactBanner | null>(null);
+  const [contactBanner, setContactBanner] = useState<ContactBanner | null>(
+    null
+  );
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -65,7 +67,19 @@ const ContactPage = () => {
 
     fetchData();
   }, [locale]);
+  const getEmbedUrl = (locationLink?: string): string => {
+    if (!locationLink) {
+      return ""; // Return empty string as fallback
+    }
 
+    // Extract coordinates from the Google Maps URL
+    const match = locationLink.match(/@(-?\d+\.?\d*),(-?\d+\.?\d*)/);
+    if (match) {
+      const [, lat, lng] = match;
+      return `https://maps.google.com/maps?q=${lat},${lng}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+    }
+    return ""; // Return empty string if no match found
+  };
   // Contact data configuration
   const contactData = [
     {
@@ -92,8 +106,7 @@ const ContactPage = () => {
       icon: <FaMapMarkerAlt />,
       title: t("location"),
       btn: t("visit_us"),
-      description:
-        "New Cairo - south 90 St- top 90 building\nNew Damietta - the 3rd district – 15th St",
+      description:t("description"),
       link: "https://maps.app.goo.gl/VYVirReCxBxe4zQC9",
       animation: "slideUp" as const,
       delay: 0.4,
@@ -105,7 +118,10 @@ const ContactPage = () => {
     { value: "", label: t("form.subject_options.interested") },
     { value: "commercial", label: t("form.subject_options.commercial") },
     { value: "housing", label: t("form.subject_options.housing") },
-    { value: "administrative", label: t("form.subject_options.administrative") },
+    {
+      value: "administrative",
+      label: t("form.subject_options.administrative"),
+    },
     { value: "medical", label: t("form.subject_options.medical") },
   ];
 
@@ -125,20 +141,24 @@ const ContactPage = () => {
   };
 
   // Form handling functions
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handlePhoneChange = (value: string | undefined) => {
     const phoneValue = value || "";
     setPhone(phoneValue);
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      phone: phoneValue
+      phone: phoneValue,
     }));
   };
 
@@ -149,7 +169,7 @@ const ContactPage = () => {
     try {
       // Add your form submission logic here
       console.log("Form submitted:", { ...formData, phone });
-      
+
       // Reset form after successful submission
       setFormData({
         name: "",
@@ -159,10 +179,9 @@ const ContactPage = () => {
         message: "",
       });
       setPhone("");
-      
+
       // Show success message (you can implement toast notifications here)
       alert("Message sent successfully!");
-      
     } catch (error) {
       console.error("Error submitting form:", error);
       alert("Error sending message. Please try again.");
@@ -201,7 +220,9 @@ const ContactPage = () => {
                     className="w-full h-full"
                   >
                     <div className="p-4 lg:p-6 xl:p-10 border border-gray-200 rounded-3xl space-y-8 flex flex-col justify-between h-full">
-                      <div className="icon text-2xl text-[#dba426]">{item.icon}</div>
+                      <div className="icon text-2xl text-[#dba426]">
+                        {item.icon}
+                      </div>
                       <div className="content">
                         <h3 className="text-[20px] lg:text-[25px] font-[600] mb-2">
                           {item.title}
@@ -212,9 +233,9 @@ const ContactPage = () => {
                       </div>
 
                       <div className="w-full">
-                        <a 
-                          href={item.link} 
-                          target="_blank" 
+                        <a
+                          href={item.link}
+                          target="_blank"
                           rel="noopener noreferrer"
                         >
                           <button className="bg-[#dba426] hover:bg-black w-full text-white px-6 py-4 rounded-full font-[600] transition-all duration-300">
@@ -244,7 +265,9 @@ const ContactPage = () => {
                         className="w-full h-full"
                       >
                         <div className="p-4 lg:p-6 xl:p-10 border border-gray-200 rounded-3xl space-y-8 flex flex-col justify-between h-full min-h-[300px]">
-                          <div className="icon text-2xl text-[#dba426]">{item.icon}</div>
+                          <div className="icon text-2xl text-[#dba426]">
+                            {item.icon}
+                          </div>
                           <div className="content">
                             <h3 className="text-[20px] lg:text-[25px] font-[600] mb-2">
                               {item.title}
@@ -314,7 +337,7 @@ const ContactPage = () => {
               <h3 className="text-[30px] lg:text-[50px] font-[700]">
                 {t("send_message")}
               </h3>
-              
+
               <form onSubmit={handleSubmit} className="space-y-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5">
                   <div>
@@ -354,13 +377,18 @@ const ContactPage = () => {
                       className="w-full bg-gray-100 p-6 rounded-full [&_.PhoneInputInput]:bg-transparent [&_.PhoneInputInput]:border-0 [&_.PhoneInputInput]:outline-0 [&_.PhoneInputInput]:text-base"
                     />
                   </div>
-                  <div>
-                    <select 
-                      id="subject" 
+                  <div className="relative">
+                    <select
+                      id="subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      className={inputStyle}
+                      className={`bg-gray-100 p-6 w-full focus:outline-none rounded-full appearance-none cursor-pointer ${
+                        locale === "ar"
+                          ? "pl-12 pr-6 text-right" // RTL: padding-left for arrow, text-right
+                          : "pr-12 pl-6 text-left" // LTR: padding-right for arrow, text-left
+                      }`}
+                      dir={locale === "ar" ? "rtl" : "ltr"}
                       required
                     >
                       {subjectOptions.map((option) => (
@@ -369,6 +397,29 @@ const ContactPage = () => {
                         </option>
                       ))}
                     </select>
+
+                    {/* Custom dropdown arrow with RTL/LTR positioning */}
+                    <div
+                      className={`absolute inset-y-0 flex items-center pointer-events-none ${
+                        locale === "ar"
+                          ? "left-4" // RTL: arrow on the left side
+                          : "right-4" // LTR: arrow on the right side
+                      }`}
+                    >
+                      <svg
+                        className="w-5 h-5 text-gray-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M19 9l-7 7-7-7"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
 
@@ -416,7 +467,9 @@ const ContactPage = () => {
             {/* Right Side - Map */}
             <div className="w-full h-[300px] md:h-[100%] lg:h-[100%] xl:h-[700px] relative rounded-3xl">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d55292.51054158744!2d31.717864784673285!3d29.985697098329215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1457f37ff900ea15%3A0x79af3ad6eb5c0452!2sARX%20Development!5e0!3m2!1sen!2seg!4v1750696675452!5m2!1sen!2seg"
+                src={getEmbedUrl(
+                  "https://www.google.com/maps/place/31%C2%B026'17.8%22N+31%C2%B039'52.4%22E/@31.4382778,31.6645556,17z/data=!3m1!4b1!4m4!3m3!8m2!3d31.4382778!4d31.6645556?entry=ttu&g_ep=EgoyMDI1MDgzMC4wIKXMDSoASAFQAw%3D%3D"
+                )}
                 width="100%"
                 height="100%"
                 className="rounded-3xl border-0"
