@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import { useLocale, useTranslations } from "next-intl";
@@ -61,6 +61,9 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
   const [mounted, setMounted] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  
+  // Animation frame ref for smooth scrolling
+const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     setMounted(true);
@@ -73,57 +76,89 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     checkMobile();
     window.addEventListener('resize', checkMobile);
     
-    return () => window.removeEventListener('resize', checkMobile);
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
   }, []);
 
-  useEffect(() => {
+  // Smooth scroll handler with requestAnimationFrame
+  const handleSmoothScroll = useCallback(() => {
     if (!mounted || !centerSectionRef.current || !swiperRef.current || isMobile) return;
 
-    const handleScroll = () => {
-      const centerSection = centerSectionRef.current;
-      const swiper = swiperRef.current;
+    const centerSection = centerSectionRef.current;
+    const swiper = swiperRef.current;
 
-      if (!centerSection || !swiper) return;
+    const rect = centerSection.getBoundingClientRect();
+    const sectionHeight = centerSection.offsetHeight;
+    const windowHeight = window.innerHeight;
 
-      const rect = centerSection.getBoundingClientRect();
-      const sectionHeight = centerSection.offsetHeight;
-      const windowHeight = window.innerHeight;
+    // Calculate scroll progress through the center section
+    const progress = Math.max(
+      0,
+      Math.min(
+        1,
+        (windowHeight - rect.top) / (windowHeight + sectionHeight * 1.2)
+      )
+    );
 
-      // Calculate scroll progress through the center section
-      const progress = Math.max(
-        0,
-        Math.min(
-          1,
-          (windowHeight - rect.top) / (windowHeight + sectionHeight * 1.2)
-        )
-      );
+    setScrollProgress(progress);
 
-      setScrollProgress(progress);
+    // Total slides: 1 start space + timeline items + 1 end space
+    const totalSlides = 1 + timelineData.length + 1; // start + timeline + end
 
-      // Total slides: 1 start space + timeline items + 1 end space
-      const totalSlides = 1 + timelineData.length + 1; // start + timeline + end
+    // Calculate target slide based on scroll progress
+    const targetSlide = Math.floor(progress * (totalSlides - 1));
 
-      // Calculate target slide based on scroll progress
-      const targetSlide = Math.floor(progress * (totalSlides - 1));
+    // Clamp the target slide to valid range
+    const clampedTargetSlide = Math.max(
+      0,
+      Math.min(totalSlides - 1, targetSlide)
+    );
 
-      // Clamp the target slide to valid range
-      const clampedTargetSlide = Math.max(
-        0,
-        Math.min(totalSlides - 1, targetSlide)
-      );
+    if (swiper.activeIndex !== clampedTargetSlide) {
+      swiper.slideTo(clampedTargetSlide, 300);
+    }
 
-      if (swiper.activeIndex !== clampedTargetSlide) {
-        swiper.slideTo(clampedTargetSlide, 200);
+    // Continue animation loop
+    animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
+  }, [mounted, timelineData.length, isMobile]);
+
+  useEffect(() => {
+    if (!mounted || isMobile) return;
+
+    // Throttled scroll handler to trigger smooth animation
+    let ticking = false;
+    
+    const onScroll = () => {
+      if (!ticking) {
+        if (animationFrameRef.current) {
+          cancelAnimationFrame(animationFrameRef.current);
+        }
+        animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
+        ticking = true;
+        
+        // Reset ticking flag
+        setTimeout(() => {
+          ticking = false;
+        }, 16); // ~60fps
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll(); // Initial call
+    window.addEventListener("scroll", onScroll, { passive: true });
+    
+    // Initial call
+    handleSmoothScroll();
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", onScroll);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
     };
-  }, [mounted, timelineData.length, isMobile]);
+  }, [handleSmoothScroll]);
 
   // Calculate which dots should be active based on scroll progress
   const getActiveDotIndex = () => {
@@ -132,6 +167,18 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     // Clamp the result to ensure it doesn't exceed the array bounds
     return Math.min(calculatedIndex, timelineData.length - 1);
   };
+
+  // Individual item animation progress
+  const getItemAnimationProgress = useCallback((itemIndex: number) => {
+    const totalItems = timelineData.length;
+    const itemProgressStart = itemIndex / totalItems;
+    const itemProgressEnd = (itemIndex + 1) / totalItems;
+    
+    if (scrollProgress < itemProgressStart) return 0;
+    if (scrollProgress > itemProgressEnd) return 1;
+    
+    return (scrollProgress - itemProgressStart) / (itemProgressEnd - itemProgressStart);
+  }, [scrollProgress, timelineData.length]);
 
   if (!mounted) {
     return <div className="min-h-screen bg-gray-100" />;
@@ -191,18 +238,21 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     );
   }
 
-  // Desktop version - sticky behavior
+  // Desktop version - sticky behavior with smooth animations
   return (
     <section
       ref={centerSectionRef}
       className={`h-[350vh] max-w-[1920px] mx-auto relative ${className}`}
     >
       <div className="sticky top-20 h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 bg-white z-20">
-        {/* Header */}
+        {/* Header with gentle movement */}
         <div
           className={`${
             locale === "ar" ? "text-right" : "text-left"
-          } pb-26 w-full max-w-7xl mx-auto`}
+          } pb-26 w-full max-w-7xl mx-auto transition-transform duration-300 ease-out`}
+          style={{
+            transform: `translateY(${scrollProgress * -8}px)`
+          }}
         >
           <SmallHeadSpan>{t("OUR_STORY")}</SmallHeadSpan>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black ">
@@ -221,6 +271,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
             spaceBetween={60}
             allowTouchMove={false}
             centeredSlides={false}
+            speed={300}
             breakpoints={{
               768: {
                 slidesPerView: 2,
@@ -259,18 +310,38 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
             {timelineData.map((item, index) => {
               const activeDotIndex = getActiveDotIndex();
               const isActive = index <= activeDotIndex;
+              const itemProgress = getItemAnimationProgress(index);
+              
+              // Smooth movement animations (always visible)
+              const yearScale = 0.96 + (itemProgress * 0.08);
+              const yearTranslateY = (1 - itemProgress) * 10;
+              
+              const imageScale = 0.94 + (itemProgress * 0.12);
+              const imageTranslateY = (1 - itemProgress) * 15;
+              
+              const textTranslateY = (1 - itemProgress) * 8;
               
               return (
                 <SwiperSlide key={index}>
                   <div className="w-full h-full flex items-center justify-center px-2">
                     <div className="flex flex-col items-center max-w-xs mx-auto">
-                      {/* Year */}
-                      <div className="text-6xl sm:text-5xl lg:text-7xl font-bold text-[#e4ed64] -ml-4 sm:-ml-8 -mb-8 sm:-mb-12">
+                      {/* Year with smooth movement */}
+                      <div 
+                        className="text-6xl sm:text-5xl lg:text-7xl font-bold text-[#e4ed64] -ml-4 sm:-ml-8 -mb-8 sm:-mb-12 transition-all duration-300 ease-out"
+                        style={{
+                          transform: `scale(${yearScale}) translateY(${yearTranslateY}px)`
+                        }}
+                      >
                         {item.year}
                       </div>
 
-                      {/* Building/House Image */}
-                      <div className="relative mb-16 sm:mb-20">
+                      {/* Building/House Image with smooth movement */}
+                      <div 
+                        className="relative mb-16 sm:mb-20 transition-all duration-400 ease-out"
+                        style={{
+                          transform: `scale(${imageScale}) translateY(${imageTranslateY}px)`
+                        }}
+                      >
                         <div className="w-full h-32 sm:h-40 lg:h-38 flex items-center rounded-md justify-center">
                           <img
                             src={item.image}
@@ -285,32 +356,51 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                         {/* Left line segment */}
                         {index > 0 && (
                           <div
-                            className={`absolute right-1/2 w-full h-1 hidden sm:block transition-colors duration-500 ${
+                            className={`absolute right-1/2 w-full h-1 hidden sm:block transition-all duration-500 ease-out ${
                               isActive ? 'bg-[#e4ed64]' : 'bg-gray-300'
                             }`}
-                            style={{ width: "calc(25vw - 50px)" }}
+                            style={{ 
+                              width: "calc(25vw - 50px)",
+                              transform: `scaleX(${isActive ? 1 : 0.8})`,
+                              transformOrigin: 'right center'
+                            }}
                           ></div>
                         )}
 
                         {/* Right line segment */}
                         {index < timelineData.length - 1 && (
                           <div
-                            className={`absolute left-1/2 w-full h-1 hidden sm:block transition-colors duration-500 ${
+                            className={`absolute left-1/2 w-full h-1 hidden sm:block transition-all duration-500 ease-out ${
                               isActive ? 'bg-[#e4ed64]' : 'bg-gray-300'
                             }`}
-                            style={{ width: "calc(30vw - 50px)" }}
+                            style={{ 
+                              width: "calc(30vw - 50px)",
+                              transform: `scaleX(${isActive ? 1 : 0.8})`,
+                              transformOrigin: 'left center'
+                            }}
                           ></div>
                         )}
 
                         {/* The dot */}
-                        <div className={`w-7 sm:w-9 h-7 sm:h-9 rounded-full shadow-lg border-2 sm:border-4 border-white relative z-10 transition-colors duration-500 ${
-                          isActive ? 'bg-[#e4ed64]' : 'bg-gray-300'
-                        }`}></div>
+                        <div 
+                          className={`w-7 sm:w-9 h-7 sm:h-9 rounded-full shadow-lg border-2 sm:border-4 border-white relative z-10 transition-all duration-500 ease-out ${
+                            isActive ? 'bg-[#e4ed64]' : 'bg-gray-300'
+                          }`}
+                          style={{
+                            transform: `scale(${isActive ? 1.1 : 0.95})`,
+                            boxShadow: isActive ? '0 0 15px rgba(228, 237, 100, 0.4)' : '0 4px 6px rgba(0, 0, 0, 0.1)'
+                          }}
+                        ></div>
                       </div>
                       <div className="mb-3 sm:mb-4"></div>
 
-                      {/* Description */}
-                      <div className="text-center max-w-xs px-2">
+                      {/* Description with smooth movement */}
+                      <div 
+                        className="text-center max-w-xs px-2 transition-all duration-400 ease-out"
+                        style={{
+                          transform: `translateY(${textTranslateY}px)`
+                        }}
+                      >
                         <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
                           {item.title}
                         </p>

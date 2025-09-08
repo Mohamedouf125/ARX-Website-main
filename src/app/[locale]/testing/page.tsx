@@ -233,7 +233,7 @@ const AboutPage = () => {
 
       {/* swiper hear  */}
       <PropertySwiper />
-      <section className="w-full h-full py-[10vw] ">
+      <section className="w-full h-full pb-[30vw] ">
           <HomeContact contact="/about.jpg" />
 
       </section>
