@@ -172,17 +172,19 @@ const Footer: React.FC = () => {
 
       {/* Footer Content */}
       <AnimatedElement type="slideUp" duration={1} className="w-full h-full">
-        <footer className="pt-16 pb-10 mx-auto rounded-3xl z-10 relative bg-white">
+        <footer className="lg:pt-16 lg:pb-10 mx-auto rounded-3xl z-10 relative bg-white">
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-20 px-6 lg:px-10 xl:px-20">
             {/* Logo + Description + Addresses */}
             <div>
-              <Image
-                src={imagelogo}
-                alt="ARX Logo"
-                width={104}
-                height={48}
-                className="h-30 w-auto p-2 rounded-lg mb-10"
-              />
+              <div className="flex justify-center md:block">
+                <Image
+                  src={imagelogo}
+                  alt="ARX Logo"
+                  width={104}
+                  height={48}
+                  className="w-48 md:w-auto h-auto p-2 rounded-lg lg:mb-10"
+                />
+              </div>
               <p className="text-lg font-[500] text-gray-400 leading-6">
                 {t("footerDescription")}
               </p>
@@ -206,7 +208,7 @@ const Footer: React.FC = () => {
             {/* Navigation Links */}
             <div className="grid grid-cols-2 gap-5 border-t md:border-t-0 border-b md:border-b-0 border-l border-l-0 md:border-l border-r border-r-0 md:border-r border-gray-300 py-8 md:py-0 px-5 xl:px-10 justify-center">
               <div className="cover">
-                <ul className="space-y-6 text-sm">
+                <ul className="lg:space-y-6 space-y-2 text-sm">
                   {navigationLinks.map((item) => (
                     <li key={item.id}>
                       <Link
@@ -221,7 +223,7 @@ const Footer: React.FC = () => {
               </div>
 
               {/* Projects Links */}
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col lg:gap-6 gap-2.5">
                 <Link
                   href="/projects"
                   className="font-[600] text-[16px] leading-[1.5] hover:text-[#DBA426] transition-all duration-300"
@@ -247,7 +249,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Contact Information */}
-            <div className="mt-10 md:mt-0 flex flex-col justify-between">
+            <div className="lg:mt-10 md:mt-0 flex flex-col justify-between items-center sm:items-start">
               <ul className="text-sm font-['Switzer, Sans-serif'] flex flex-col gap-2 items-start">
                 {contactInfo.map((item) => (
                   <li
@@ -269,17 +271,29 @@ const Footer: React.FC = () => {
                         }
                         className="transition flex items-center gap-2 text-[0px] md:text-[20px] lg:text-[25px] font-['Switzer, Sans-serif'] font-[550]"
                       >
-                        <span className="text-black text-lg">
-                          {item.title}
-                        </span>
+                        <span className="text-black lg:text-lg text-3xl">{item.title}</span>
                       </a>
                     </div>
                   </li>
                 ))}
               </ul>
-
               {/* Social Media Links */}
-              <ul className="flex items-center justify-start gap-2 mt-10">
+              <ul className="grid grid-cols-4 gap-4 mt-10 sm:hidden">
+                {socialLinks.map((social) => (
+                  <li key={social.name} className="flex justify-center">
+                    <a
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="opacity-60 hover:opacity-100 transition-all duration-300 text-center"
+                    >
+                      {social.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              {/* Optional: Keep original flex version for desktop */}
+              <ul className="hidden sm:flex items-center justify-start gap-2 mt-10">
                 {socialLinks.map((social, index) => (
                   <React.Fragment key={social.name}>
                     <li>

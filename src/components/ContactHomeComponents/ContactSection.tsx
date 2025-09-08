@@ -23,7 +23,7 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
   // Check if we're on the home page
  const isHomePage = pathname === `/${locale}`
   return (
-    <section className="relative flex items-center justify-center p-2 px-10 lg:px-20">
+    <section className="relative flex items-center justify-center p-2 lg:px-20">
       {/* Background Image with Overlay */}
       <div
         className="bg-cover bg-center bg-no-repeat relative p-30 px-5 sm:px-10 xl:px-40 rounded-3xl w-full"
