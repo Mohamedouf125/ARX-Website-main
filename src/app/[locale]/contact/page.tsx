@@ -107,7 +107,7 @@ const ContactPage = () => {
       title: t("location"),
       btn: t("visit_us"),
       description:t("description"),
-      link: "https://maps.app.goo.gl/VYVirReCxBxe4zQC9",
+      link: "https://maps.google.com/?q=31.438272,31.664551",
       animation: "slideUp" as const,
       delay: 0.4,
     },

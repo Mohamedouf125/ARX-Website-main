@@ -91,7 +91,7 @@ const PlansSwiper = ({ projectData }: { projectData: ProjectType | null }) => {
       </button>
       
       <button
-        className="swiper-button-next-plans absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-black z-10 shadow-lg transition-all duration-300 hover:scale-110"
+        className="swiper-button-next-plans absolute right-[2vw] sm:right-[3vw] md:right-[4vw] lg:right-[60vw] xl:right-[45vw] 2xl:right-[37vw] top-1/2 -translate-y-1/2 w-10 h-10 bg-white/90 hover:bg-white rounded-full flex items-center justify-center text-black z-10 shadow-lg transition-all duration-300 hover:scale-110"
         aria-label="Next slide"
       >
         <svg

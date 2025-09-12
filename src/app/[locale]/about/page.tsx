@@ -99,7 +99,7 @@ const AboutPage = () => {
       <div className="rounded-t-3xl bg-white flex flex-col items-center px-6 mx-auto relative z-10">
         {/* VISION / MISSION / VALUES */}
 
-        <section className="grid grid-cols-1 md:grid-cols-2 items-center pt-14 pb-20 gap-10 lg:gap-20 xl:gap-30 font-[sans-serif] max-w-7xl">
+        <section className="grid grid-cols-1 md:grid-cols-2 items-center lg:pt-14 pt-10 lg:pb-20 pb-5 gap-10 lg:gap-20 xl:gap-30 font-[sans-serif] max-w-7xl">
           {/* Left Section */}
           <div className="left-section">
             <SmallHeadSpan>{t("vision_title")}</SmallHeadSpan>
@@ -110,7 +110,7 @@ const AboutPage = () => {
             >
               <h2
                 className="font-bold text-black"
-                style={{ fontSize: "clamp(30px,7vw,50px)" }}
+                style={{ fontSize: "clamp(10px,5vw,50px)" }}
               >
                 {t("description")}
               </h2>

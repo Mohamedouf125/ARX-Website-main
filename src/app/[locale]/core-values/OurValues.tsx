@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 // import { useTranslations } from "next-intl";
 import { getData } from "@/libs/axios/server";
 import { AxiosHeaders } from "axios";
+import { useLocale } from "next-intl";
 
 interface CoreValue {
   id: number;
@@ -22,6 +23,7 @@ function OurValues() {
   // const t = useTranslations("core_values");
   const [apiValues, setApiValues] = useState<CoreValue[]>([]);
   const [loading, setLoading] = useState(true);
+  const locale = useLocale();
 
   useEffect(() => {
     const fetchCoreValues = async () => {
@@ -31,7 +33,7 @@ function OurValues() {
           {},
           new AxiosHeaders({
             // Add locale if needed
-            // lang: locale,
+            lang: locale,
           })
         );
         setApiValues(response.data || []);

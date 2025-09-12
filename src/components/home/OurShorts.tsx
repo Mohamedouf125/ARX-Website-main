@@ -16,6 +16,12 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
   const [showModal, setShowModal] = useState<boolean>(false);
   const t = useTranslations("shorts");
 
+  // Drag scroll state
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [hasDragged, setHasDragged] = useState(false);
+
   const scroll = (dir: "left" | "right") => {
     if (!containerRef.current) return;
     const width = containerRef.current.clientWidth;
@@ -37,6 +43,76 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
     document.body.style.overflow = "auto"; // Re-enable scrolling
   };
 
+  // Handle drag start
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    setIsDragging(true);
+    setHasDragged(false);
+    setStartX(e.pageX - containerRef.current.offsetLeft);
+    setScrollLeft(containerRef.current.scrollLeft);
+    containerRef.current.style.cursor = 'grabbing';
+  };
+
+  // Handle drag move
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Scroll speed multiplier
+    containerRef.current.scrollLeft = scrollLeft - walk;
+    
+    // If mouse moved more than 5px, consider it a drag
+    if (Math.abs(walk) > 5) {
+      setHasDragged(true);
+    }
+  };
+
+  // Handle drag end
+  const handleMouseUp = () => {
+    if (!containerRef.current) return;
+    setIsDragging(false);
+    containerRef.current.style.cursor = 'grab';
+  };
+
+  // Handle mouse leave
+  const handleMouseLeave = () => {
+    if (!containerRef.current) return;
+    setIsDragging(false);
+    containerRef.current.style.cursor = 'grab';
+  };
+
+  // Touch events for mobile
+  const handleTouchStart = (e: React.TouchEvent) => {
+    if (!containerRef.current) return;
+    setIsDragging(true);
+    setHasDragged(false);
+    setStartX(e.touches[0].pageX - containerRef.current.offsetLeft);
+    setScrollLeft(containerRef.current.scrollLeft);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    const x = e.touches[0].pageX - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    containerRef.current.scrollLeft = scrollLeft - walk;
+    
+    if (Math.abs(walk) > 5) {
+      setHasDragged(true);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
+  // Handle play button click
+  const handlePlayClick = (e: React.MouseEvent, videoUrl: string) => {
+    e.stopPropagation(); // Prevent event bubbling
+    if (!hasDragged) {
+      openVideoModal(videoUrl);
+    }
+  };
+
   // Close modal on escape key press
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
@@ -50,8 +126,6 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
       window.removeEventListener("keydown", handleEscKey);
     };
   }, [showModal]);
-
-  // Use the API data if available, otherwise fallback to static data
 
   return (
     <>
@@ -102,20 +176,35 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
                 </svg>
               </button>
 
-              {/* Scrollable Track */}
+              {/* Scrollable Track with Drag Support */}
               <div className="px-0 md:px-15">
                 <div
                   ref={containerRef}
-                  className="flex space-x-4 md:space-x-6 overflow-x-auto snap-x snap-mandatory hideScrollbar pl-4 md:pl-0"
+                  className="flex space-x-4 md:space-x-6 overflow-x-auto snap-x snap-mandatory hideScrollbar pl-4 md:pl-0 cursor-grab select-none scroll-smooth"
+                  onMouseDown={handleMouseDown}
+                  onMouseMove={handleMouseMove}
+                  onMouseUp={handleMouseUp}
+                  onMouseLeave={handleMouseLeave}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
+                  onTouchEnd={handleTouchEnd}
+                  style={{
+                    cursor: isDragging ? 'grabbing' : 'grab',
+                    userSelect: 'none',
+                    WebkitUserSelect: 'none',
+                    MozUserSelect: 'none',
+                    msUserSelect: 'none',
+                    scrollBehavior: 'smooth'
+                  }}
                 >
                   {shorts.map((video: ShortsTypes, index: number) => (
                     <div
                       key={video?.id || index}
-                      className="snap-start min-w-[calc(80vw-2rem)] md:min-w-[320px] lg:min-w-[300px] h-[500px] bg-white rounded-xl overflow-hidden relative cursor-pointer"
-                      onClick={() => openVideoModal(video?.video)}
+                      className="snap-start min-w-[calc(80vw-2rem)] md:min-w-[320px] lg:min-w-[300px] h-[500px] bg-white rounded-xl overflow-hidden relative"
+                      style={{ userSelect: 'none' }}
                     >
                       {/* Background Image */}
-                      <div className="relative w-full h-full">
+                      <div className="relative w-full h-full pointer-events-none">
                         <img
                           src={
                             video?.thumbnail ||
@@ -124,11 +213,16 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
                           }
                           alt={video?.title || "Video thumbnail"}
                           className="brightness-90 w-full h-full object-cover"
+                          draggable={false}
                         />
 
-                        {/* Play button overlay */}
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="w-16 h-16 bg-white bg-opacity-80 rounded-full flex items-center justify-center">
+                        {/* Play button overlay - Only this is clickable */}
+                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                          <button
+                            className="w-16 h-16 bg-white bg-opacity-80 rounded-full flex items-center justify-center pointer-events-auto hover:bg-opacity-100 transition-all hover:scale-110"
+                            onClick={(e) => handlePlayClick(e, video?.video)}
+                            aria-label="Play video"
+                          >
                             <svg
                               width="24"
                               height="24"
@@ -138,11 +232,11 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
                             >
                               <path d="M8 5V19L19 12L8 5Z" fill="#0066CC" />
                             </svg>
-                          </div>
+                          </button>
                         </div>
 
                         {/* Video info */}
-                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent text-white">
+                        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent text-white pointer-events-none">
                           <h3 className="font-bold text-lg">{video?.title}</h3>
                           {video?.location && (
                             <p className="text-sm opacity-80">
@@ -186,7 +280,7 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
           <div className="relative w-full max-w-4xl bg-black rounded-xl overflow-hidden">
             <button
               onClick={closeVideoModal}
-              className="absolute top-4 right-4 z-10 p-2 bg-black rounded-full text-white"
+              className="absolute top-4 right-4 z-10 p-2 bg-black rounded-full text-white hover:bg-white hover:text-black transition-colors"
               aria-label="Close modal"
             >
               <svg
@@ -198,7 +292,7 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
               >
                 <path
                   d="M18 6L6 18M6 6L18 18"
-                  stroke="white"
+                  stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"

@@ -74,7 +74,7 @@ const Header = () => {
       <div className="px-[25px] lg:px-[10px] top-5 w-[95%] md:w-[99%] lg:w-[95%] mx-auto py-3 z-50 rounded-3xl md:rounded-full fixed bg-black/30 backdrop-blur-sm lg:px-[clamp(10px,16.614582vw,50px)] xl:px-[clamp(10px,16.614582vw,200px)]">
         <div className="flex justify-between items-center md:py-1">
           {/* Logo */}
-          <div className="flex-shrink-0">
+          <Link href="/" className="flex-shrink-0">
             <Image
               src="https://storage.googleapis.com/furniture-hub/arx/settings/ARX%20Logo%20(1).png"
               alt="Logo"
@@ -82,7 +82,7 @@ const Header = () => {
               height={48}
               className=" h-8 md:h-12 w-auto"
             />
-          </div>
+          </Link>
 
           {/* Mobile menu button */}
           <div className="md:hidden">

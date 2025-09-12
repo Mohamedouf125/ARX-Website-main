@@ -106,20 +106,16 @@ const animationFrameRef = useRef<number | undefined>(undefined);
 
     setScrollProgress(progress);
 
-    // Total slides: 1 start space + timeline items + 1 end space
-    const totalSlides = 1 + timelineData.length + 1; // start + timeline + end
-
     // Calculate target slide based on scroll progress
-    const targetSlide = Math.floor(progress * (totalSlides - 1));
+    // We want to map the progress to show timeline items (excluding start/end spacers)
+    const targetTimelineIndex = Math.floor(progress * timelineData.length);
+    const clampedTimelineIndex = Math.max(0, Math.min(timelineData.length - 1, targetTimelineIndex));
+    
+    // Add 1 to account for the start spacer slide
+    const targetSlide = clampedTimelineIndex + 1;
 
-    // Clamp the target slide to valid range
-    const clampedTargetSlide = Math.max(
-      0,
-      Math.min(totalSlides - 1, targetSlide)
-    );
-
-    if (swiper.activeIndex !== clampedTargetSlide) {
-      swiper.slideTo(clampedTargetSlide, 300);
+    if (swiper.activeIndex !== targetSlide) {
+      swiper.slideTo(targetSlide, 300);
     }
 
     // Continue animation loop
@@ -163,7 +159,7 @@ const animationFrameRef = useRef<number | undefined>(undefined);
   // Calculate which dots should be active based on scroll progress
   const getActiveDotIndex = () => {
     const progressPerItem = 1 / timelineData.length;
-    const calculatedIndex = Math.floor(scrollProgress / progressPerItem * 1.5);
+    const calculatedIndex = Math.floor(scrollProgress / progressPerItem);
     // Clamp the result to ensure it doesn't exceed the array bounds
     return Math.min(calculatedIndex, timelineData.length - 1);
   };
