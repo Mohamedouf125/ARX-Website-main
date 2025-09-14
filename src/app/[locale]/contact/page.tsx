@@ -268,7 +268,7 @@ const ContactPage = () => {
                           <div className="icon text-2xl text-[#dba426]">
                             {item.icon}
                           </div>
-                          <div className="content">
+                          <div className="content mb-14">
                             <h3 className="text-[20px] lg:text-[25px] font-[600] mb-2">
                               {item.title}
                             </h3>
@@ -298,7 +298,7 @@ const ContactPage = () => {
               {/* Navigation Arrows */}
               <button
                 onClick={prevSlide}
-                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-200 rounded-full p-2 shadow-lg hover:bg-gray-50 transition-all duration-200 z-10"
+                className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-200 rounded-full p-2 shadow-lg hover:bg-gray-50 transition-all duration-200 z-50"
                 aria-label="Previous slide"
               >
                 <FaChevronLeft className="w-4 h-4 text-gray-600" />
@@ -306,7 +306,7 @@ const ContactPage = () => {
 
               <button
                 onClick={nextSlide}
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-200 rounded-full p-2 shadow-lg hover:bg-gray-50 transition-all duration-200 z-10"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white border border-gray-200 rounded-full p-2 shadow-lg hover:bg-gray-50 transition-all duration-200 z-50"
                 aria-label="Next slide"
               >
                 <FaChevronRight className="w-4 h-4 text-gray-600" />

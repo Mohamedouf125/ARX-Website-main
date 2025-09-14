@@ -9,18 +9,17 @@ const FloatingSocialIcons: FC = () => {
     // Check if locale is RTL
     const isRTL = locale === 'ar' || locale === 'he' || locale === 'fa' || locale === 'ur';
 
-
     const toggleExpanded = () => {
         setIsExpanded(!isExpanded);
     };
 
     return (
-        <div className={`fixed bottom-8 z-40 flex flex-col gap-3 ${isRTL ? 'left-8' : 'right-8'}`} dir={isRTL ? 'rtl' : 'ltr'}>
+        <div className={`fixed bottom-8 z-40 flex flex-col gap-3 ${isRTL ? 'left-8' : 'right-8'} ${!isExpanded ? 'pointer-events-none' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
             {/* Social Media Icons Container */}
             <div
                 className={`flex flex-col gap-3 transition-all duration-500 transform origin-bottom ${
                     isExpanded
-                        ? 'opacity-100 translate-y-0 scale-100'
+                    ? 'opacity-100 translate-y-0 scale-100 pointer-events-auto'
                         : 'opacity-0 translate-y-4 scale-95 pointer-events-none'
                 }`}
             >
@@ -106,7 +105,7 @@ const FloatingSocialIcons: FC = () => {
 
                 {/* WhatsApp Icon */}
                 <a
-                    href="https://wa.me"
+                    href="https://wa.me/201001703888"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="group relative overflow-hidden bg-gradient-to-br from-[#25D366] to-[#128C7E] hover:from-[#1ea952] hover:to-[#0d6b5c] p-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center"
@@ -148,7 +147,7 @@ const FloatingSocialIcons: FC = () => {
             {/* Toggle Button - Now at the bottom */}
             <button
                 onClick={toggleExpanded}
-                className={`group relative overflow-hidden gradient-btn p-3 bg-[#dba426] rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center ${
+                className={`group relative overflow-hidden gradient-btn p-3 bg-[#dba426] rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:scale-110 hover:-translate-y-1 backdrop-blur-sm border border-white/10 w-12 h-12 flex items-center justify-center pointer-events-auto ${
                     isExpanded ? 'rotate-45' : ''
                 }`}
             >
