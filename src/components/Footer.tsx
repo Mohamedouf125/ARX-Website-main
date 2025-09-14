@@ -204,8 +204,8 @@ const Footer: React.FC = () => {
 
       {/* Footer Content */}
       <AnimatedElement type="slideUp" duration={1} className="w-full h-full">
-        <footer className="lg:pt-16 lg:pb-10 mx-auto rounded-3xl z-10 relative bg-white">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 mb-20 px-6 lg:px-10 xl:px-20">
+        <footer className="lg:pt-16 lg:pb-10  mx-auto rounded-3xl z-10 relative bg-white">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5 lg:mb-20 px-6 lg:px-10 xl:px-20">
             {/* Logo + Description + Addresses */}
             <div>
               <div className="flex justify-center md:block">
@@ -238,7 +238,7 @@ const Footer: React.FC = () => {
             </div>
 
             {/* Navigation Links */}
-            <div className="grid grid-cols-2 gap-5 border-t md:border-t-0 border-b md:border-b-0 border-l border-l-0 md:border-l border-r border-r-0 md:border-r border-gray-300 py-8 md:py-0 px-5 xl:px-10 justify-center">
+            <div className="grid grid-cols-2 gap-5 border-t md:border-t-0 border-b md:border-b-0 border-l border-l-0 md:border-l border-r border-r-0 md:border-r border-gray-300 py-8  px-5 xl:px-10 justify-center">
               <div className="cover">
                 <ul className="lg:space-y-6 space-y-2 text-sm">
                   {navigationLinks.map((item) => (
@@ -255,7 +255,7 @@ const Footer: React.FC = () => {
               </div>
 
               {/* Projects Links */}
-              <div className="flex flex-col lg:gap-6 gap-2.5">
+              <div className="flex flex-col lg:gap-6  gap-2.5">
                 <Link
                   href="/projects"
                   className="font-[600] text-[16px] leading-[1.5] hover:text-[#DBA426] transition-all duration-300"
@@ -304,7 +304,7 @@ const Footer: React.FC = () => {
                         }
                         className="transition flex items-center gap-2 text-[0px] md:text-[20px] lg:text-[25px] font-['Switzer, Sans-serif'] font-[550]"
                       >
-                        <span className="text-black lg:text-lg text-3xl">{item.title}</span>
+                        <span className="text-black lg:text-lg md:2xl text-xl">{item.title}</span>
                       </a>
                     </div>
                   </li>
@@ -312,7 +312,7 @@ const Footer: React.FC = () => {
               </ul>
 
               {/* Mobile Style - Full Width */}
-              <ul className="md:hidden text-sm font-['Switzer, Sans-serif'] flex flex-col gap-4 w-full">
+              <ul className="md:hidden text-sm font-['Switzer, Sans-serif'] flex flex-col gap-1 w-full">
                 {contactInfo.map((item) => (
                   <li
                     className="group relative w-full"
@@ -343,14 +343,14 @@ const Footer: React.FC = () => {
               </ul>
 
               {/* Social Media Links - Mobile (Grid with SVG icons) */}
-              <ul className="grid grid-cols-7  mt-4 md:hidden w-full">
+              <ul className="flex   md:hidden w-full">
                 {socialLinks.map((social) => (
                   <li key={social.name} className="flex justify-center">
                     <a
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="opacity-60 hover:opacity-100 transition-all duration-300 text-center text-gray-600 hover:text-[#DBA426] p-2"
+                      className={`opacity-60 hover:opacity-100 transition-all duration-300 text-center text-gray-600 hover:text-[#DBA426] ${locale === "ar" ? "ml-3" : "mr-3"} my-2`}
                       title={social.name}
                     >
                       {social.icon}
@@ -370,10 +370,10 @@ const Footer: React.FC = () => {
                         rel="noopener noreferrer"
                         className="flex items-center gap-2 opacity-60 hover:opacity-100 transition-all duration-300 text-gray-600 hover:text-[#DBA426]"
                       >
-                        <span className="w-4 h-4 lg:hidden block">
+                        <span className="w-4 h-4 lg:hidden md:hidden block">
                           {social.icon}
                         </span>
-                        <span>{social.name}</span>
+                        <span >{social.name}</span>
                       </a>
                     </li>
                     {index < socialLinks.length - 1 && (
@@ -388,7 +388,7 @@ const Footer: React.FC = () => {
           </div>
 
           {/* Bottom Bar */}
-          <div className="border-t border-gray-300 mt-10 pt-4">
+          <div className="border-t border-gray-300 lg:mt-10 mt-4 pt-4">
             <div className="max-w-7xl mx-auto px-4 text-center">
               <p className="text-md text-gray-500 font-['Switzer, Sans-serif'] font-[500]">
                 &copy; {new Date().getFullYear()} ARX Developments
