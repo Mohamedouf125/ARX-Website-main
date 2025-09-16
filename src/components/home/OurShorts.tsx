@@ -50,7 +50,7 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
     setHasDragged(false);
     setStartX(e.pageX - containerRef.current.offsetLeft);
     setScrollLeft(containerRef.current.scrollLeft);
-    containerRef.current.style.cursor = 'grabbing';
+    containerRef.current.style.cursor = "grabbing";
   };
 
   // Handle drag move
@@ -60,7 +60,7 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
     const x = e.pageX - containerRef.current.offsetLeft;
     const walk = (x - startX) * 2; // Scroll speed multiplier
     containerRef.current.scrollLeft = scrollLeft - walk;
-    
+
     // If mouse moved more than 5px, consider it a drag
     if (Math.abs(walk) > 5) {
       setHasDragged(true);
@@ -71,14 +71,14 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
   const handleMouseUp = () => {
     if (!containerRef.current) return;
     setIsDragging(false);
-    containerRef.current.style.cursor = 'grab';
+    containerRef.current.style.cursor = "grab";
   };
 
   // Handle mouse leave
   const handleMouseLeave = () => {
     if (!containerRef.current) return;
     setIsDragging(false);
-    containerRef.current.style.cursor = 'grab';
+    containerRef.current.style.cursor = "grab";
   };
 
   // Touch events for mobile
@@ -95,7 +95,7 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
     const x = e.touches[0].pageX - containerRef.current.offsetLeft;
     const walk = (x - startX) * 2;
     containerRef.current.scrollLeft = scrollLeft - walk;
-    
+
     if (Math.abs(walk) > 5) {
       setHasDragged(true);
     }
@@ -189,19 +189,19 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
                   onTouchMove={handleTouchMove}
                   onTouchEnd={handleTouchEnd}
                   style={{
-                    cursor: isDragging ? 'grabbing' : 'grab',
-                    userSelect: 'none',
-                    WebkitUserSelect: 'none',
-                    MozUserSelect: 'none',
-                    msUserSelect: 'none',
-                    scrollBehavior: 'smooth'
+                    cursor: isDragging ? "grabbing" : "grab",
+                    userSelect: "none",
+                    WebkitUserSelect: "none",
+                    MozUserSelect: "none",
+                    msUserSelect: "none",
+                    scrollBehavior: "smooth",
                   }}
                 >
                   {shorts.map((video: ShortsTypes, index: number) => (
                     <div
                       key={video?.id || index}
                       className="snap-start min-w-[calc(80vw-2rem)] md:min-w-[320px] lg:min-w-[300px] h-[500px] bg-white rounded-xl overflow-hidden relative"
-                      style={{ userSelect: 'none' }}
+                      style={{ userSelect: "none" }}
                     >
                       {/* Background Image */}
                       <div className="relative w-full h-full pointer-events-none">
@@ -212,7 +212,7 @@ export default function ShortsPage({ shorts }: { shorts: ShortsTypes[] }) {
                             sliderImage01
                           }
                           alt={video?.title || "Video thumbnail"}
-                          className="brightness-90 w-full h-full object-cover"
+                          className="brightness-90 w-full h-full object-fill sm:object-cover"
                           draggable={false}
                         />
 

@@ -98,7 +98,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                 duration={1}
                 className="w-full h-full"
               >
-                <span className="text-3xl lg:text-5xl uppercase font-extrabold text-gray-900">
+                <span className="text-2xl sm:text-3xl lg:text-5xl uppercase font-extrabold text-gray-900">
                   {t("our_projects_description")}
                 </span>
               </AnimatedElement>
@@ -131,7 +131,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
             {projects.map((project, index) => (
               <div
                 key={project.id}
-                className="sticky top-0 md:h-[800px] h-[600px] w-full rounded-3xl"
+                className="sticky top-0 h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] w-full rounded-3xl"
                 data-index={index}
                 ref={(el) => {
                   cardRefs.current[index] = el;
@@ -151,37 +151,33 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
 
                   {/* Content Container */}
                   <div className="relative z-10 h-full flex items-center justify-center">
-                    <div className="container mx-auto px-8 w-full">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full">
                       <div className="flex items-center justify-end">
-                        {/* Project Details Card */}
-                        <div className="rounded-3xl p-8 relative bg-[url('/download.png')] bg-cover bg-bottom w-full sm:w-[500px]">
+                        {/* Project Details Card - Keep same design, just scale */}
+                        <div className="rounded-3xl p-4 sm:p-6 lg:p-8 relative bg-[url('/download.png')] bg-cover bg-bottom w-[320px] sm:w-[400px] lg:w-[500px]">
                           {/* Status Badge */}
-                          <div className="mb-4">
-                            <span
-                              className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800`}
-                            >
-                              <span
-                                className={`w-2 h-2 rounded-full bg-yellow-500`}
-                              ></span>
+                          <div className="mb-3 sm:mb-4">
+                            <span className="inline-flex items-center gap-2 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium bg-yellow-100 text-yellow-800">
+                              <span className="w-1.5 sm:w-2 h-1.5 sm:h-2 rounded-full bg-yellow-500"></span>
                               {t("under_construction")}
                             </span>
                           </div>
 
                           {/* Project Title with Bottom Border */}
-                          <div className="mb-4">
+                          <div className="mb-3 sm:mb-4">
                             <Link href={`${locale}/projects/${project.slug}`}>
-                              <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                                 {project.title}
                               </h2>
                             </Link>
 
                             <div className="description">
                               <p
-                                className="text-gray-600 flex flex-col gap-2 mb-2"
+                                className="text-sm sm:text-base text-gray-600 flex flex-col gap-2 mb-2"
                                 dangerouslySetInnerHTML={{
                                   __html: `${project.description.slice(
                                     0,
-                                    locale === "ar" ? 250 : 150
+                                    locale === "ar" ? 180 : 120
                                   )}...`,
                                 }}
                               ></p>
@@ -190,9 +186,9 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                           </div>
 
                           {/* Location */}
-                          <div className="mb-4 flex items-center text-gray-600">
+                          <div className="mb-3 sm:mb-4 flex items-center text-gray-600">
                             <svg
-                              className="w-4 h-4 mr-2 text-[#DBA426]"
+                              className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#DBA426]"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
@@ -202,17 +198,19 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                                 clipRule="evenodd"
                               />
                             </svg>
-                            <span>{project.location}</span>
+                            <span className="text-sm sm:text-base">
+                              {project.location}
+                            </span>
                           </div>
 
                           {/* Floating Button with Arrow - Bottom Right */}
-                          <div className="bg-black/20 rounded-full absolute bottom-[-20px] sm:bottom-[-25px] sm:right-[65px] right-[40px]">
+                          <div className="bg-black/20 rounded-full absolute bottom-[-15px] sm:bottom-[-20px] lg:bottom-[-25px] right-[40px] md:right-[50px] sm:right-[50px] lg:right-[65px]">
                             <Link
                               href={`${locale}/projects/${project.slug}`}
-                              className="group inline-flex items-center bg-[#DBA426] hover:bg-[#DBA426] text-white p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                              className="group inline-flex items-center bg-[#DBA426] hover:bg-[#DBA426] text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                             >
                               <svg
-                                className={`w-3 h-3 sm:w-5 sm:h-5 transition-transform duration-300 ${
+                                className={`w-3 sm:w-4 lg:w-5 h-3 sm:h-4 lg:h-5 transition-transform duration-300 ${
                                   locale === "ar" ? "mirror" : ""
                                 }`}
                                 fill="currentColor"
