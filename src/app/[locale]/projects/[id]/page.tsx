@@ -368,8 +368,8 @@ const ProjectPage: React.FC = () => {
                         title={item.value ?? ""}
                       >
                         {typeof item.value === "string"
-                          ? item.value.length >18
-                            ? `${item.value.slice(0,18)}...`
+                          ? item.value.length > 18
+                            ? `${item.value.slice(0, 18)}...`
                             : item.value
                           : ""}
                       </h3>
@@ -563,124 +563,133 @@ const ProjectPage: React.FC = () => {
             )}
           </div>
         </div>
-<div className="w-full py-30 max-w-7xl mx-auto px-6">
-  {/* Interactive tab navigation */}
-  <div className="head lg:flex items-center justify-between mb-6">
-    <div className="title">
-      <h2 className="text-[35px] md:text-[55px] font-[600] mb-4">
-        {t("media")}
-      </h2>
-    </div>
-    
-    {/* Desktop tab navigation - hidden on mobile */}
-    <div className="hidden lg:flex flex-wrap justify-center gap-2">
-      {tabs.map((tab) => (
-        <button
-          key={tab.id}
-          onClick={() => setActiveTab(tab.id)}
-          className={`flex items-center gap-2 p-3 px-6 rounded-full border border-gray-300 transition-all duration-300 ${
-            activeTab === tab.id
-              ? "bg-[#dba426] text-white fil-white"
-              : "bg-white text-black"
-          }`}
-        >
-          <span className="fill-white!">{tab.icon}</span>
-          <span className=" uppercase text-sm">{t(tab.name)}</span>
-        </button>
-      ))}
-      <Link href={`./${projectData?.slug}/construction_photos`}>
-        <div className="flex  border-2 items-center gap-2 p-4 px-6 rounded-full  bg-white text-black transition-all duration-300">
-          <Construction className="w-4 h-4" />
-          <span className="uppercase text-sm">
-            {t("constructionphotos")}
-          </span>
-        </div>
-      </Link>
-    </div>
-  </div>
+        <div className="w-full py-30 max-w-7xl mx-auto px-6">
+          {/* Interactive tab navigation */}
+          <div className="head lg:flex items-center justify-between mb-6">
+            <div className="title">
+              <h2 className="text-[35px] md:text-[55px] font-[600] mb-4">
+                {t("media")}
+              </h2>
+            </div>
 
-  {/* Mobile tab layout - visible only on mobile */}
-  <div className="lg:hidden space-y-4">
-    {tabs.map((tab) => (
-      <div key={tab.id} className="w-full">
-        {/* Tab button */}
-        <button
-          onClick={() => setActiveTab(activeTab === tab.id ? "" : tab.id)}
-          className={`w-full flex items-center justify-between p-4 px-6 rounded-t-2xl border border-gray-300 transition-all duration-300 ${
-            activeTab === tab.id
-              ? "bg-[#dba426] text-white border-b-0"
-              : "bg-white text-black rounded-2xl"
-          }`}
-        >
-          <div className="flex items-center gap-3">
-            <span className="fill-white!">{tab.icon}</span>
-            <span className="uppercase text-sm font-medium">{t(tab.name)}</span>
-          </div>
-          <svg
-            className={`w-5 h-5 transition-transform duration-300 ${
-              activeTab === tab.id ? "rotate-180" : ""
-            }`}
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-          </svg>
-        </button>
-        
-        {/* Tab content - appears directly below the active tab */}
-        {activeTab === tab.id && (
-          <div className="border border-gray-300 border-t-0 rounded-b-2xl bg-white overflow-hidden">
-            <div className="p-4">
-              <div
-                className={`h-full ${
-                  activeTab === "photos"
-                    ? "2xl:ml-[-150px] lg:mr-[-700px]"
-                    : activeTab === "plan"
-                    ? projectData?.property_floor_plans?.length &&
-                      projectData?.property_floor_plans?.length > 0
-                      ? "lg:ml-[-150px] lg:mr-[-700px]"
-                      : "ml-[0px] mr-[0px] w-full"
-                    : ""
-                }`}
-              >
-                {tab.content}
-              </div>
+            {/* Desktop tab navigation - hidden on mobile */}
+            <div className="hidden lg:flex flex-wrap justify-center gap-2">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 p-3 px-6 rounded-full border border-gray-300 transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? "bg-[#dba426] text-white fil-white"
+                      : "bg-white text-black"
+                  }`}
+                >
+                  <span className="fill-white!">{tab.icon}</span>
+                  <span className=" uppercase text-sm">{t(tab.name)}</span>
+                </button>
+              ))}
+              <Link href={`./${projectData?.slug}/construction_photos`}>
+                <div className="flex  border-2 items-center gap-2 p-4 px-6 rounded-full  bg-white text-black transition-all duration-300">
+                  <Construction className="w-4 h-4" />
+                  <span className="uppercase text-sm">
+                    {t("constructionphotos")}
+                  </span>
+                </div>
+              </Link>
             </div>
           </div>
-        )}
-      </div>
-    ))}
-    
-    {/* Construction photos link for mobile */}
-    <Link href={`./${projectData?.slug}/construction_photos`}>
-      <div className="w-full flex items-center gap-2 p-4 px-6 rounded-2xl border-2 bg-white text-black transition-all duration-300">
-        <Construction className="w-4 h-4" />
-        <span className="uppercase text-sm">
-          {t("constructionphotos")}
-        </span>
-      </div>
-    </Link>
-  </div>
 
-  {/* Desktop tab content - hidden on mobile */}
-  <div className="hidden lg:block">
-    <div
-      className={`h-full ${
-        activeTab === "photos"
-          ? "2xl:ml-[-150px] lg:mr-[-700px]"
-          : activeTab === "plan"
-          ? projectData?.property_floor_plans?.length &&
-            projectData?.property_floor_plans?.length > 0
-            ? "lg:ml-[-150px] lg:mr-[-700px]"
-            : "ml-[0px] mr-[0px] w-full"
-          : ""
-      }`}
-    >
-      {tabs.find((tab) => tab.id === activeTab)?.content}
-    </div>
-  </div>
-</div>
+          {/* Mobile tab layout - visible only on mobile */}
+          <div className="lg:hidden space-y-4">
+            {tabs.map((tab) => (
+              <div key={tab.id} className="w-full">
+                {/* Tab button */}
+                <button
+                  onClick={() =>
+                    setActiveTab(activeTab === tab.id ? "" : tab.id)
+                  }
+                  className={`w-full flex items-center justify-between p-4 px-6 rounded-t-2xl border border-gray-300 transition-all duration-300 ${
+                    activeTab === tab.id
+                      ? "bg-[#dba426] text-white border-b-0"
+                      : "bg-white text-black rounded-2xl"
+                  }`}
+                >
+                  <div className="flex items-center gap-3">
+                    <span className="fill-white!">{tab.icon}</span>
+                    <span className="uppercase text-sm font-medium">
+                      {t(tab.name)}
+                    </span>
+                  </div>
+                  <svg
+                    className={`w-5 h-5 transition-transform duration-300 ${
+                      activeTab === tab.id ? "rotate-180" : ""
+                    }`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
+
+                {/* Tab content - appears directly below the active tab */}
+                {activeTab === tab.id && (
+                  <div className="border border-gray-300 border-t-0 rounded-b-2xl bg-white overflow-hidden">
+                    <div className="p-4">
+                      <div
+                        className={`h-full ${
+                          activeTab === "photos"
+                            ? "2xl:ml-[-150px] lg:mr-[-700px]"
+                            : activeTab === "plan"
+                            ? projectData?.property_floor_plans?.length &&
+                              projectData?.property_floor_plans?.length > 0
+                              ? "lg:ml-[-150px] lg:mr-[-700px]"
+                              : "ml-[0px] mr-[0px] w-full"
+                            : ""
+                        }`}
+                      >
+                        {tab.content}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+
+            {/* Construction photos link for mobile */}
+            <Link href={`./${projectData?.slug}/construction_photos`}>
+              <div className="w-full flex items-center gap-2 p-4 px-6 rounded-2xl border-2 bg-white text-black transition-all duration-300">
+                <Construction className="w-4 h-4" />
+                <span className="uppercase text-sm">
+                  {t("constructionphotos")}
+                </span>
+              </div>
+            </Link>
+          </div>
+
+          {/* Desktop tab content - hidden on mobile */}
+          <div className="hidden lg:block">
+            <div
+              className={`h-full ${
+                activeTab === "photos"
+                  ? "2xl:ml-[-150px] lg:mr-[-700px]"
+                  : activeTab === "plan"
+                  ? projectData?.property_floor_plans?.length &&
+                    projectData?.property_floor_plans?.length > 0
+                    ? "lg:ml-[-150px] lg:mr-[-700px]"
+                    : "ml-[0px] mr-[0px] w-full"
+                  : ""
+              }`}
+            >
+              {tabs.find((tab) => tab.id === activeTab)?.content}
+            </div>
+          </div>
+        </div>
 
         {/* Location Section with Map Image */}
         <div className="max-w-7xl mx-auto px-6">
@@ -698,7 +707,16 @@ const ProjectPage: React.FC = () => {
                   <h3 className="md:text-[30px] text-[20px] font-[600] capitalize">
                     {projectData?.location}
                   </h3>
-                  <SectionButton href="#">{t("get_direction")}</SectionButton>
+                  <SectionButton
+                    href={
+                      projectData?.location_link ||
+                      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                        projectData?.location || ""
+                      )}`
+                    }
+                  >
+                    {t("get_direction")}
+                  </SectionButton>
                 </div>
               </div>
 
