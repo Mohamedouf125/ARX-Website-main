@@ -133,6 +133,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                 key={project.id}
                 className="sticky top-0 h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px] w-full rounded-3xl"
                 data-index={index}
+                style={{ paddingTop: `${130 + index * 0}px` }}
                 ref={(el) => {
                   cardRefs.current[index] = el;
                 }}

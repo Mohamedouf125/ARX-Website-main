@@ -7,9 +7,10 @@ import { AnimatedElement } from "@/components/animations/AnimationType";
 import { getData } from "@/libs/axios/server";
 import { AxiosHeaders } from "axios";
 import ServiceCard from "./components/projects";
-import PropertySwiper from "./components/ImageSwiper";
+// import PropertySwiper from "./components/ImageSwiper";
 import HomeContact from "@/components/home/HomeContact";
 import TimelineSwiper from "./components/TimelineSwiper"; // Import the new component
+import { OurProjects } from "@/components/home/OurProjects";
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -40,6 +41,20 @@ interface ServiceItem {
 const AboutPage = () => {
   const t = useTranslations("about");
   const locale = useLocale();
+  const [projects, setProjects] = useState([]);
+
+  const getProjects = async () => {
+    try {
+      const response = await getData("properties", {}, new AxiosHeaders({ lang: locale }));
+      setProjects(response.data.properties);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
+  };
+
+  useEffect(() => {
+    getProjects();
+  }, []);
 
   // Updated state type to match API response
   const [aboutBanner, setAboutBanner] = useState<AboutBannerType>({
@@ -217,9 +232,11 @@ const AboutPage = () => {
             {servicesData.map((service) => (
               <ServiceCard
                 key={service.id}
-                image={service.image}
+                image={
+                  "https://demo2.wpopal.com/spaciaz/wp-content/uploads/2025/04/h1_service-3.png"
+                }
                 title={service.title}
-                description={service.description}
+                // description={service.description}
                 onClick={() => handleServiceClick(service)}
                 className="hover:transform hover:scale-105 transition-transform duration-300"
               />
@@ -229,13 +246,13 @@ const AboutPage = () => {
       </section>
 
       {/* Timeline Swiper Component */}
-      <TimelineSwiper  />
+      <TimelineSwiper />
 
       {/* swiper hear  */}
-      <PropertySwiper />
+      {/* <PropertySwiper /> */}
+      <OurProjects projects={projects} />
       <section className="w-full h-full pb-[30vw] ">
-          <HomeContact contact="/about.jpg" />
-
+        <HomeContact contact="/about.jpg" />
       </section>
     </div>
   );

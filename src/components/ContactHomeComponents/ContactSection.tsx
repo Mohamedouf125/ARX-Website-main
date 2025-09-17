@@ -77,7 +77,7 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
               </AnimatedElement>
             </div>
 
-            <div className="cover">
+            <div className="cover w-full md:w-[70%]">
               <AnimatedElement
                 type="slideUp"
                 duration={3}
