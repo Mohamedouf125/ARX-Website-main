@@ -12,16 +12,11 @@ import {
 import { useTranslations } from "next-intl";
 import { FaArrowRight, FaArrowLeft, FaCheck } from "react-icons/fa";
 import { useLocale } from "next-intl";
+import { postData } from "@/libs/axios/server";
+import toast from "react-hot-toast";
 
 interface ContactFormProps {
   handleReloadAnimation?: () => void;
-}
-
-interface CategoryOptions {
-  women: boolean;
-  gents: boolean;
-  kids: boolean;
-  family: boolean;
 }
 
 const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
@@ -30,73 +25,49 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [formData, setFormData] = useState({
-    // Basic Contact Info (Step 1)
-    name: "",
-    email: "",
-    phone: "",
-    companyName: "",
-    postalAddress: "",
-    website: "",
-    fax: "",
+    // Step 1: Company & Contact Information
+    company_name: "",
+    webiste: "",
+    postal_address: "",
+    company_phone: "",
+    company_email: "",
+    company_fax: "",
 
-    // Contact Person Details (Step 2)
-    responsiblePerson: "",
-    position: "",
-    mobile: "",
+    // Step 2: Responsible Person Details
+    responsible_person: "",
+    responsible_person_phone: "",
+    responsible_person_email: "",
+    responsible_person_position: "",
 
-    // Brand Information (Step 3)
-    agencyBrandName: "",
-    franchiseOwner: "",
-    countryOfOrigin: "",
-    branchesInEgypt: "",
-    branchesOutsideEgypt: "",
+    // Step 3: Brand Information
+    brand_name: "",
+    franchise_name: "",
+    country_of_origin: "",
+    no_of_branches_in_egypt: "",
+    no_of_branches_outside_egypt: "",
+    no_of_employees: "",
 
-    // Business Categories (Step 4)
-    clothes: {
-      women: false,
-      gents: false,
-      kids: false,
-      family: false,
-    } as CategoryOptions,
-    accessories: {
-      women: false,
-      gents: false,
-      kids: false,
-      family: false,
-    } as CategoryOptions,
-    shoesLeather: {
-      women: false,
-      gents: false,
-      kids: false,
-      family: false,
-    } as CategoryOptions,
-    perfumesBeauty: false,
-    restaurants: false,
-    jewellsWatches: false,
-    furniture: "",
-    services: "",
-    others: "",
+    // Step 4: Business Categories
+    business_category: "",
+    other_business_category: "",
 
-    // Target Market (Step 5)
-    productPrice: "",
-    targetedCustomers: {
-      women: false,
-      gents: false,
-      kids: false,
-      family: false,
-    } as CategoryOptions,
-    customerIncome: "",
+    // Step 5: Target Market
+    product_price: "",
+    target_customer: "",
+    icome: "",
 
-    // Location Information (Step 6)
-    requiredLocation: "",
-    shopNo: "",
-    floorNo: "",
-    areaNo: "",
-    requiredArea: "",
-    otherConditions: "",
+    // Step 6: Location Information
+    location_name: "",
+    shop_no: "",
+    floor_no: "",
+    area_no: "",
+    required_area: "",
+    other_conditions: "",
 
-    // Original inquiry field
-    inquiry: "",
+    // Step 7: File Uploads (not implemented in UI below)
+    company_profile: null as File | null,
+    brand_presentation: null as File | null,
+    shop_photos: null as File | null,
   });
 
   const locale = useLocale();
@@ -105,26 +76,16 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    const { name, value, type, files } = e.target as any;
+    if (type === "file") {
+      setFormData((prev) => ({ ...prev, [name]: files[0] }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSelectChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleCategoryChange = (
-    category: "clothes" | "accessories" | "shoesLeather" | "targetedCustomers",
-    subcategory: keyof CategoryOptions,
-    checked: boolean
-  ) => {
-    setFormData((prev) => ({
-      ...prev,
-      [category]: {
-        ...prev[category],
-        [subcategory]: checked,
-      },
-    }));
   };
 
   const handleNext = () => {
@@ -161,46 +122,96 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      console.log("Form submitted:", formData);
-      setCurrentStep(1);
-    }, 2000);
+    await postData("leasing-application-forms", formData)
+      .then(() => {
+        setIsSubmitting(false);
+        setFormData({
+          // Step 1: Company & Contact Information
+          company_name: "",
+          webiste: "",
+          postal_address: "",
+          company_phone: "",
+          company_email: "",
+          company_fax: "",
+
+          // Step 2: Responsible Person Details
+          responsible_person: "",
+          responsible_person_phone: "",
+          responsible_person_email: "",
+          responsible_person_position: "",
+
+          // Step 3: Brand Information
+          brand_name: "",
+          franchise_name: "",
+          country_of_origin: "",
+          no_of_branches_in_egypt: "",
+          no_of_branches_outside_egypt: "",
+          no_of_employees: "",
+
+          // Step 4: Business Categories
+          business_category: "",
+          other_business_category: "",
+
+          // Step 5: Target Market
+          product_price: "",
+          target_customer: "",
+          icome: "",
+
+          // Step 6: Location Information
+          location_name: "",
+          shop_no: "",
+          floor_no: "",
+          area_no: "",
+          required_area: "",
+          other_conditions: "",
+
+          // Step 7: File Uploads (not implemented in UI below)
+          company_profile: null as File | null,
+          brand_presentation: null as File | null,
+          shop_photos: null as File | null,
+        });
+        toast.success("Form submitted successfully!");
+      })
+      .catch((error) => {
+        console.error("Error submitting form:", error);
+        setIsSubmitting(false);
+        toast.error("Error submitting form. Please try again.");
+      });
   };
 
   // Validation functions for each step
   const isStep1Valid = () => {
     return (
-      formData.name.trim() !== "" &&
-      formData.email.trim() !== "" &&
-      formData.phone.trim() !== ""
+      formData.company_name.trim() !== "" &&
+      formData.company_email.trim() !== "" &&
+      formData.company_phone.trim() !== ""
     );
   };
 
   const isStep2Valid = () => {
     return (
-      formData.responsiblePerson.trim() !== "" &&
-      formData.position.trim() !== ""
+      formData.responsible_person.trim() !== "" &&
+      formData.responsible_person_position.trim() !== ""
     );
   };
 
   const isStep3Valid = () => {
     return (
-      formData.agencyBrandName.trim() !== "" &&
-      formData.countryOfOrigin.trim() !== ""
+      formData.brand_name.trim() !== "" &&
+      formData.country_of_origin.trim() !== ""
     );
   };
 
   const isStep4Valid = () => {
-    return true; // Optional fields
+    return formData.business_category.trim() !== "";
   };
 
   const isStep5Valid = () => {
-    return formData.productPrice !== "" && formData.customerIncome !== "";
+    return formData.product_price !== "" && formData.icome !== "";
   };
 
   const isStep6Valid = () => {
-    return formData.requiredLocation.trim() !== "";
+    return formData.location_name.trim() !== "";
   };
 
   const isCurrentStepValid = () => {
@@ -241,11 +252,37 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
     }
   };
 
-  const categoryItems = [
-    { key: "women" as keyof CategoryOptions, label: "Women" },
-    { key: "gents" as keyof CategoryOptions, label: "Men" },
-    { key: "kids" as keyof CategoryOptions, label: "Kids" },
-    { key: "family" as keyof CategoryOptions, label: "Family" },
+  // For business_category select
+  const businessCategories = [
+    "Clothes",
+    "Accessories",
+    "Shoes & Leather",
+    "Perfumes & Beauty",
+    "Restaurants",
+    "Jewels & Watches",
+    "Furniture",
+    "Services",
+    "Others",
+  ];
+
+  // For product_price and icome
+  const productPriceOptions = [
+    { value: "low", label: "Low" },
+    { value: "average", label: "Average" },
+    { value: "high", label: "High" },
+  ];
+  const incomeOptions = [
+    { value: "average", label: "Average" },
+    { value: "above-average", label: "Above Average" },
+    { value: "high", label: "High" },
+  ];
+
+  // For target_customer
+  const targetCustomerOptions = [
+    { value: "women", label: "Women" },
+    { value: "gents", label: "Men" },
+    { value: "kids", label: "Kids" },
+    { value: "family", label: "Family" },
   ];
 
   return (
@@ -258,8 +295,6 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
           <span className="mx-1 sm:mx-2">•</span>
           {t("quick_enquiry")}
         </div>
-
-        {/* <ProgressIndicator /> */}
 
         <div className="overflow-hidden">
           <h2
@@ -303,10 +338,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="companyName"
+                    name="company_name"
                     type="text"
                     required
-                    value={formData.companyName}
+                    value={formData.company_name}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Company Name"
@@ -320,13 +355,12 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="name"
-                    type="text"
-                    required
-                    value={formData.name}
+                    name="webiste"
+                    type="url"
+                    value={formData.webiste}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder={t("your_name")}
+                    placeholder="Website"
                   />
                 </div>
                 <div
@@ -337,13 +371,13 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="email"
+                    name="company_email"
                     type="email"
                     required
-                    value={formData.email}
+                    value={formData.company_email}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder={t("your_email")}
+                    placeholder="Company Email"
                   />
                 </div>
                 <div
@@ -354,13 +388,13 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="phone"
+                    name="company_phone"
                     type="tel"
                     required
-                    value={formData.phone}
+                    value={formData.company_phone}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder={t("your_phone")}
+                    placeholder="Company Phone"
                   />
                 </div>
                 <div
@@ -371,28 +405,12 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="website"
-                    type="url"
-                    value={formData.website}
-                    onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Website"
-                  />
-                </div>
-                <div
-                  className={`transition-all duration-700 delay-350 transform ${
-                    currentStep === 1 && !isTransitioning
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-8 opacity-0"
-                  }`}
-                >
-                  <Input
-                    name="fax"
+                    name="company_fax"
                     type="tel"
-                    value={formData.fax}
+                    value={formData.company_fax}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Fax"
+                    placeholder="Company Fax"
                   />
                 </div>
               </div>
@@ -404,8 +422,8 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 }`}
               >
                 <textarea
-                  name="postalAddress"
-                  value={formData.postalAddress}
+                  name="postal_address"
+                  value={formData.postal_address}
                   onChange={handleInputChange}
                   rows={3}
                   className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-0 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
@@ -452,10 +470,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="responsiblePerson"
+                    name="responsible_person"
                     type="text"
                     required
-                    value={formData.responsiblePerson}
+                    value={formData.responsible_person}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Responsible Person"
@@ -469,10 +487,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="position"
+                    name="responsible_person_position"
                     type="text"
                     required
-                    value={formData.position}
+                    value={formData.responsible_person_position}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Position"
@@ -486,17 +504,33 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="mobile"
+                    name="responsible_person_phone"
                     type="tel"
-                    value={formData.mobile}
+                    value={formData.responsible_person_phone}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Mobile"
                   />
                 </div>
+                <div
+                  className={`transition-all duration-700 delay-250 transform ${
+                    currentStep === 2 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="responsible_person_email"
+                    type="email"
+                    value={formData.responsible_person_email}
+                    onChange={handleInputChange}
+                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Responsible Person Email"
+                  />
+                </div>
               </div>
               <div
-                className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-250 transform ${
+                className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-300 transform ${
                   currentStep === 2 && !isTransitioning
                     ? "translate-y-0 opacity-100"
                     : "translate-y-8 opacity-0"
@@ -544,10 +578,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="agencyBrandName"
+                    name="brand_name"
                     type="text"
                     required
-                    value={formData.agencyBrandName}
+                    value={formData.brand_name}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Brand Name"
@@ -560,21 +594,14 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                       : "translate-y-8 opacity-0"
                   }`}
                 >
-                  <Select
-                    dir={locale === "ar" ? "rtl" : "ltr"}
-                    value={formData.franchiseOwner}
-                    onValueChange={(value) =>
-                      handleSelectChange("franchiseOwner", value)
-                    }
-                  >
-                    <SelectTrigger className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 w-full transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105">
-                      <SelectValue placeholder="Franchise Owner?" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-200 rounded-xl shadow-2xl">
-                      <SelectItem value="yes">Yes</SelectItem>
-                      <SelectItem value="no">No</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <Input
+                    name="franchise_name"
+                    type="text"
+                    value={formData.franchise_name}
+                    onChange={handleInputChange}
+                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="Franchise Name"
+                  />
                 </div>
                 <div
                   className={`transition-all duration-700 delay-200 transform ${
@@ -584,17 +611,15 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="countryOfOrigin"
+                    name="country_of_origin"
                     type="text"
                     required
-                    value={formData.countryOfOrigin}
+                    value={formData.country_of_origin}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Country of Origin"
                   />
                 </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div
                   className={`transition-all duration-700 delay-250 transform ${
                     currentStep === 3 && !isTransitioning
@@ -602,15 +627,18 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                       : "translate-y-8 opacity-0"
                   }`}
                 >
-                  <textarea
-                    name="branchesInEgypt"
-                    value={formData.branchesInEgypt}
+                  <Input
+                    name="no_of_employees"
+                    type="number"
+                    value={formData.no_of_employees}
                     onChange={handleInputChange}
-                    rows={3}
-                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-0 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
-                    placeholder="Branches in Egypt"
+                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="No. of Employees"
+                    min="0"
                   />
                 </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div
                   className={`transition-all duration-700 delay-300 transform ${
                     currentStep === 3 && !isTransitioning
@@ -618,18 +646,36 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                       : "translate-y-8 opacity-0"
                   }`}
                 >
-                  <textarea
-                    name="branchesOutsideEgypt"
-                    value={formData.branchesOutsideEgypt}
+                  <Input
+                    name="no_of_branches_in_egypt"
+                    type="number"
+                    value={formData.no_of_branches_in_egypt}
                     onChange={handleInputChange}
-                    rows={3}
-                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-0 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
-                    placeholder="Branches Outside Egypt"
+                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="No. of Branches in Egypt"
+                    min="0"
+                  />
+                </div>
+                <div
+                  className={`transition-all duration-700 delay-350 transform ${
+                    currentStep === 3 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="no_of_branches_outside_egypt"
+                    type="number"
+                    value={formData.no_of_branches_outside_egypt}
+                    onChange={handleInputChange}
+                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    placeholder="No. of Branches Outside Egypt"
+                    min="0"
                   />
                 </div>
               </div>
               <div
-                className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-350 transform ${
+                className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-400 transform ${
                   currentStep === 3 && !isTransitioning
                     ? "translate-y-0 opacity-100"
                     : "translate-y-8 opacity-0"
@@ -668,7 +714,6 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
             }`}
           >
             <div className="space-y-4 sm:space-y-6">
-              {/* Clothes Category */}
               <div
                 className={`transition-all duration-700 delay-100 transform ${
                   currentStep === 4 && !isTransitioning
@@ -676,93 +721,43 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     : "translate-y-8 opacity-0"
                 }`}
               >
-                <h4 className="text-sm sm:text-md font-medium text-gray-800 mb-3 sm:mb-4">
-                  Clothes
-                </h4>
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                  {categoryItems.map((item) => (
-                    <label
-                      key={item.key}
-                      className={`flex items-center cursor-pointer p-2 sm:p-3 rounded-lg sm:rounded-xl border transition-all duration-300 ${
-                        formData.clothes[item.key]
-                          ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
-                          : "border-gray-200 hover:border-[#DEA228]/50"
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.clothes[item.key]}
-                        onChange={(e) =>
-                          handleCategoryChange(
-                            "clothes",
-                            item.key,
-                            e.target.checked
-                          )
-                        }
-                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 rounded focus:ring-[#DEA228]"
-                      />
-                      <span className="ml-2 sm:ml-3 text-xs sm:text-sm font-medium">
-                        {item.label}
-                      </span>
-                    </label>
-                  ))}
-                </div>
+                <Select
+                  dir={locale === "ar" ? "rtl" : "ltr"}
+                  value={formData.business_category}
+                  onValueChange={(value) =>
+                    handleSelectChange("business_category", value)
+                  }
+                >
+                  <SelectTrigger className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 w-full transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105">
+                    <SelectValue placeholder="Business Category" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border border-gray-200 rounded-xl shadow-2xl">
+                    {businessCategories.map((cat) => (
+                      <SelectItem key={cat} value={cat}>
+                        {cat}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
-
-              {/* Other Categories */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-                <div
-                  className={`transition-all duration-700 delay-200 transform ${
-                    currentStep === 4 && !isTransitioning
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-8 opacity-0"
-                  }`}
-                >
-                  <Input
-                    name="furniture"
-                    type="text"
-                    value={formData.furniture}
-                    onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Furniture (specify)"
-                  />
-                </div>
-                <div
-                  className={`transition-all duration-700 delay-250 transform ${
-                    currentStep === 4 && !isTransitioning
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-8 opacity-0"
-                  }`}
-                >
-                  <Input
-                    name="services"
-                    type="text"
-                    value={formData.services}
-                    onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Services (specify)"
-                  />
-                </div>
-                <div
-                  className={`transition-all duration-700 delay-300 transform ${
-                    currentStep === 4 && !isTransitioning
-                      ? "translate-y-0 opacity-100"
-                      : "translate-y-8 opacity-0"
-                  }`}
-                >
-                  <Input
-                    name="others"
-                    type="text"
-                    value={formData.others}
-                    onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Others (specify)"
-                  />
-                </div>
-              </div>
-
               <div
-                className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-350 transform ${
+                className={`transition-all duration-700 delay-200 transform ${
+                  currentStep === 4 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <Input
+                  name="other_business_category"
+                  type="text"
+                  value={formData.other_business_category}
+                  onChange={handleInputChange}
+                  className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                  placeholder="Other Business Category (specify)"
+                />
+              </div>
+              <div
+                className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-300 transform ${
                   currentStep === 4 && !isTransitioning
                     ? "translate-y-0 opacity-100"
                     : "translate-y-8 opacity-0"
@@ -813,26 +808,22 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   Product Price Range
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-                  {[
-                    { value: "low", label: "Low" },
-                    { value: "average", label: "Average" },
-                    { value: "high", label: "High" },
-                  ].map((item) => (
+                  {productPriceOptions.map((item) => (
                     <label
                       key={item.value}
                       className={`flex items-center cursor-pointer p-3 sm:p-4 rounded-xl border transition-all duration-300 ${
-                        formData.productPrice === item.value
+                        formData.product_price === item.value
                           ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
                           : "border-gray-200 hover:border-[#DEA228]/50"
                       }`}
                     >
                       <input
                         type="radio"
-                        name="productPrice"
+                        name="product_price"
                         value={item.value}
-                        checked={formData.productPrice === item.value}
+                        checked={formData.product_price === item.value}
                         onChange={(e) =>
-                          handleSelectChange("productPrice", e.target.value)
+                          handleSelectChange("product_price", e.target.value)
                         }
                         className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
                       />
@@ -844,7 +835,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 </div>
               </div>
 
-              {/* Targeted Customers */}
+              {/* Target Customer */}
               <div
                 className={`transition-all duration-700 delay-200 transform ${
                   currentStep === 5 && !isTransitioning
@@ -853,29 +844,27 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 }`}
               >
                 <h4 className="text-sm sm:text-md font-medium text-gray-800 mb-3 sm:mb-4">
-                  Targeted Customers
+                  Target Customer
                 </h4>
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
-                  {categoryItems.map((item) => (
+                  {targetCustomerOptions.map((item) => (
                     <label
-                      key={item.key}
+                      key={item.value}
                       className={`flex items-center cursor-pointer p-2 sm:p-3 rounded-lg sm:rounded-xl border transition-all duration-300 ${
-                        formData.targetedCustomers[item.key]
+                        formData.target_customer === item.value
                           ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
                           : "border-gray-200 hover:border-[#DEA228]/50"
                       }`}
                     >
                       <input
-                        type="checkbox"
-                        checked={formData.targetedCustomers[item.key]}
+                        type="radio"
+                        name="target_customer"
+                        value={item.value}
+                        checked={formData.target_customer === item.value}
                         onChange={(e) =>
-                          handleCategoryChange(
-                            "targetedCustomers",
-                            item.key,
-                            e.target.checked
-                          )
+                          handleSelectChange("target_customer", e.target.value)
                         }
-                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 rounded focus:ring-[#DEA228]"
+                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
                       />
                       <span className="ml-2 sm:ml-3 text-xs sm:text-sm font-medium">
                         {item.label}
@@ -885,7 +874,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 </div>
               </div>
 
-              {/* Customer Income */}
+              {/* Income */}
               <div
                 className={`transition-all duration-700 delay-300 transform ${
                   currentStep === 5 && !isTransitioning
@@ -897,26 +886,22 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   Customer Income Level
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
-                  {[
-                    { value: "average", label: "Average" },
-                    { value: "above-average", label: "Above Average" },
-                    { value: "high", label: "High" },
-                  ].map((item) => (
+                  {incomeOptions.map((item) => (
                     <label
                       key={item.value}
                       className={`flex items-center cursor-pointer p-3 sm:p-4 rounded-xl border transition-all duration-300 ${
-                        formData.customerIncome === item.value
+                        formData.icome === item.value
                           ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
                           : "border-gray-200 hover:border-[#DEA228]/50"
                       }`}
                     >
                       <input
                         type="radio"
-                        name="customerIncome"
+                        name="icome"
                         value={item.value}
-                        checked={formData.customerIncome === item.value}
+                        checked={formData.icome === item.value}
                         onChange={(e) =>
-                          handleSelectChange("customerIncome", e.target.value)
+                          handleSelectChange("icome", e.target.value)
                         }
                         className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
                       />
@@ -974,10 +959,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 }`}
               >
                 <Input
-                  name="requiredLocation"
+                  name="location_name"
                   type="text"
                   required
-                  value={formData.requiredLocation}
+                  value={formData.location_name}
                   onChange={handleInputChange}
                   className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                   placeholder="Required Location"
@@ -993,9 +978,9 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="shopNo"
+                    name="shop_no"
                     type="text"
-                    value={formData.shopNo}
+                    value={formData.shop_no}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Shop Number (Optional)"
@@ -1009,9 +994,9 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="floorNo"
+                    name="floor_no"
                     type="text"
-                    value={formData.floorNo}
+                    value={formData.floor_no}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Floor Number (Optional)"
@@ -1025,9 +1010,9 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="areaNo"
+                    name="area_no"
                     type="text"
-                    value={formData.areaNo}
+                    value={formData.area_no}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Area Number (Optional)"
@@ -1041,9 +1026,9 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }`}
                 >
                   <Input
-                    name="requiredArea"
+                    name="required_area"
                     type="number"
-                    value={formData.requiredArea}
+                    value={formData.required_area}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
                     placeholder="Required Area (sq meters)"
@@ -1060,8 +1045,8 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 }`}
               >
                 <textarea
-                  name="otherConditions"
-                  value={formData.otherConditions}
+                  name="other_conditions"
+                  value={formData.other_conditions}
                   onChange={handleInputChange}
                   rows={4}
                   className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-0 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
