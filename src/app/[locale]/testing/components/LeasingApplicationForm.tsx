@@ -76,9 +76,9 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { name, value, type, files } = e.target as any;
+    const { name, value, type, files } = e.target as HTMLInputElement;
     if (type === "file") {
-      setFormData((prev) => ({ ...prev, [name]: files[0] }));
+      setFormData((prev) => ({ ...prev, [name]: files && files[0] ? files[0] : null }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }

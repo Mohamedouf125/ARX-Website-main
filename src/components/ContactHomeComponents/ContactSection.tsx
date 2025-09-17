@@ -6,7 +6,6 @@ import "@/app/globals.css";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 
 interface ContactSectionProps {
   contact: string;
