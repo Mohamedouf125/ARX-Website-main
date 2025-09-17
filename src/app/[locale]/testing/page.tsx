@@ -251,7 +251,7 @@ const AboutPage = () => {
       {/* swiper hear  */}
       {/* <PropertySwiper /> */}
       <OurProjects projects={projects} />
-      <section className="w-full h-full pb-[30vw] ">
+      <section className="w-full h-full pb-[170px] ">
         <HomeContact contact="/about.jpg" />
       </section>
     </div>

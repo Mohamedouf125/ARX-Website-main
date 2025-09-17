@@ -4,6 +4,7 @@ import ContactSection from '../ContactHomeComponents/ContactSection'
 function HomeContact({contact}: {contact: string}) {
   return (
     <div>
+      
       <ContactSection contact={contact} />
     </div>
   )

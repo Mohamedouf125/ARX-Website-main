@@ -5,7 +5,8 @@ import ContactForm from "./ContactForm";
 import "@/app/globals.css";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { useLocale } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 interface ContactSectionProps {
   contact: string;
@@ -15,6 +16,7 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
   const [reloadKey, setReloadKey] = useState(0);
   const pathname = usePathname();
   const locale = useLocale();
+  const t = useTranslations("home");
 
   const handleReloadAnimation = () => {
     setReloadKey((prev) => prev + 1);
@@ -23,7 +25,23 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
   // Check if we're on the home page
  const isHomePage = pathname === `/${locale}`
   return (
-    <section className="relative flex items-center justify-center p-2 lg:px-20">
+    <section className="relative flex items-center flex-col gap-[100px] justify-center p-2 lg:px-20">
+      <div className=" px-4 pt-[70px] relative overflow-hidden mb-[-60px] z-10">
+        <div className="flex flex-col justify-center items-center">
+          <div className="max-w-2xl text-center">
+            <AnimatedElement
+              type="slideUp"
+              duration={1}
+              className="w-full h-full"
+            >
+              <span className="text-2xl sm:text-3xl lg:text-5xl uppercase font-extrabold text-gray-900">
+                {t("our_form_description")}
+              </span>
+            </AnimatedElement>
+          </div>
+          
+        </div>
+      </div>
       {/* Background Image with Overlay */}
       <div
         className="bg-cover bg-center bg-no-repeat relative p-30 px-5 sm:px-10 xl:px-40 rounded-3xl w-full"
@@ -87,7 +105,9 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
                 {isHomePage ? (
                   <ContactForm />
                 ) : (
-                  <ContactFormProject handleReloadAnimation={handleReloadAnimation} />
+                  <ContactFormProject
+                    handleReloadAnimation={handleReloadAnimation}
+                  />
                 )}
               </AnimatedElement>
             </div>

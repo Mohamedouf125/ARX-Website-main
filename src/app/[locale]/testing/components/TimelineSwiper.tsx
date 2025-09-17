@@ -2,9 +2,33 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
-import { useLocale, useTranslations } from "next-intl";
-import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
 import "swiper/css";
+
+interface SmallHeadSpanProps {
+  children: React.ReactNode;
+  color?: string;
+}
+
+// SmallHeadSpan Component (inline for the artifact)
+const SmallHeadSpan = ({ children, color = "#dba426" }: SmallHeadSpanProps) => {
+  return (
+    <div className="mb-6 inline-block">
+      <div
+        className="px-6 py-2 border border-amber-500 rounded-full overflow-hidden relative"
+        style={{ borderColor: color }}
+      >
+        <div className="flex animate-pulse">
+          <span
+            className="text-xs font-bold uppercase tracking-wider text-amber-600"
+            style={{ color }}
+          >
+            · {children} · {children} · {children} ·
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 interface TimelineItem {
   year: string;
@@ -22,71 +46,84 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     {
       year: "1983",
       title:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+        "Founded with a vision to revolutionize the industry through innovative solutions and dedication to excellence.",
       image: "/pngimg.png",
     },
     {
       year: "1996",
       title:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+        "Expanded operations internationally, establishing key partnerships and reaching new markets across continents.",
       image: "/pngimg.png",
     },
     {
       year: "2005",
       title:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+        "Launched groundbreaking products that transformed customer experience and set new industry standards.",
       image: "/pngimg.png",
     },
     {
       year: "2010",
       title:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+        "Achieved significant milestones in sustainability and corporate responsibility, leading by example.",
       image: "/pngimg.png",
     },
     {
       year: "2014",
       title:
-        "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa.",
+        "Embraced digital transformation, pioneering innovative technologies that shaped the future of our industry.",
       image: "/pngimg.png",
-    }
+    },
+    {
+      year: "2014",
+      title:
+        "Embraced digital transformation, pioneering innovative technologies that shaped the future of our industry.",
+      image: "/pngimg.png",
+    },
+    {
+      year: "2014",
+      title:
+        "Embraced digital transformation, pioneering innovative technologies that shaped the future of our industry.",
+      image: "/pngimg.png",
+    },
+    {
+      year: "2014",
+      title:
+        "Embraced digital transformation, pioneering innovative technologies that shaped the future of our industry.",
+      image: "/pngimg.png",
+    },
   ],
   className = "",
 }) => {
-  const t = useTranslations("about");
-  const locale = useLocale();
-
-  // Swiper refs and states
   const swiperRef = useRef<SwiperType | null>(null);
   const centerSectionRef = useRef<HTMLDivElement | null>(null);
   const [mounted, setMounted] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-  
-  // Animation frame ref for smooth scrolling
-const animationFrameRef = useRef<number | undefined>(undefined);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
+  const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     setMounted(true);
-    
-    // Check if it's mobile
+
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
+    window.addEventListener("resize", checkMobile);
+
     return () => {
-      window.removeEventListener('resize', checkMobile);
+      window.removeEventListener("resize", checkMobile);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
   }, []);
 
-  // Smooth scroll handler with requestAnimationFrame
   const handleSmoothScroll = useCallback(() => {
-    if (!mounted || !centerSectionRef.current || !swiperRef.current || isMobile) return;
+    if (!mounted || !centerSectionRef.current || !swiperRef.current || isMobile)
+      return;
 
     const centerSection = centerSectionRef.current;
     const swiper = swiperRef.current;
@@ -95,39 +132,36 @@ const animationFrameRef = useRef<number | undefined>(undefined);
     const sectionHeight = centerSection.offsetHeight;
     const windowHeight = window.innerHeight;
 
-    // Calculate scroll progress through the center section
+    // Faster scroll calculation - reduced divisor from 1.2 to 0.6
     const progress = Math.max(
       0,
       Math.min(
         1,
-        (windowHeight - rect.top) / (windowHeight + sectionHeight * 1.2)
+        (windowHeight - rect.top) / (windowHeight + sectionHeight * 0.6)
       )
     );
 
     setScrollProgress(progress);
 
-    // Calculate target slide based on scroll progress
-    // We want to map the progress to show timeline items (excluding start/end spacers)
     const targetTimelineIndex = Math.floor(progress * timelineData.length);
-    const clampedTimelineIndex = Math.max(0, Math.min(timelineData.length - 1, targetTimelineIndex));
-    
-    // Add 1 to account for the start spacer slide
+    const clampedTimelineIndex = Math.max(
+      0,
+      Math.min(timelineData.length - 1, targetTimelineIndex)
+    );
     const targetSlide = clampedTimelineIndex + 1;
 
     if (swiper.activeIndex !== targetSlide) {
-      swiper.slideTo(targetSlide, 300);
+      swiper.slideTo(targetSlide, 200); // Faster slide transition
     }
 
-    // Continue animation loop
     animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
   }, [mounted, timelineData.length, isMobile]);
 
   useEffect(() => {
     if (!mounted || isMobile) return;
 
-    // Throttled scroll handler to trigger smooth animation
     let ticking = false;
-    
+
     const onScroll = () => {
       if (!ticking) {
         if (animationFrameRef.current) {
@@ -135,17 +169,14 @@ const animationFrameRef = useRef<number | undefined>(undefined);
         }
         animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
         ticking = true;
-        
-        // Reset ticking flag
+
         setTimeout(() => {
           ticking = false;
-        }, 16); // ~60fps
+        }, 16);
       }
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
-    
-    // Initial call
     handleSmoothScroll();
 
     return () => {
@@ -156,105 +187,123 @@ const animationFrameRef = useRef<number | undefined>(undefined);
     };
   }, [handleSmoothScroll]);
 
-  // Calculate which dots should be active based on scroll progress
   const getActiveDotIndex = () => {
     const progressPerItem = 1 / timelineData.length;
     const calculatedIndex = Math.floor(scrollProgress / progressPerItem);
-    // Clamp the result to ensure it doesn't exceed the array bounds
     return Math.min(calculatedIndex, timelineData.length - 1);
   };
 
-  // Individual item animation progress
-  const getItemAnimationProgress = useCallback((itemIndex: number) => {
-    const totalItems = timelineData.length;
-    const itemProgressStart = itemIndex / totalItems;
-    const itemProgressEnd = (itemIndex + 1) / totalItems;
-    
-    if (scrollProgress < itemProgressStart) return 0;
-    if (scrollProgress > itemProgressEnd) return 1;
-    
-    return (scrollProgress - itemProgressStart) / (itemProgressEnd - itemProgressStart);
-  }, [scrollProgress, timelineData.length]);
+  const getItemAnimationProgress = useCallback(
+    (itemIndex: number) => {
+      const totalItems = timelineData.length;
+      const itemProgressStart = itemIndex / totalItems;
+      const itemProgressEnd = (itemIndex + 1) / totalItems;
+
+      if (scrollProgress < itemProgressStart) return 0;
+      if (scrollProgress > itemProgressEnd) return 1;
+
+      return (
+        (scrollProgress - itemProgressStart) /
+        (itemProgressEnd - itemProgressStart)
+      );
+    },
+    [scrollProgress, timelineData.length]
+  );
 
   if (!mounted) {
-    return <div className="min-h-screen bg-gray-100" />;
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white" />
+    );
   }
 
-  // Mobile version - not sticky, shows cards individually
+  // Mobile Version
   if (isMobile) {
     return (
       <section className={`max-w-[1920px] mx-auto ${className}`}>
-        {/* Header */}
-        <div className={`${locale === "ar" ? "text-right" : "text-left"} px-4 py-8 bg-white`}>
-          <SmallHeadSpan>{t("OUR_STORY")}</SmallHeadSpan>
-          <h1 className="text-3xl sm:text-4xl font-bold text-black mb-8">
-            {t("40+")}<br />
-            <span className="text-gray-900">{t("remarkable journey")}</span>
-          </h1>
-        </div>
+        <div className="px-6 py-12 bg-gradient-to-b from-white to-gray-50">
+          <div className="text-center mb-12">
+            <SmallHeadSpan>OUR STORY</SmallHeadSpan>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">40+ Years</h1>
+            <p className="text-xl text-gray-600">of remarkable journey</p>
+          </div>
 
-        {/* Mobile Timeline Cards */}
-        <div className="px-4 bg-white">
-          {timelineData.map((item, index) => (
-            <div key={index} className="mb-12 last:mb-0">
-              <div className="flex flex-col items-center text-center">
-                {/* Year */}
-                <div className="text-5xl font-bold text-[#e4ed64] mb-4">
-                  {item.year}
-                </div>
+          <div className="space-y-16">
+            {timelineData.map((item, index) => (
+              <div key={index} className="relative">
+                <div className="flex flex-col items-center">
+                  {/* Year Display - No scaling */}
+                  <div className="relative mb-8">
+                    <div className="absolute inset-0 bg-yellow-300 opacity-20 blur-3xl"></div>
+                    <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">
+                      {item.year}
+                    </div>
+                  </div>
 
-                {/* Image */}
-                <div className="mb-6">
-                  <img
-                    src={item.image}
-                    alt={`Building ${item.year}`}
-                    className="w-32 h-32 object-contain filter drop-shadow-lg"
-                  />
-                </div>
+                  {/* Image Container - No scaling */}
+                  <div className="mb-8 relative">
+                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-amber-200 rounded-2xl blur-2xl opacity-30"></div>
+                    <img
+                      src={item.image}
+                      alt={`Milestone ${item.year}`}
+                      className="relative w-40 h-40 object-contain filter drop-shadow-2xl"
+                    />
+                  </div>
 
-                {/* Timeline connector */}
-                <div className="flex flex-col items-center mb-6">
-                  <div className={`w-6 h-6 rounded-full shadow-lg border-2 border-white transition-colors duration-500 bg-[#e4ed64]`}></div>
-                  {index < timelineData.length - 1 && (
-                    <div className="w-0.5 h-8 bg-[#e4ed64] mt-2"></div>
-                  )}
-                </div>
+                  {/* Timeline Connector */}
+                  <div className="relative mb-8">
+                    <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full shadow-lg animate-pulse"></div>
+                    {index < timelineData.length - 1 && (
+                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-gradient-to-b from-amber-400 to-transparent"></div>
+                    )}
+                  </div>
 
-                {/* Description */}
-                <div className="max-w-sm">
-                  <p className="text-gray-600 text-sm leading-relaxed">
-                    {item.title}
-                  </p>
+                  {/* Description */}
+                  <div className="max-w-sm px-4">
+                    <p className="text-gray-700 text-center leading-relaxed">
+                      {item.title}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </section>
     );
   }
 
-  // Desktop version - sticky behavior with smooth animations
+  // Desktop Version - No scaling, faster scroll
   return (
     <section
       ref={centerSectionRef}
-      className={`h-[350vh] max-w-[1920px] mx-auto relative ${className}`}
+      className={`h-[250vh] max-w-[1920px] mx-auto relative ${className}`} // Reduced height for faster scroll
+      style={{
+        background: `linear-gradient(180deg, 
+          #ffffff 0%, 
+          #fafafa 25%, 
+          #f5f5f5 50%, 
+          #fafafa 75%, 
+          #ffffff 100%)`,
+      }}
     >
-      <div className="sticky top-20 h-screen flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-8 sm:py-12 bg-white z-20">
-        {/* Header with gentle movement */}
+      <div className="sticky top-16 h-screen flex flex-col justify-center px-8 py-12 z-20">
+        {/* Header - minimal parallax, no scaling */}
         <div
-          className={`${
-            locale === "ar" ? "text-right" : "text-left"
-          } pb-26 w-full max-w-7xl mx-auto transition-transform duration-300 ease-out`}
+          className="pb-20 w-full max-w-7xl mx-auto"
           style={{
-            transform: `translateY(${scrollProgress * -8}px)`
+            transform: `translateY(${scrollProgress * -10}px)`, // Reduced parallax
+            opacity: 1 - scrollProgress * 0.2,
           }}
         >
-          <SmallHeadSpan>{t("OUR_STORY")}</SmallHeadSpan>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-black ">
-            {t("40+")}<br />
-            <span className="text-gray-900">{t("remarkable journey")}</span>
+          <SmallHeadSpan>OUR STORY</SmallHeadSpan>
+          <h1 className="text-7xl font-black text-gray-900 mb-4">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500">
+              40+ Years
+            </span>
           </h1>
+          <p className="text-3xl text-gray-700 font-light">
+            of remarkable journey
+          </p>
         </div>
 
         {/* Swiper Container */}
@@ -264,140 +313,148 @@ const animationFrameRef = useRef<number | undefined>(undefined);
               swiperRef.current = swiper;
             }}
             slidesPerView={4}
-            spaceBetween={60}
+            spaceBetween={80}
             allowTouchMove={false}
             centeredSlides={false}
-            speed={300}
+            speed={200} // Faster transition speed
             breakpoints={{
-              768: {
-                slidesPerView: 2,
-                spaceBetween: 32,
-              },
-              1024: {
-                slidesPerView: 3,
-                spaceBetween: 40,
-              },
-              1280: {
-                slidesPerView: 4,
-                spaceBetween: 60,
-              },
+              768: { slidesPerView: 2, spaceBetween: 40 },
+              1024: { slidesPerView: 3, spaceBetween: 60 },
+              1280: { slidesPerView: 4, spaceBetween: 80 },
             }}
             className="w-full relative z-10"
           >
-            {/* Empty slide at the beginning for spacing */}
+            {/* Empty slide at the beginning */}
             <SwiperSlide key="start-space">
-              <div className="w-full h-full flex items-center justify-center px-2">
-                <div className="flex flex-col items-center max-w-xs mx-auto opacity-0">
-                  <div className="text-6xl sm:text-7xl lg:text-8xl font-bold text-transparent -ml-4 sm:-ml-8 -mb-8 sm:-mb-12">
-                    &nbsp;
-                  </div>
-                  <div className="relative mb-16 sm:mb-20">
-                    <div className="w-full h-32 sm:h-40 lg:h-48 flex items-center rounded-md justify-center">
-                    </div>
-                  </div>
-                  <div className="relative z-20 flex items-center justify-center">
-                    <div className="w-7 sm:w-9 h-7 sm:h-9 bg-transparent rounded-full relative z-10"></div>
-                  </div>
-                  <div className="mb-3 sm:mb-4"></div>
-                </div>
-              </div>
+              <div className="w-full h-full opacity-0"></div>
             </SwiperSlide>
 
             {timelineData.map((item, index) => {
               const activeDotIndex = getActiveDotIndex();
               const isActive = index <= activeDotIndex;
+              const isPassed = index < activeDotIndex;
               const itemProgress = getItemAnimationProgress(index);
-              
-              // Smooth movement animations (always visible)
-              const yearScale = 0.96 + (itemProgress * 0.08);
-              const yearTranslateY = (1 - itemProgress) * 10;
-              
-              const imageScale = 0.94 + (itemProgress * 0.12);
-              const imageTranslateY = (1 - itemProgress) * 15;
-              
-              const textTranslateY = (1 - itemProgress) * 8;
-              
+              const isHovered = hoveredIndex === index;
+
+              // No scaling - only opacity and position changes
+              const yearOpacity = 0.5 + itemProgress * 0.5;
+              const imageOpacity = 0.6 + itemProgress * 0.4;
+              const textOpacity = 0.4 + itemProgress * 0.6;
+
               return (
                 <SwiperSlide key={index}>
-                  <div className="w-full h-full flex items-center justify-center px-2">
+                  <div
+                    className="w-full h-full flex items-center justify-center px-4 cursor-pointer"
+                    onMouseEnter={() => setHoveredIndex(index)}
+                    onMouseLeave={() => setHoveredIndex(null)}
+                  >
                     <div className="flex flex-col items-center max-w-xs mx-auto">
-                      {/* Year with smooth movement */}
-                      <div 
-                        className="text-6xl sm:text-5xl lg:text-7xl font-bold text-[#e4ed64] -ml-4 sm:-ml-8 -mb-8 sm:-mb-12 transition-all duration-300 ease-out"
+                      {/* Year Display - No scaling, only opacity */}
+                      <div
+                        className="relative mb-12"
                         style={{
-                          transform: `scale(${yearScale}) translateY(${yearTranslateY}px)`
+                          opacity: yearOpacity,
+                          transition: "opacity 0.3s ease-out",
                         }}
                       >
-                        {item.year}
-                      </div>
-
-                      {/* Building/House Image with smooth movement */}
-                      <div 
-                        className="relative mb-16 sm:mb-20 transition-all duration-400 ease-out"
-                        style={{
-                          transform: `scale(${imageScale}) translateY(${imageTranslateY}px)`
-                        }}
-                      >
-                        <div className="w-full h-32 sm:h-40 lg:h-38 flex items-center rounded-md justify-center">
-                          <img
-                            src={item.image}
-                            alt={`Building ${item.year}`}
-                            className="max-w-full min-w-[100px] sm:min-w-[140px] lg:min-w-[180px] max-h-full object-contain filter drop-shadow-2xl"
-                          />
+                        <div
+                          className="absolute inset-0 bg-yellow-300 blur-3xl"
+                          style={{ opacity: itemProgress * 0.3 }}
+                        ></div>
+                        <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-500">
+                          {item.year}
                         </div>
                       </div>
 
-                      {/* Indicator Dot with connecting line */}
-                      <div className="relative z-20 flex items-center justify-center">
-                        {/* Left line segment */}
-                        {index > 0 && (
-                          <div
-                            className={`absolute right-1/2 w-full h-1 hidden sm:block transition-all duration-500 ease-out ${
-                              isActive ? 'bg-[#e4ed64]' : 'bg-gray-300'
-                            }`}
-                            style={{ 
-                              width: "calc(25vw - 50px)",
-                              transform: `scaleX(${isActive ? 1 : 0.8})`,
-                              transformOrigin: 'right center'
-                            }}
-                          ></div>
-                        )}
-
-                        {/* Right line segment */}
-                        {index < timelineData.length - 1 && (
-                          <div
-                            className={`absolute left-1/2 w-full h-1 hidden sm:block transition-all duration-500 ease-out ${
-                              isActive ? 'bg-[#e4ed64]' : 'bg-gray-300'
-                            }`}
-                            style={{ 
-                              width: "calc(30vw - 50px)",
-                              transform: `scaleX(${isActive ? 1 : 0.8})`,
-                              transformOrigin: 'left center'
-                            }}
-                          ></div>
-                        )}
-
-                        {/* The dot */}
-                        <div 
-                          className={`w-7 sm:w-9 h-7 sm:h-9 rounded-full shadow-lg border-2 sm:border-4 border-white relative z-10 transition-all duration-500 ease-out ${
-                            isActive ? 'bg-[#e4ed64]' : 'bg-gray-300'
-                          }`}
-                          style={{
-                            transform: `scale(${isActive ? 1.1 : 0.95})`,
-                            boxShadow: isActive ? '0 0 15px rgba(228, 237, 100, 0.4)' : '0 4px 6px rgba(0, 0, 0, 0.1)'
-                          }}
-                        ></div>
-                      </div>
-                      <div className="mb-3 sm:mb-4"></div>
-
-                      {/* Description with smooth movement */}
-                      <div 
-                        className="text-center max-w-xs px-2 transition-all duration-400 ease-out"
+                      {/* Image Container - No scaling, only opacity */}
+                      <div
+                        className="relative mb-20"
                         style={{
-                          transform: `translateY(${textTranslateY}px)`
+                          opacity: imageOpacity,
+                          transition: "opacity 0.3s ease-out",
                         }}
                       >
-                        <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                        <div
+                          className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-amber-200 rounded-2xl blur-2xl"
+                          style={{
+                            opacity: itemProgress * 0.4 + (isHovered ? 0.2 : 0),
+                          }}
+                        ></div>
+                        <img
+                          src={item.image}
+                          alt={`Milestone ${item.year}`}
+                          className="relative w-48 h-48 object-contain filter drop-shadow-2xl"
+                          style={{
+                            filter: `drop-shadow(0 20px 40px rgba(0,0,0,${
+                              0.1 + itemProgress * 0.2
+                            }))`,
+                          }}
+                        />
+                      </div>
+
+                      {/* Timeline Indicator - No scaling on dots */}
+                      <div className="relative z-20 flex items-center justify-center mb-6">
+                        {/* Connecting lines */}
+                        {index > 0 && (
+                          <div
+                            className="absolute right-full h-1 transition-all duration-300"
+                            style={{
+                              width: "calc(25vw - 50px)",
+                              background: isActive
+                                ? "linear-gradient(90deg, transparent, #fbbf24)"
+                                : "#e5e7eb",
+                              opacity: isActive ? 1 : 0.5,
+                            }}
+                          ></div>
+                        )}
+
+                        {index < timelineData.length - 1 && (
+                          <div
+                            className="absolute left-full h-1 transition-all duration-300"
+                            style={{
+                              width: "calc(25vw - 50px)",
+                              background: isPassed
+                                ? "linear-gradient(90deg, #fbbf24, transparent)"
+                                : "#e5e7eb",
+                              opacity: isPassed ? 1 : 0.5,
+                            }}
+                          ></div>
+                        )}
+
+                        {/* Dot with glow - no scaling */}
+                        <div className="relative">
+                          {isActive && (
+                            <div
+                              className="absolute inset-0 rounded-full animate-ping"
+                              style={{
+                                background: "#fbbf24",
+                                opacity: 0.4,
+                              }}
+                            ></div>
+                          )}
+                          <div
+                            className="w-10 h-10 rounded-full border-4 border-white relative z-10 transition-all duration-300"
+                            style={{
+                              background: isActive
+                                ? "linear-gradient(135deg, #fbbf24, #f59e0b)"
+                                : "#e5e7eb",
+                              boxShadow: isActive
+                                ? "0 0 30px rgba(251, 191, 36, 0.6), 0 4px 15px rgba(0, 0, 0, 0.1)"
+                                : "0 2px 8px rgba(0, 0, 0, 0.1)",
+                            }}
+                          ></div>
+                        </div>
+                      </div>
+
+                      {/* Description - Only opacity change */}
+                      <div
+                        className="text-center max-w-xs px-4"
+                        style={{
+                          opacity: textOpacity,
+                          transition: "opacity 0.3s ease-out",
+                        }}
+                      >
+                        <p className="text-gray-700 text-sm leading-relaxed font-light">
                           {item.title}
                         </p>
                       </div>
@@ -407,23 +464,9 @@ const animationFrameRef = useRef<number | undefined>(undefined);
               );
             })}
 
-            {/* Empty slide at the end for spacing */}
+            {/* Empty slide at the end */}
             <SwiperSlide key="end-space">
-              <div className="w-full h-full flex items-center justify-center px-2">
-                <div className="flex flex-col items-center max-w-xs mx-auto opacity-0">
-                  <div className="text-6xl sm:text-7xl lg:text-8xl font-bold text-transparent -ml-4 sm:-ml-8 -mb-8 sm:-mb-12">
-                    &nbsp;
-                  </div>
-                  <div className="relative mb-16 sm:mb-20">
-                    <div className="w-full h-32 sm:h-40 lg:h-48 flex items-center rounded-md justify-center">
-                    </div>
-                  </div>
-                  <div className="relative z-20 flex items-center justify-center">
-                    <div className="w-7 sm:w-9 h-7 sm:h-9 bg-transparent rounded-full relative z-10"></div>
-                  </div>
-                  <div className="mb-3 sm:mb-4"></div>
-                </div>
-              </div>
+              <div className="w-full h-full opacity-0"></div>
             </SwiperSlide>
           </Swiper>
         </div>
