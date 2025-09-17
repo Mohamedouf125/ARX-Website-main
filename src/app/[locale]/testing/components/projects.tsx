@@ -24,6 +24,8 @@ export default function ServiceCard({
     }
   };
 
+  console.log(delay)
+
   return (
     <div
       className={`group relative flex flex-col min-h-[370px] rounded-[30px_0_30px_30px] 
