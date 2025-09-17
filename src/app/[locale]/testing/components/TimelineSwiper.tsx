@@ -316,7 +316,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
             spaceBetween={80}
             allowTouchMove={false}
             centeredSlides={false}
-            speed={200} // Faster transition speed
+            speed={100} // Faster transition speed
             breakpoints={{
               768: { slidesPerView: 2, spaceBetween: 40 },
               1024: { slidesPerView: 3, spaceBetween: 60 },
