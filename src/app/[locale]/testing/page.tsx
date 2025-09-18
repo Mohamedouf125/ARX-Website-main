@@ -45,7 +45,11 @@ const AboutPage = () => {
 
   const getProjects = async () => {
     try {
-      const response = await getData("properties", {}, new AxiosHeaders({ lang: locale }));
+      const response = await getData(
+        "properties",
+        {},
+        new AxiosHeaders({ lang: locale })
+      );
       setProjects(response.data.properties);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -66,50 +70,43 @@ const AboutPage = () => {
     },
   });
 
-
-  // Dummy services data
+  // Services data (titles as-is), descriptions from i18n keys
   const servicesData: ServiceItem[] = [
     {
       id: 1,
-      image: "/images/home/VALUES.png",
-      title: "Real Estate Development",
-      description:
-        "We engage as early as possible, typically during the conceptual or schematic stage.",
+      image: "/aboutServices/prime.png",
+      title: t("services_title.s1"),
+      description: t("services_descriptions.s1"),
     },
     {
       id: 2,
-      image: "/images/home/VALUES.png",
-      title: "Property Management",
-      description:
-        "Comprehensive property management services to maximize your investment returns and tenant satisfaction.",
+      image: "/aboutServices/modern.webp",
+      title: t("services_title.s2"),
+      description: t("services_descriptions.s2"),
     },
     {
       id: 3,
-      image: "/images/home/VALUES.png",
-      title: "Construction Services",
-      description:
-        "From planning to execution, we deliver high-quality construction projects on time and within budget.",
+      image: "/aboutServices/professional.png",
+      title: t("services_title.s3"),
+      description: t("services_descriptions.s3"),
     },
     {
       id: 4,
-      image: "/images/home/VALUES.png",
-      title: "Investment Advisory",
-      description:
-        "Expert guidance on real estate investments to help you make informed decisions in today's market.",
+      image: "/aboutServices/marketing.png",
+      title: t("services_title.s4"),
+      description: t("services_descriptions.s4"),
     },
     {
       id: 5,
-      image: "/images/home/VALUES.png",
-      title: "Commercial Leasing",
-      description:
-        "Strategic commercial leasing solutions tailored to meet your business needs and growth objectives.",
+      image: "/aboutServices/comperhensive.png",
+      title: t("services_title.s5"),
+      description: t("services_descriptions.s5"),
     },
     {
       id: 6,
-      image: "/images/home/VALUES.png",
-      title: "Residential Sales",
-      description:
-        "Premium residential properties with modern amenities in prime locations across the city.",
+      image: "/aboutServices/secure.png",
+      title: t("services_title.s6"),
+      description: t("services_descriptions.s6"),
     },
   ];
 
@@ -232,9 +229,7 @@ const AboutPage = () => {
             {servicesData.map((service) => (
               <ServiceCard
                 key={service.id}
-                image={
-                  "https://demo2.wpopal.com/spaciaz/wp-content/uploads/2025/04/h1_service-3.png"
-                }
+                image={service.image}
                 title={service.title}
                 // description={service.description}
                 onClick={() => handleServiceClick(service)}

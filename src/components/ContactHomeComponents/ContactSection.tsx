@@ -29,7 +29,7 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
         <div className="flex flex-col justify-center items-center">
           <div className="max-w-2xl text-center">
             <AnimatedElement
-              type="slideUp"
+              type="slideRight"
               duration={1}
               className="w-full h-full"
             >
@@ -38,7 +38,6 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
               </span>
             </AnimatedElement>
           </div>
-          
         </div>
       </div>
       {/* Background Image with Overlay */}
