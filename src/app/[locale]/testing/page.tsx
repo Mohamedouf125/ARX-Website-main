@@ -136,7 +136,7 @@ const AboutPage = () => {
     <div className="text-gray-800 mx-auto">
       {/* Hero Section */}
       <PageHero
-        title={t("title")}
+        title={t("leasingTitle")}
         hideDescription={true}
         breadcrumbs={[
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
@@ -158,17 +158,17 @@ const AboutPage = () => {
               className="w-full h-full"
             >
               <h2 className="font-bold text-[28px] xs:text-[32px] sm:text-[38px] md:text-[45px] lg:text-[60px] xl:text-[50px] text-black leading-tight sm:leading-normal break-words hyphens-auto">
-                {t("description")}
+                {t("leasingDescription")}
               </h2>
             </AnimatedElement>
           </div>
           {/* Right Section */}
           <div className="right-section">
             <h4 className="font-[600] text-[18px] md:text-[22px] leading-[1.5em] mb-5">
-              {t("vision_description_part_one")}
+              {t("leasing_vision_description_part_one")}
             </h4>
             <p className="font-[500] text-[16px] md:text-[18px] opacity-60">
-              {t("vision_description_part_two")}
+              {t("leasing_vision_description_part_two")}
             </p>
           </div>
         </section>
@@ -176,7 +176,7 @@ const AboutPage = () => {
         <section className="h-full md:h-[650px] w-full max-w-7xl mx-auto flex items-end justify-end mb-10">
           <div
             style={{
-              backgroundImage: `url(${aboutBanner?.data?.bannerInside?.image})`,
+              backgroundImage: `url(/aboutServices/whoARX.webp)`,
             }}
             className=" bg-cover bg-center w-full h-full rounded-3xl p-3 flex items-end relative pt-60 md:pt-0 pb-10 md:pb-3"
           >

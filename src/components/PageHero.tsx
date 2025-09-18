@@ -32,7 +32,7 @@ const PageHero: React.FC<PageHeroProps> = ({
   const t = useTranslations("second_hero");
 
   const heightClasses = {
-    medium: "h-[45vh] md:h-[65vh]",
+    medium: "h-[35vh] md:h-[45vh]",
     fullpage: "h-screen", // 100vh - full viewport height
   };
 
@@ -55,7 +55,7 @@ const PageHero: React.FC<PageHeroProps> = ({
       {/* Content */}
       <div className="z-10 relative h-full">
         {/* Standard layout with breadcrumbs */}
-        <div className="absolute inset-0 flex flex-col items-start justify-between pt-30 md:pt-40 pb-20 lg:pb-30 mb-[-50px] px-3 md:px-8 w-full z-10">
+        <div className="absolute inset-0 flex flex-col items-start justify-start pt-30 md:pt-40 pb-20 lg:pb-30 mb-[-50px] px-3 md:px-8 w-full z-10">
           {/* Title */}
           <h1 className="text-[30px] sm:text-[50px] md:text-[70px] font-bold font-['Cinzel'] mb-4 text-white">
             {title}

@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
+import { useTranslations } from "next-intl";
 
 interface SmallHeadSpanProps {
   children: React.ReactNode;
@@ -42,58 +43,29 @@ interface TimelineSwiperProps {
 }
 
 const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
-  timelineData = [
-    {
-      year: "1983",
-      title:
-        "Founded with a vision to revolutionize the industry through innovative solutions and dedication to excellence.",
-      image: "/pngimg.png",
-    },
-    {
-      year: "1996",
-      title:
-        "Expanded operations internationally, establishing key partnerships and reaching new markets across continents.",
-      image: "/pngimg.png",
-    },
-    {
-      year: "2005",
-      title:
-        "Launched groundbreaking products that transformed customer experience and set new industry standards.",
-      image: "/pngimg.png",
-    },
-    {
-      year: "2010",
-      title:
-        "Achieved significant milestones in sustainability and corporate responsibility, leading by example.",
-      image: "/pngimg.png",
-    },
-    {
-      year: "2014",
-      title:
-        "Embraced digital transformation, pioneering innovative technologies that shaped the future of our industry.",
-      image: "/pngimg.png",
-    },
-    {
-      year: "2014",
-      title:
-        "Embraced digital transformation, pioneering innovative technologies that shaped the future of our industry.",
-      image: "/pngimg.png",
-    },
-    {
-      year: "2014",
-      title:
-        "Embraced digital transformation, pioneering innovative technologies that shaped the future of our industry.",
-      image: "/pngimg.png",
-    },
-    {
-      year: "2014",
-      title:
-        "Embraced digital transformation, pioneering innovative technologies that shaped the future of our industry.",
-      image: "/pngimg.png",
-    },
-  ],
+  timelineData,
   className = "",
 }) => {
+  const t = useTranslations("leasing");
+  const i18nTimeline: TimelineItem[] = Array.from({ length: 6 }, (_, idx) => {
+    const step = String(idx + 1);
+    const stepname = ["one", "two", "three", "four", "five", "six"];
+    const images = [
+      "/aboutServices/leasing1.png",
+      "/pngimg.png",
+      "/pngimg.png",
+      "/pngimg.png",
+      "/pngimg.png",
+      "/pngimg.png",
+    ];
+    return {
+      year: step,
+      // Put the step description into title to match current renderer
+      title: t(`steps.${stepname[idx]}.description`),
+      image: images[idx],
+    };
+  });
+  const data: TimelineItem[] = timelineData ?? i18nTimeline;
   const swiperRef = useRef<SwiperType | null>(null);
   const centerSectionRef = useRef<HTMLDivElement | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -132,30 +104,43 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     const sectionHeight = centerSection.offsetHeight;
     const windowHeight = window.innerHeight;
 
-    // Faster scroll calculation - reduced divisor from 1.2 to 0.6
-    const progress = Math.max(
-      0,
-      Math.min(
-        1,
-        (windowHeight - rect.top) / (windowHeight + sectionHeight * 0.6)
-      )
-    );
+    // Only start animation when section reaches the top of the page
+    // Calculate progress only after the section top reaches viewport top
+    let progress = 0;
+
+    if (rect.top <= 0) {
+      // Section has reached the top, now calculate scroll progress within the section
+      const scrolledDistance = Math.abs(rect.top);
+      const totalScrollDistance = sectionHeight - windowHeight;
+
+      if (totalScrollDistance > 0) {
+        progress = Math.min(1, scrolledDistance / totalScrollDistance);
+      }
+    }
 
     setScrollProgress(progress);
 
-    const targetTimelineIndex = Math.floor(progress * timelineData.length);
-    const clampedTimelineIndex = Math.max(
-      0,
-      Math.min(timelineData.length - 1, targetTimelineIndex)
-    );
-    const targetSlide = clampedTimelineIndex + 1;
+    // Only move swiper if there's actual progress
+    if (progress > 0) {
+      const targetTimelineIndex = Math.floor(progress * data.length);
+      const clampedTimelineIndex = Math.max(
+        0,
+        Math.min(data.length - 1, targetTimelineIndex)
+      );
+      const targetSlide = clampedTimelineIndex + 1;
 
-    if (swiper.activeIndex !== targetSlide) {
-      swiper.slideTo(targetSlide, 200); // Faster slide transition
+      if (swiper.activeIndex !== targetSlide) {
+        swiper.slideTo(targetSlide, 200);
+      }
+    } else {
+      // Reset to first slide when section hasn't reached top yet
+      if (swiper.activeIndex !== 1) {
+        swiper.slideTo(1, 200);
+      }
     }
 
     animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
-  }, [mounted, timelineData.length, isMobile]);
+  }, [mounted, data.length, isMobile]);
 
   useEffect(() => {
     if (!mounted || isMobile) return;
@@ -188,14 +173,14 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
   }, [handleSmoothScroll]);
 
   const getActiveDotIndex = () => {
-    const progressPerItem = 1 / timelineData.length;
+    const progressPerItem = 1 / data.length;
     const calculatedIndex = Math.floor(scrollProgress / progressPerItem);
-    return Math.min(calculatedIndex, timelineData.length - 1);
+    return Math.min(calculatedIndex, data.length - 1);
   };
 
   const getItemAnimationProgress = useCallback(
     (itemIndex: number) => {
-      const totalItems = timelineData.length;
+      const totalItems = data.length;
       const itemProgressStart = itemIndex / totalItems;
       const itemProgressEnd = (itemIndex + 1) / totalItems;
 
@@ -207,7 +192,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
         (itemProgressEnd - itemProgressStart)
       );
     },
-    [scrollProgress, timelineData.length]
+    [scrollProgress, data.length]
   );
 
   if (!mounted) {
@@ -228,7 +213,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
           </div>
 
           <div className="space-y-16">
-            {timelineData.map((item, index) => (
+            {data.map((item, index) => (
               <div key={index} className="relative">
                 <div className="flex flex-col items-center">
                   {/* Year Display - No scaling */}
@@ -252,7 +237,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                   {/* Timeline Connector */}
                   <div className="relative mb-8">
                     <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full shadow-lg animate-pulse"></div>
-                    {index < timelineData.length - 1 && (
+                    {index < data.length - 1 && (
                       <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-gradient-to-b from-amber-400 to-transparent"></div>
                     )}
                   </div>
@@ -272,11 +257,11 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     );
   }
 
-  // Desktop Version - No scaling, faster scroll
+  // Desktop Version - Fixed to not move until section reaches top
   return (
     <section
       ref={centerSectionRef}
-      className={`h-[250vh] max-w-[1920px] mx-auto relative ${className}`} // Reduced height for faster scroll
+      className={`h-[250vh] max-w-[1920px] mx-auto relative ${className}`}
       style={{
         background: `linear-gradient(180deg, 
           #ffffff 0%, 
@@ -291,7 +276,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
         <div
           className="pb-20 w-full max-w-7xl mx-auto"
           style={{
-            transform: `translateY(${scrollProgress * -10}px)`, // Reduced parallax
+            transform: `translateY(${scrollProgress * -10}px)`,
             opacity: 1 - scrollProgress * 0.2,
           }}
         >
@@ -316,7 +301,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
             spaceBetween={80}
             allowTouchMove={false}
             centeredSlides={false}
-            speed={100} // Faster transition speed
+            speed={80}
             breakpoints={{
               768: { slidesPerView: 2, spaceBetween: 40 },
               1024: { slidesPerView: 3, spaceBetween: 60 },
@@ -329,7 +314,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
               <div className="w-full h-full opacity-0"></div>
             </SwiperSlide>
 
-            {timelineData.map((item, index) => {
+            {data.map((item, index) => {
               const activeDotIndex = getActiveDotIndex();
               const isActive = index <= activeDotIndex;
               const isPassed = index < activeDotIndex;
@@ -351,7 +336,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                     <div className="flex flex-col items-center max-w-xs mx-auto">
                       {/* Year Display - No scaling, only opacity */}
                       <div
-                        className="relative mb-12"
+                        className="relative mb-4"
                         style={{
                           opacity: yearOpacity,
                           transition: "opacity 0.3s ease-out",
@@ -368,7 +353,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
 
                       {/* Image Container - No scaling, only opacity */}
                       <div
-                        className="relative mb-20"
+                        className="relative mb-0"
                         style={{
                           opacity: imageOpacity,
                           transition: "opacity 0.3s ease-out",
@@ -408,7 +393,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                           ></div>
                         )}
 
-                        {index < timelineData.length - 1 && (
+                        {index < data.length - 1 && (
                           <div
                             className="absolute left-full h-1 transition-all duration-300"
                             style={{

@@ -108,14 +108,18 @@
     "remarkable journey": "remarkable journey",
     "Property Gallery": "Property Gallery",
     "Our Services": "Our Services",
-    "Take a brief look at some of the services we offer": "🌟 Key Benefits You’ll Get with Us",
+    "Take a brief look at some of the services we offer": "Key Benefits You’ll Get with Us",
+    "leasingTitle": "Leasing",
     "title": "About Us",
-    "description": "✨ Why Join Our Projects?",
+    "leasingDescription": " Why Join Our Projects?",
+    "description": "Leading real estate transformation with a clear vision and a purpose-driven mission",
     "vision_title": "VISION",
     "vision_button": "Meet The Team",
     "vision_description": "To lead in urban development with a global and sustainable outlook, reflecting our company's ambition—from the heart of the world to its farthest horizons.",
-    "vision_description_part_one": "At ARX Development, we believe that true success isn’t only about buildings, but about creating partnerships that add real value",
-    "vision_description_part_two": "That’s why we provide an integrated business environment designed for both international and local brands looking to grow and stand out in the Egyptian market.",
+    "leasing_vision_description_part_one": "At ARX Development, we believe that true success isn’t only about buildings, but about creating partnerships that add real value",
+    "leasing_vision_description_part_two": "That’s why we provide an integrated business environment designed for both international and local brands looking to grow and stand out in the Egyptian market.",
+    "vision_description_part_one": "We are a real estate development company specializing in delivering integrated property solutions that elevate the experience of living, working, and investing.",
+    "vision_description_part_two": "that balance contemporary design with practical needs.We are committed to creating real value through projects that serve diverse real estate purposes and align with evolving market expectations.",
     "mission_title": "MISSION",
     "mission_description": "We create high-quality, culturally rich real estate aligned with global standards, meeting client needs through thoughtful planning and sustainable development.",
     "values_title": "VALUES",
@@ -506,6 +510,36 @@
     "messages": {
       "submitSuccess": "Application submitted successfully!",
       "submitError": "Error submitting application. Please try again."
+    }
+  },
+  "leasing": {
+    "heading": "How Leasing Works",
+    "intro": "We’ve made the leasing process smooth, transparent, and supportive from start to finish:",
+    "steps": {
+      "one": {
+        "title": "Explore Our Projects",
+        "description": "Browse through our wide range of commercial and mixed-use projects. Each development is strategically located, designed to attract high traffic, and tailored to different industries."
+      },
+      "two": {
+        "title": "Choose the Right Space",
+        "description": "Our team will guide you through the available units, sizes, and layouts to match your brand’s needs — whether you’re a flagship store, boutique, or office."
+      },
+      "three": {
+        "title": "Tailored Consultation & Proposal",
+        "description": "We work with you to understand your goals, suggest the best options, and create a leasing proposal that aligns with your business vision."
+      },
+      "four": {
+        "title": "Clear & Transparent Contracting",
+        "description": "Once the right space is selected, we handle the leasing agreement with full clarity and no hidden terms, ensuring a smooth and professional process."
+      },
+      "five": {
+        "title": "Handover & Fit-Out Support",
+        "description": "After signing, you’ll receive your unit ready for customization. Our projects are built with international standards, giving you the flexibility to design your space exactly as you envision it."
+      },
+      "six": {
+        "title": "Launch & Continuous Support",
+        "description": "We stay with you beyond the handover. From marketing exposure to facility management, our team will continue to support your brand’s success within our communities."
+      }
     }
   }
 }
