@@ -51,12 +51,12 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     const step = String(idx + 1);
     const stepname = ["one", "two", "three", "four", "five", "six"];
     const images = [
-      "/aboutServices/leasing1.png",
-      "/pngimg.png",
-      "/pngimg.png",
-      "/pngimg.png",
-      "/pngimg.png",
-      "/pngimg.png",
+      "/aboutServices/one.png",
+      "/aboutServices/two.png",
+      "/aboutServices/three.png",
+      "/aboutServices/four.png",
+      "/aboutServices/five.png",
+      "/aboutServices/six.png",
     ];
     return {
       year: step,
@@ -274,15 +274,15 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
       <div className="sticky top-16 h-screen flex flex-col justify-center px-8 py-12 z-20">
         {/* Header - minimal parallax, no scaling */}
         <div
-          className="pb-20 w-full max-w-7xl mx-auto"
+          className="pb-10 w-full max-w-7xl mx-auto"
           style={{
             transform: `translateY(${scrollProgress * -10}px)`,
             opacity: 1 - scrollProgress * 0.2,
           }}
         >
           <SmallHeadSpan>OUR STORY</SmallHeadSpan>
-          <h1 className="text-7xl font-black text-gray-900 mb-4">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 via-amber-500 to-orange-500">
+          <h1 className="text-7xl font-black text-gray-900 mb-0">
+            <span className="text-transparent bg-clip-text bg-[#DBA426]">
               40+ Years
             </span>
           </h1>
@@ -346,7 +346,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                           className="absolute inset-0 bg-yellow-300 blur-3xl"
                           style={{ opacity: itemProgress * 0.3 }}
                         ></div>
-                        <div className="text-7xl font-black text-transparent bg-clip-text bg-gradient-to-br from-yellow-400 via-amber-500 to-orange-500">
+                        <div className="text-7xl font-black text-transparent bg-clip-text bg-[#DBA426]">
                           {item.year}
                         </div>
                       </div>

@@ -80,7 +80,7 @@ const AboutPage = () => {
     },
     {
       id: 2,
-      image: "/aboutServices/modern.webp",
+      image: "/aboutServices/modern.png",
       title: t("services_title.s2"),
       description: t("services_descriptions.s2"),
     },
