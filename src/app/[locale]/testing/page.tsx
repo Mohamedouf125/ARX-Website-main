@@ -33,12 +33,12 @@ interface AboutBannerType {
 }
 
 // Service data interface
-interface ServiceItem {
-  id: number;
-  image: string;
-  title: string;
-  description: string;
-}
+// interface ServiceItem {
+//   id: number;
+//   image: string;
+//   title: string;
+//   description: string;
+// }
 
 const AboutPage = () => {
   const t = useTranslations("about");
