@@ -6,13 +6,17 @@ import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
 import { AnimatedElement } from "@/components/animations/AnimationType";
 import { getData } from "@/libs/axios/server";
 import { AxiosHeaders } from "axios";
-// import ServiceCard from "./components/projects";
-// import PropertySwiper from "./components/ImageSwiper";
 import HomeContact from "@/components/home/HomeContact";
-import TimelineSwiper from "./components/TimelineSwiper"; // Import the new component
+import TimelineSwiper from "./components/TimelineSwiper";
 import { OurProjects } from "@/components/home/OurProjects";
-// import { Link } from "@/i18n/routing";
 import { ArrowRightIcon } from "lucide-react";
+// Import Swiper React components and modules
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -31,14 +35,6 @@ interface AboutBannerType {
     };
   };
 }
-
-// Service data interface
-// interface ServiceItem {
-//   id: number;
-//   image: string;
-//   title: string;
-//   description: string;
-// }
 
 const AboutPage = () => {
   const t = useTranslations("about");
@@ -72,46 +68,6 @@ const AboutPage = () => {
     },
   });
 
-  // Services data (titles as-is), descriptions from i18n keys
-  // const servicesData: ServiceItem[] = [
-  //   {
-  //     id: 1,
-  //     image: "/aboutServices/prime.png",
-  //     title: t("services_title.s1"),
-  //     description: t("services_descriptions.s1"),
-  //   },
-  //   {
-  //     id: 2,
-  //     image: "/aboutServices/modern.png",
-  //     title: t("services_title.s2"),
-  //     description: t("services_descriptions.s2"),
-  //   },
-  //   {
-  //     id: 3,
-  //     image: "/aboutServices/professional.png",
-  //     title: t("services_title.s3"),
-  //     description: t("services_descriptions.s3"),
-  //   },
-  //   {
-  //     id: 4,
-  //     image: "/aboutServices/marketing.png",
-  //     title: t("services_title.s4"),
-  //     description: t("services_descriptions.s4"),
-  //   },
-  //   {
-  //     id: 5,
-  //     image: "/aboutServices/comperhensive.png",
-  //     title: t("services_title.s5"),
-  //     description: t("services_descriptions.s5"),
-  //   },
-  //   {
-  //     id: 6,
-  //     image: "/aboutServices/secure.png",
-  //     title: t("services_title.s6"),
-  //     description: t("services_descriptions.s6"),
-  //   },
-  // ];
-
   useEffect(() => {
     const fetchAboutBanner = async () => {
       try {
@@ -129,10 +85,125 @@ const AboutPage = () => {
     fetchAboutBanner();
   }, [locale]);
 
-  // const handleServiceClick = (service: ServiceItem) => {
-  //   console.log("Service clicked:", service);
-  //   // Handle service card click - navigate to service page, open modal, etc.
-  // };
+  // Services data
+  const servicesData = [
+    {
+      span: "01.",
+      title: t("services_title.s1"),
+      description: t("services_descriptions.s1"),
+      button: t("big_cards.first_card_button"),
+      backgroundImage: "/aboutServices/prime.png",
+      animation: "slideRight",
+      href: "/services",
+      top: false,
+    },
+    {
+      span: "02.",
+      title: t("services_title.s2"),
+      description: t("services_descriptions.s2"),
+      button: t("big_cards.second_card_button"),
+      backgroundImage: "/aboutServices/modern.png",
+      animation: "slideLeft",
+      href: "/projects",
+      top: false,
+    },
+    {
+      span: "03.",
+      title: t("services_title.s3"),
+      description: t("services_descriptions.s3"),
+      button: t("big_cards.second_card_button"),
+      background: "bg-[#dba426]",
+      top: true,
+      backgroundImage: "/aboutServices/professional.png",
+      animation: "slideUp",
+      href: "/projects",
+    },
+    {
+      span: "04.",
+      title: t("services_title.s4"),
+      description: t("services_descriptions.s4"),
+      button: t("big_cards.third_card_button"),
+      backgroundImage: "/aboutServices/marketing.png",
+      animation: "slideLeft",
+      href: "/core-values",
+      top: false,
+    },
+    {
+      span: "05.",
+      title: t("services_title.s5"),
+      description: t("services_descriptions.s5"),
+      button: t("big_cards.third_card_button"),
+      backgroundImage: "/aboutServices/comperhensive.png",
+      animation: "slideLeft",
+      href: "/core-values",
+      top: false,
+    },
+    {
+      span: "06.",
+      title: t("services_title.s6"),
+      description: t("services_descriptions.s6"),
+      button: t("big_cards.third_card_button"),
+      backgroundImage: "/aboutServices/secure.png",
+      animation: "slideLeft",
+      href: "/core-values",
+      top: false,
+    },
+  ];
+
+  // Service Card Component
+  const ServiceCard = ({ item, index }: { item: any; index: number }) => (
+    <div
+      className={`group relative p-10 rounded-3xl w-full h-[500px] text-white flex flex-col overflow-hidden ${
+        item.top ? "justify-start" : "justify-between"
+      } ${item.background || ""} bg-cover bg-center`}
+      style={{
+        backgroundImage: item.backgroundImage
+          ? `url(${item.backgroundImage})`
+          : undefined,
+      }}
+    >
+      {/* shapes */}
+      <div className="cover z-10 absolute top-0 left-0 w-full h-full">
+        <div
+          className="absolute bottom-[55px] right-[-1px] bg-white w-[30px] h-[30px] rounded-br-2xl rotate-[-90deg]"
+          style={{
+            clipPath: ' path("M0 0 Q0,30 30,30 L 0 30 Z")',
+          }}
+        ></div>
+        <div className="absolute bottom-0 right-0 bg-white w-[55px] h-[55px] rounded-tl-3xl"></div>
+        <div
+          className="absolute bottom-[-1px] right-[51px] bg-white w-[30px] h-[30px] rounded-br-4xl rotate-[-90deg]"
+          style={{
+            clipPath: ' path("M0 0 Q0,30 30,30 L 0 30 Z")',
+          }}
+        ></div>
+      </div>
+      {/* end shapes */}
+
+      {item.backgroundImage && (
+        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 rounded-3xl"></div>
+      )}
+      <div className={`head-span border-b ${item.top ? "mb-5" : ""} pb-2 z-10`}>
+        <span className="text-[14px] font-[600] ">{item.span}</span>
+      </div>
+      <div className="bottom z-10">
+        <h3 className="text-[35px] font-[700]">{item.title}</h3>
+        <p className="text-[18px] font-[500] opacity-70">{item.description}</p>
+
+        <div className="read mx-6 mt-6">
+          {/* Link component commented out */}
+        </div>
+
+        {/* floating button */}
+        <div className="floating-button absolute bottom-0 right-0 z-10">
+          <div className="bg-[#dba426] group-hover:bg-black rounded-full p-2 flex items-center justify-center rotate-[-45deg] hover:rotate-[315deg] transition-all duration-300">
+            <ArrowRightIcon className="w-7 h-7" />
+          </div>
+        </div>
+        {/* end floating button */}
+      </div>
+    </div>
+  );
 
   return (
     <div className="text-gray-800 mx-auto">
@@ -225,147 +296,99 @@ const AboutPage = () => {
             </h2>
           </div>
 
-          {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {[
-              {
-                span: "01.",
-                title: t("services_title.s1"),
-                description: t("services_descriptions.s1"),
-                button: t("big_cards.first_card_button"),
-                backgroundImage: "/aboutServices/prime.png",
-                animation: "slideRight",
-                href: "/services",
-                top: false,
-              },
-              {
-                span: "02.",
-                title: t("services_title.s2"),
-                description: t("services_descriptions.s2"),
-                button: t("big_cards.second_card_button"),
-                backgroundImage: "/aboutServices/modern.png",
-                animation: "slideLeft",
-                href: "/projects",
-                top: false,
-              },
-              {
-                span: "03.",
-                title: t("services_title.s3"),
-                description: t("services_descriptions.s3"),
-                button: t("big_cards.second_card_button"),
-                background: "bg-[#dba426]",
-                top: true,
-                backgroundImage: "/aboutServices/professional.png",
-                animation: "slideUp",
-                href: "/projects",
-              },
-              {
-                span: "04.",
-                title: t("services_title.s4"),
-                description: t("services_descriptions.s4"),
-                button: t("big_cards.third_card_button"),
-                backgroundImage: "/aboutServices/marketing.png",
-                animation: "slideLeft",
-                href: "/core-values",
-                top: false,
-              },
-              {
-                span: "05.",
-                title: t("services_title.s5"),
-                description: t("services_descriptions.s5"),
-                button: t("big_cards.third_card_button"),
-                backgroundImage: "/aboutServices/comperhensive.png",
-                animation: "slideLeft",
-                href: "/core-values",
-                top: false,
-              },
-              {
-                span: "06.",
-                title: t("services_title.s6"),
-                description: t("services_descriptions.s6"),
-                button: t("big_cards.third_card_button"),
-                backgroundImage: "/aboutServices/secure.png",
-                animation: "slideLeft",
-                href: "/core-values",
-                top: false,
-              },
-            ].map((item, index) => (
+          {/* Mobile Swiper (visible on screens < md) */}
+          <div className="block md:hidden">
+            <Swiper
+              modules={[Pagination, Navigation]}
+              spaceBetween={20}
+              slidesPerView={1.1}
+              centeredSlides={false}
+              pagination={{
+                clickable: true,
+                dynamicBullets: true,
+              }}
+              navigation={{
+                prevEl: ".swiper-button-prev-services",
+                nextEl: ".swiper-button-next-services",
+              }}
+              breakpoints={{
+                480: {
+                  slidesPerView: 1.2,
+                  spaceBetween: 20,
+                },
+                640: {
+                  slidesPerView: 1.5,
+                  spaceBetween: 20,
+                },
+              }}
+              className="services-swiper pb-12"
+            >
+              {servicesData.map((item, index) => (
+                <SwiperSlide key={index}>
+                  <AnimatedElement
+                    type={
+                      item.animation as "slideUp" | "slideLeft" | "slideRight"
+                    }
+                    duration={1}
+                    className="w-full h-full"
+                  >
+                    <ServiceCard item={item} index={index} />
+                  </AnimatedElement>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+
+            {/* Custom Navigation Buttons */}
+            {/* <div className="flex justify-center gap-4 mt-4">
+              <button className="swiper-button-prev-services w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors">
+                <ArrowRightIcon className="w-5 h-5 rotate-180" />
+              </button>
+              <button className="swiper-button-next-services w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors">
+                <ArrowRightIcon className="w-5 h-5" />
+              </button>
+            </div> */}
+          </div>
+
+          {/* Desktop Grid (visible on screens >= md) */}
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {servicesData.map((item, index) => (
               <AnimatedElement
                 key={index}
                 type={item.animation as "slideUp" | "slideLeft" | "slideRight"}
                 duration={1}
                 className="w-full h-full"
               >
-                <div
-                  className={`group relative p-10 rounded-3xl w-full h-[500px] text-white flex flex-col overflow-hidden ${
-                    item.top ? "justify-start" : "justify-between"
-                  } ${item.background || ""} bg-cover bg-center`}
-                  style={{
-                    backgroundImage: item.backgroundImage
-                      ? `url(${item.backgroundImage})`
-                      : undefined,
-                  }}
-                >
-                  {/* shapes */}
-                  <div className="cover z-10 absolute top-0 left-0 w-full h-full">
-                    <div
-                      className="absolute bottom-[55px] right-[-1px] bg-white w-[30px] h-[30px] rounded-br-2xl rotate-[-90deg]"
-                      style={{
-                        clipPath: ' path("M0 0 Q0,30 30,30 L 0 30 Z")',
-                      }}
-                    ></div>
-                    <div className="absolute bottom-0 right-0 bg-white w-[55px] h-[55px] rounded-tl-3xl"></div>
-                    <div
-                      className="absolute bottom-[-1px] right-[51px] bg-white w-[30px] h-[30px] rounded-br-4xl rotate-[-90deg]"
-                      style={{
-                        clipPath: ' path("M0 0 Q0,30 30,30 L 0 30 Z")',
-                      }}
-                    ></div>
-                  </div>
-                  {/* end shapes */}
-
-                  {item.backgroundImage && (
-                    <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 rounded-3xl"></div>
-                  )}
-                  <div
-                    className={`head-span border-b ${
-                      item.top ? "mb-5" : ""
-                    } pb-2 z-10`}
-                  >
-                    <span className="text-[14px] font-[600] ">{item.span}</span>
-                  </div>
-                  <div className="bottom z-10">
-                    <h3 className="text-[35px] font-[700]">{item.title}</h3>
-                    <p className="text-[18px] font-[500] opacity-70">
-                      {item.description}
-                    </p>
-
-                    <div className="read mx-6 mt-6">
-                      {/* <Link
-                        href={`/${locale}${item.href}`}
-                        className="group relative pb-1 text-[18px] font-[500] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white after:transition-all after:duration-300 hover:after:w-0"
-                      >
-                        {item.button}
-                        <span className="text-[18px] font-[500] after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-[1px] after:bg-white after:transition-all after:duration-300 after:delay-200 group-hover:after:w-full"></span>
-                      </Link> */}
-                    </div>
-
-                    {/* floating button */}
-                    <div className="floating-button absolute bottom-0 right-0 z-10">
-                      <div
-                        // href={`/${locale}${item.href}`}
-                        className="bg-[#dba426] group-hover:bg-black rounded-full p-2 flex items-center justify-center rotate-[-45deg] hover:rotate-[315deg] transition-all duration-300"
-                      >
-                        <ArrowRightIcon className="w-7 h-7" />
-                      </div>
-                    </div>
-                    {/* end floating button */}
-                  </div>
-                </div>
+                <ServiceCard item={item} index={index} />
               </AnimatedElement>
             ))}
           </div>
         </div>
+
+        {/* Add custom styles for Swiper pagination */}
+        <style jsx global>{`
+          .services-swiper .swiper-pagination-bullet {
+            background-color: #dba426;
+            opacity: 0.5;
+            width: 8px;
+            height: 8px;
+          }
+
+          .services-swiper .swiper-pagination-bullet-active {
+            opacity: 1;
+            background-color: #dba426;
+            width: 24px;
+            border-radius: 4px;
+          }
+
+          @media (max-width: 767px) {
+            .services-swiper {
+              margin-left: -24px;
+              margin-right: -24px;
+              padding-left: 24px;
+              padding-right: 24px;
+            }
+          }
+        `}</style>
       </section>
 
       {/* Timeline Swiper Component */}
