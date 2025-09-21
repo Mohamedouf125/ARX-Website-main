@@ -48,7 +48,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
 }) => {
   const t = useTranslations("leasing");
   const i18nTimeline: TimelineItem[] = Array.from({ length: 6 }, (_, idx) => {
-    const step = String(idx + 1);
+    const step = `${t("step")} ${idx + 1}`;
     const stepname = ["one", "two", "three", "four", "five", "six"];
     const images = [
       "/aboutServices/one.png",
@@ -207,9 +207,11 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
       <section className={`max-w-[1920px] mx-auto ${className}`}>
         <div className="px-6 py-12 bg-gradient-to-b from-white to-gray-50">
           <div className="text-center mb-12">
-            <SmallHeadSpan>OUR STORY</SmallHeadSpan>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">40+ Years</h1>
-            <p className="text-xl text-gray-600">of remarkable journey</p>
+            <SmallHeadSpan>{t("leasing steps")}</SmallHeadSpan>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              {t("heading")}
+            </h1>
+            <p className="text-xl text-gray-600">{t("intro")}</p>
           </div>
 
           <div className="space-y-16">
@@ -280,14 +282,14 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
             opacity: 1 - scrollProgress * 0.2,
           }}
         >
-          <SmallHeadSpan>OUR STORY</SmallHeadSpan>
+          <SmallHeadSpan>{t("leasing steps")}</SmallHeadSpan>
           <h1 className="text-7xl font-black text-gray-900 mb-0">
             <span className="text-transparent bg-clip-text bg-[#DBA426]">
-              40+ Years
+              {t("heading")}
             </span>
           </h1>
           <p className="text-3xl text-gray-700 font-light">
-            of remarkable journey
+            {t("intro")}
           </p>
         </div>
 

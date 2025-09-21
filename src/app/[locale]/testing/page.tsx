@@ -11,6 +11,8 @@ import ServiceCard from "./components/projects";
 import HomeContact from "@/components/home/HomeContact";
 import TimelineSwiper from "./components/TimelineSwiper"; // Import the new component
 import { OurProjects } from "@/components/home/OurProjects";
+import { Link } from "@/i18n/routing";
+import { ArrowRightIcon } from "lucide-react";
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -127,10 +129,10 @@ const AboutPage = () => {
     fetchAboutBanner();
   }, [locale]);
 
-  const handleServiceClick = (service: ServiceItem) => {
-    console.log("Service clicked:", service);
-    // Handle service card click - navigate to service page, open modal, etc.
-  };
+  // const handleServiceClick = (service: ServiceItem) => {
+  //   console.log("Service clicked:", service);
+  //   // Handle service card click - navigate to service page, open modal, etc.
+  // };
 
   return (
     <div className="text-gray-800 mx-auto">
@@ -140,7 +142,7 @@ const AboutPage = () => {
         hideDescription={true}
         breadcrumbs={[
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
-          { label: t("title") },
+          { label: t("leasingTitle") },
         ]}
         backgroundImage={aboutBanner?.data?.bannerHeader?.image}
         height="medium"
@@ -206,14 +208,13 @@ const AboutPage = () => {
           <div className="pb-5 lg:gap-64 gap-0 lg:flex block">
             <SmallHeadSpan>{t("Our Services")}</SmallHeadSpan>
             <h2
-              className={`font-bold ${
+              className={`font-bold w-full text-nowrap ${
                 locale === "en"
                   ? "text-left lg:text-left"
                   : "text-right lg:text-right"
-              }
-    max-w-[95vw] sm:max-w-[85vw] md:max-w-[70vw] lg:max-w-[38vw]
+              } max-w-[95vw] sm:max-w-[85vw] md:max-w-[70vw] lg:max-w-[38vw]
     mx-auto lg:mx-0
-    text-[clamp(2rem,6vw,4.5rem)] sm:text-[clamp(2.5rem,7vw,4.5rem)] lg:text-[clamp(3rem,8vw,4.5rem)]
+    text-[clamp(25px,2.7vw,500px)]
     text-black
     mt-3 sm:mt-4
     mb-4 sm:mb-5 lg:mb-6
@@ -225,16 +226,143 @@ const AboutPage = () => {
           </div>
 
           {/* Services Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {servicesData.map((service) => (
-              <ServiceCard
-                key={service.id}
-                image={service.image}
-                title={service.title}
-                // description={service.description}
-                onClick={() => handleServiceClick(service)}
-                className="hover:transform hover:scale-105 transition-transform duration-300"
-              />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {[
+              {
+                span: "01.",
+                title: t("services_title.s1"),
+                description: t("services_descriptions.s1"),
+                button: t("big_cards.first_card_button"),
+                backgroundImage: "/aboutServices/prime.png",
+                animation: "slideRight",
+                href: "/services",
+                top: false,
+              },
+              {
+                span: "02.",
+                title: t("services_title.s2"),
+                description: t("services_descriptions.s2"),
+                button: t("big_cards.second_card_button"),
+                backgroundImage: "/aboutServices/modern.png",
+                animation: "slideLeft",
+                href: "/projects",
+                top: false,
+              },
+              {
+                span: "03.",
+                title: t("services_title.s3"),
+                description: t("services_descriptions.s3"),
+                button: t("big_cards.second_card_button"),
+                background: "bg-[#dba426]",
+                top: true,
+                backgroundImage: "/aboutServices/professional.png",
+                animation: "slideUp",
+                href: "/projects",
+              },
+              {
+                span: "04.",
+                title: t("services_title.s4"),
+                description: t("services_descriptions.s4"),
+                button: t("big_cards.third_card_button"),
+                backgroundImage: "/aboutServices/marketing.png",
+                animation: "slideLeft",
+                href: "/core-values",
+                top: false,
+              },
+              {
+                span: "05.",
+                title: t("services_title.s5"),
+                description: t("services_descriptions.s5"),
+                button: t("big_cards.third_card_button"),
+                backgroundImage: "/aboutServices/comperhensive.png",
+                animation: "slideLeft",
+                href: "/core-values",
+                top: false,
+              },
+              {
+                span: "06.",
+                title: t("services_title.s6"),
+                description: t("services_descriptions.s6"),
+                button: t("big_cards.third_card_button"),
+                backgroundImage: "/aboutServices/secure.png",
+                animation: "slideLeft",
+                href: "/core-values",
+                top: false,
+              },
+            ].map((item, index) => (
+              <AnimatedElement
+                key={index}
+                type={item.animation as "slideUp" | "slideLeft" | "slideRight"}
+                duration={1}
+                className="w-full h-full"
+              >
+                <div
+                  className={`group relative p-10 rounded-3xl w-full h-[500px] text-white flex flex-col overflow-hidden ${
+                    item.top ? "justify-start" : "justify-between"
+                  } ${item.background || ""} bg-cover bg-center`}
+                  style={{
+                    backgroundImage: item.backgroundImage
+                      ? `url(${item.backgroundImage})`
+                      : undefined,
+                  }}
+                >
+                  {/* shapes */}
+                  <div className="cover z-10 absolute top-0 left-0 w-full h-full">
+                    <div
+                      className="absolute bottom-[55px] right-[-1px] bg-white w-[30px] h-[30px] rounded-br-2xl rotate-[-90deg]"
+                      style={{
+                        clipPath: ' path("M0 0 Q0,30 30,30 L 0 30 Z")',
+                      }}
+                    ></div>
+                    <div className="absolute bottom-0 right-0 bg-white w-[55px] h-[55px] rounded-tl-3xl"></div>
+                    <div
+                      className="absolute bottom-[-1px] right-[51px] bg-white w-[30px] h-[30px] rounded-br-4xl rotate-[-90deg]"
+                      style={{
+                        clipPath: ' path("M0 0 Q0,30 30,30 L 0 30 Z")',
+                      }}
+                    ></div>
+                  </div>
+                  {/* end shapes */}
+
+                  {item.backgroundImage && (
+                    <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50 rounded-3xl"></div>
+                  )}
+                  <div
+                    className={`head-span border-b ${
+                      item.top ? "mb-5" : ""
+                    } pb-2 z-10`}
+                  >
+                    <span className="text-[14px] font-[600] ">{item.span}</span>
+                  </div>
+                  <div className="bottom z-10">
+                    <h3 className="text-[35px] font-[700]">{item.title}</h3>
+                    <p className="text-[18px] font-[500] opacity-70">
+                      {item.description}
+                    </p>
+
+                    <div className="read mx-6 mt-6">
+                      {/* <Link
+                        href={`/${locale}${item.href}`}
+                        className="group relative pb-1 text-[18px] font-[500] after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-white after:transition-all after:duration-300 hover:after:w-0"
+                      >
+                        {item.button}
+                        <span className="text-[18px] font-[500] after:content-[''] after:absolute after:bottom-0 after:right-0 after:w-0 after:h-[1px] after:bg-white after:transition-all after:duration-300 after:delay-200 group-hover:after:w-full"></span>
+                      </Link> */}
+                    </div>
+
+                    {/* floating button */}
+                    <div className="floating-button absolute bottom-0 right-0 z-10">
+                      <div
+                        // href={`/${locale}${item.href}`}
+                        className="bg-[#dba426] group-hover:bg-black rounded-full p-2 flex items-center justify-center rotate-[-45deg] hover:rotate-[315deg] transition-all duration-300"
+                      >
+                        <ArrowRightIcon className="w-7 h-7" />
+                      </div>
+                    </div>
+                    {/* end floating button */}
+                  </div>
+                </div>
+              </AnimatedElement>
             ))}
           </div>
         </div>

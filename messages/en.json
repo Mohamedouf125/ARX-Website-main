@@ -514,7 +514,9 @@
   },
   "leasing": {
     "heading": "How Leasing Works",
+    "step": "Step",
     "intro": "We’ve made the leasing process smooth, transparent, and supportive from start to finish:",
+    "leasing steps": " Leasing",
     "steps": {
       "one": {
         "title": "Explore Our Projects",

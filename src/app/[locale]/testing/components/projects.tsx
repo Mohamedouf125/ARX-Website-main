@@ -107,7 +107,7 @@ export default function ServiceCard({
       <img
         src={image}
         alt={title}
-        className="absolute bottom-[0px] -left-[30px] h-auto max-w-[345px] w-auto 
+        className="absolute bottom-[0px] -left-[30px] h-auto max-w-[250px] w-auto 
                    transition-transform duration-500 group-hover:-translate-y-[10px] z-0"
       />
     </div>
