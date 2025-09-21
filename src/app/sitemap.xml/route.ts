@@ -6,7 +6,17 @@ import { getAllTeamMembers } from "@/libs/helpers/teamData";
 const baseUrl = "https://www.arxeg.com"; // Replace with your domain
 const locales = ["en", "ar"];
 
-const staticPaths = ["", "/about", "/contact", "/faqs", "/projects", "/blogs", "/services", "/core-values", "/our-team"];
+const staticPaths = [
+  "",
+  "/about",
+  "/contact",
+  "/faqs",
+  "/projects",
+  "/blogs",
+  "/services",
+  "/core-values",
+  "/our-team",
+];
 
 async function getAllBlogs(locale: string) {
   try {
@@ -30,7 +40,6 @@ async function getAllProjects(locale: string) {
       new AxiosHeaders({ lang: locale })
     );
     return response.data.properties;
-
   } catch (error) {
     console.error(`Error fetching blogs for ${locale}:`, error);
     return [];
@@ -94,7 +103,7 @@ ${urls
   return new NextResponse(sitemap, {
     headers: {
       "Content-Type": "application/xml",
-      "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600"
+      "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600",
     },
   });
 }

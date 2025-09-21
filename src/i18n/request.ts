@@ -12,6 +12,7 @@ export default getRequestConfig(async ({ requestLocale }) => {
   const validatedLocale: Locale = routing.locales.includes(locale as Locale)
     ? (locale as Locale)
     : (routing.defaultLocale as Locale);
+  
 
   return {
     locale: validatedLocale,

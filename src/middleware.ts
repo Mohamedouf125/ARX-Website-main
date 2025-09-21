@@ -1,9 +1,10 @@
+// src/i18n/middleware.ts
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 
 export default createMiddleware(routing);
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: ["/", "/(en|ar)/:path*"],
+  // استثناء api, _next, والملفات الثابتة
+  matcher: ["/((?!api|_next|.*\\..*).*)"],
 };
