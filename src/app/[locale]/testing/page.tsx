@@ -6,12 +6,12 @@ import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
 import { AnimatedElement } from "@/components/animations/AnimationType";
 import { getData } from "@/libs/axios/server";
 import { AxiosHeaders } from "axios";
-import ServiceCard from "./components/projects";
+// import ServiceCard from "./components/projects";
 // import PropertySwiper from "./components/ImageSwiper";
 import HomeContact from "@/components/home/HomeContact";
 import TimelineSwiper from "./components/TimelineSwiper"; // Import the new component
 import { OurProjects } from "@/components/home/OurProjects";
-import { Link } from "@/i18n/routing";
+// import { Link } from "@/i18n/routing";
 import { ArrowRightIcon } from "lucide-react";
 
 // Define the correct type for aboutBanner
@@ -73,44 +73,44 @@ const AboutPage = () => {
   });
 
   // Services data (titles as-is), descriptions from i18n keys
-  const servicesData: ServiceItem[] = [
-    {
-      id: 1,
-      image: "/aboutServices/prime.png",
-      title: t("services_title.s1"),
-      description: t("services_descriptions.s1"),
-    },
-    {
-      id: 2,
-      image: "/aboutServices/modern.png",
-      title: t("services_title.s2"),
-      description: t("services_descriptions.s2"),
-    },
-    {
-      id: 3,
-      image: "/aboutServices/professional.png",
-      title: t("services_title.s3"),
-      description: t("services_descriptions.s3"),
-    },
-    {
-      id: 4,
-      image: "/aboutServices/marketing.png",
-      title: t("services_title.s4"),
-      description: t("services_descriptions.s4"),
-    },
-    {
-      id: 5,
-      image: "/aboutServices/comperhensive.png",
-      title: t("services_title.s5"),
-      description: t("services_descriptions.s5"),
-    },
-    {
-      id: 6,
-      image: "/aboutServices/secure.png",
-      title: t("services_title.s6"),
-      description: t("services_descriptions.s6"),
-    },
-  ];
+  // const servicesData: ServiceItem[] = [
+  //   {
+  //     id: 1,
+  //     image: "/aboutServices/prime.png",
+  //     title: t("services_title.s1"),
+  //     description: t("services_descriptions.s1"),
+  //   },
+  //   {
+  //     id: 2,
+  //     image: "/aboutServices/modern.png",
+  //     title: t("services_title.s2"),
+  //     description: t("services_descriptions.s2"),
+  //   },
+  //   {
+  //     id: 3,
+  //     image: "/aboutServices/professional.png",
+  //     title: t("services_title.s3"),
+  //     description: t("services_descriptions.s3"),
+  //   },
+  //   {
+  //     id: 4,
+  //     image: "/aboutServices/marketing.png",
+  //     title: t("services_title.s4"),
+  //     description: t("services_descriptions.s4"),
+  //   },
+  //   {
+  //     id: 5,
+  //     image: "/aboutServices/comperhensive.png",
+  //     title: t("services_title.s5"),
+  //     description: t("services_descriptions.s5"),
+  //   },
+  //   {
+  //     id: 6,
+  //     image: "/aboutServices/secure.png",
+  //     title: t("services_title.s6"),
+  //     description: t("services_descriptions.s6"),
+  //   },
+  // ];
 
   useEffect(() => {
     const fetchAboutBanner = async () => {
