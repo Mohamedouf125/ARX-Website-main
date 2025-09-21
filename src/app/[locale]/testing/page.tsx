@@ -188,8 +188,8 @@ const AboutPage = () => {
         <span className="text-[14px] font-[600] ">{item.span}</span>
       </div>
       <div className="bottom z-10">
-        <h3 className="text-[35px] font-[700]">{item.title}</h3>
-        <p className="text-[18px] font-[500] opacity-70">{item.description}</p>
+        <h3 className="text-[clamp(15px,1.662vw,300px)] font-[700]">{item.title}</h3>
+        <p className="text-[clamp(8px,0.6vw,105px)] font-[500] opacity-70">{item.description}</p>
 
         <div className="read mx-6 mt-6">
           {/* Link component commented out */}

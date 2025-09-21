@@ -174,12 +174,6 @@
     "brandPresentationDesc": "Brand Presentation",
     "shopPhotos": "صور من المحلات الحالية",
     "shopPhotosDesc": "Shop Photos"
-  },
-  "pdfPopup": {
-    "projectBrochure": "كتيب المشروع",
-    "downloadPdf": "تحميل PDF",
-    "comingSoon": "قريباً",
-    "comingSoonDescription": "كتيب {projectTitle} قيد الإعداد وسيكون متاحاً قريباً.",
-    "close": "إغلاق"
   }
+
 }

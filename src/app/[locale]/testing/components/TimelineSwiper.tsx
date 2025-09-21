@@ -270,7 +270,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
           }}
         >
           <SmallHeadSpan>{t("leasing steps")}</SmallHeadSpan>
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-900 mb-2 sm:mb-4">
+          <h1 className="text-[clamp(20px,2.604vw,500px)] font-black text-gray-900 mb-2 sm:mb-4">
             <span
               className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600"
               style={{
@@ -280,7 +280,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
               {t("heading")}
             </span>
           </h1>
-          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 font-light max-w-3xl">
+          <p className="text-[clamp(10px,1.042vw,200px)] text-gray-700 font-light max-w-3xl">
             {t("intro")}
           </p>
         </div>
@@ -340,14 +340,14 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                         }}
                       >
                         <div
-                          className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-amber-400 blur-2xl sm:blur-3xl rounded-full"
+                          className="absolute inset-0 bg-[#dba426] blur-2xl sm:blur-3xl rounded-full"
                           style={{
                             opacity: glowIntensity,
                             transform: `scale(${1 + glowIntensity * 0.5})`,
                           }}
                         ></div>
                         <div
-                          className={`${config.yearSize} font-black text-transparent bg-clip-text bg-gradient-to-br from-amber-400 via-yellow-500 to-orange-500 relative z-10`}
+                          className={`text-[clamp(10px,2.042vw,200px)] font-black text-transparent bg-clip-text bg-[#dba426] relative z-10`}
                           style={{
                             filter: `drop-shadow(0 4px 12px rgba(251, 191, 36, ${glowIntensity}))`,
                           }}
@@ -366,7 +366,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                         }}
                       >
                         <div
-                          className="absolute inset-0 bg-gradient-to-br from-yellow-200 via-amber-200 to-orange-200 rounded-3xl blur-xl sm:blur-2xl"
+                          className="absolute inset-0 bg-[#dba426] rounded-3xl blur-xl sm:blur-2xl"
                           style={{
                             opacity: glowIntensity,
                             transform: `scale(${1.2 + glowIntensity * 0.3})`,

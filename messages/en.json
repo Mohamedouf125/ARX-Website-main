@@ -543,5 +543,12 @@
         "description": "We stay with you beyond the handover. From marketing exposure to facility management, our team will continue to support your brand’s success within our communities."
       }
     }
+  },
+  "pdfPopup": {
+    "projectBrochure": "Project Brochure",
+    "downloadPdf": "Download PDF",
+    "comingSoon": "Coming Soon",
+    "comingSoonDescription": "The brochure for {projectTitle} is currently being prepared and will be available soon.",
+    "close": "Close"
   }
 }
