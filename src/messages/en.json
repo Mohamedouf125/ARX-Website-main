@@ -95,5 +95,12 @@
   "faqs": {
     "title": "Frequently Asked Questions",
     "description": "Find answers to common questions about our projects, services, and real estate development."
+  },
+  "pdfPopup": {
+    "projectBrochure": "Project Brochure",
+    "downloadPdf": "Download PDF",
+    "comingSoon": "Coming Soon",
+    "comingSoonDescription": "The brochure for {projectTitle} is currently being prepared and will be available soon.",
+    "close": "Close"
   }
 }

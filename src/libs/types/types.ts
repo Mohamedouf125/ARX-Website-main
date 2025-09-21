@@ -33,8 +33,7 @@ export interface ProjectType {
     id: number;
     type: string;
     title: string;
-      image: string;
-
+    image: string;
   }>;
   property_floor_plans: Array<{
     id: number;
@@ -61,6 +60,7 @@ export interface ProjectType {
     video: string;
     type: string;
   }>;
+  pdf_lasing?: string | null;
 }
 
 export interface BlogType {

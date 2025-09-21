@@ -8,7 +8,6 @@ import { getData } from "@/libs/axios/server";
 import { AxiosHeaders } from "axios";
 import HomeContact from "@/components/home/HomeContact";
 import TimelineSwiper from "./components/TimelineSwiper";
-import { OurProjects } from "@/components/home/OurProjects";
 import { ArrowRightIcon } from "lucide-react";
 // Import Swiper React components and modules
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -17,6 +16,7 @@ import { Pagination, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { LayaredProjectCards } from "./components/LayaredProjectCards";
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -151,8 +151,9 @@ const AboutPage = () => {
   ];
 
   // Service Card Component
-  const ServiceCard = ({ item, index }: { item: any; index: number }) => (
+  const ServiceCard = ({ item, index }: { item: typeof servicesData[0]; index: number }) => (
     <div
+      key={index}
       className={`group relative p-10 rounded-3xl w-full h-[500px] text-white flex flex-col overflow-hidden ${
         item.top ? "justify-start" : "justify-between"
       } ${item.background || ""} bg-cover bg-center`}
@@ -396,7 +397,7 @@ const AboutPage = () => {
 
       {/* swiper hear  */}
       {/* <PropertySwiper /> */}
-      <OurProjects projects={projects} />
+      <LayaredProjectCards projects={projects} />
       <section className="w-full h-full pb-[170px] ">
         <HomeContact contact="/about.jpg" />
       </section>
