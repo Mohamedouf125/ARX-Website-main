@@ -15,7 +15,7 @@ const SmallHeadSpan = ({ children, color = "#dba426" }: SmallHeadSpanProps) => {
   return (
     <div className="mb-6 inline-block">
       <div
-        className="px-6 py-2 border border-amber-500 rounded-full overflow-hidden relative"
+        className="px-3 sm:px-4 md:px-6 py-2 border border-amber-500 rounded-full overflow-hidden relative"
         style={{ borderColor: color }}
       >
         <div className="flex animate-pulse">
@@ -60,33 +60,37 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     ];
     return {
       year: step,
-      // Put the step description into title to match current renderer
       title: t(`steps.${stepname[idx]}.description`),
       image: images[idx],
     };
   });
+
   const data: TimelineItem[] = timelineData ?? i18nTimeline;
   const swiperRef = useRef<SwiperType | null>(null);
   const centerSectionRef = useRef<HTMLDivElement | null>(null);
   const [mounted, setMounted] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [screenSize, setScreenSize] = useState<"sm" | "md" | "lg" | "xl">("lg");
 
   const animationFrameRef = useRef<number | undefined>(undefined);
 
   useEffect(() => {
     setMounted(true);
 
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
+    const updateScreenSize = () => {
+      const width = window.innerWidth;
+      if (width < 640) setScreenSize("sm");
+      else if (width < 768) setScreenSize("md");
+      else if (width < 1024) setScreenSize("lg");
+      else setScreenSize("xl");
     };
 
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
+    updateScreenSize();
+    window.addEventListener("resize", updateScreenSize);
 
     return () => {
-      window.removeEventListener("resize", checkMobile);
+      window.removeEventListener("resize", updateScreenSize);
       if (animationFrameRef.current) {
         cancelAnimationFrame(animationFrameRef.current);
       }
@@ -94,8 +98,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
   }, []);
 
   const handleSmoothScroll = useCallback(() => {
-    if (!mounted || !centerSectionRef.current || !swiperRef.current || isMobile)
-      return;
+    if (!mounted || !centerSectionRef.current || !swiperRef.current) return;
 
     const centerSection = centerSectionRef.current;
     const swiper = swiperRef.current;
@@ -104,12 +107,9 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     const sectionHeight = centerSection.offsetHeight;
     const windowHeight = window.innerHeight;
 
-    // Only start animation when section reaches the top of the page
-    // Calculate progress only after the section top reaches viewport top
     let progress = 0;
 
     if (rect.top <= 0) {
-      // Section has reached the top, now calculate scroll progress within the section
       const scrolledDistance = Math.abs(rect.top);
       const totalScrollDistance = sectionHeight - windowHeight;
 
@@ -120,7 +120,6 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
 
     setScrollProgress(progress);
 
-    // Only move swiper if there's actual progress
     if (progress > 0) {
       const targetTimelineIndex = Math.floor(progress * data.length);
       const clampedTimelineIndex = Math.max(
@@ -133,17 +132,16 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
         swiper.slideTo(targetSlide, 200);
       }
     } else {
-      // Reset to first slide when section hasn't reached top yet
       if (swiper.activeIndex !== 1) {
         swiper.slideTo(1, 200);
       }
     }
 
     animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
-  }, [mounted, data.length, isMobile]);
+  }, [mounted, data.length]);
 
   useEffect(() => {
-    if (!mounted || isMobile) return;
+    if (!mounted) return;
 
     let ticking = false;
 
@@ -195,75 +193,64 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     [scrollProgress, data.length]
   );
 
+  // Responsive configuration
+  const getResponsiveConfig = () => {
+    switch (screenSize) {
+      case "sm":
+        return {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          imageSize: "w-32 h-32",
+          dotSize: "w-6 h-6",
+          yearSize: "text-3xl sm:text-4xl",
+          titleSize: "text-sm",
+          connectionWidth: "calc(100vw - 100px)",
+        };
+      case "md":
+        return {
+          slidesPerView: 2,
+          spaceBetween: 30,
+          imageSize: "w-36 h-36",
+          dotSize: "w-8 h-8",
+          yearSize: "text-4xl sm:text-5xl",
+          titleSize: "text-sm",
+          connectionWidth: "calc(50vw - 75px)",
+        };
+      case "lg":
+        return {
+          slidesPerView: 3,
+          spaceBetween: 40,
+          imageSize: "w-40 h-40",
+          dotSize: "w-8 h-8",
+          yearSize: "text-5xl lg:text-6xl",
+          titleSize: "text-sm",
+          connectionWidth: "calc(33.33vw - 60px)",
+        };
+      default: // xl
+        return {
+          slidesPerView: 4,
+          spaceBetween: 60,
+          imageSize: "w-48 h-48",
+          dotSize: "w-10 h-10",
+          yearSize: "text-6xl xl:text-7xl",
+          titleSize: "text-base",
+          connectionWidth: "calc(25vw - 50px)",
+        };
+    }
+  };
+
   if (!mounted) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white" />
     );
   }
 
-  // Mobile Version
-  if (isMobile) {
-    return (
-      <section className={`max-w-[1920px] mx-auto ${className}`}>
-        <div className="px-6 py-12 bg-gradient-to-b from-white to-gray-50">
-          <div className="text-center mb-12">
-            <SmallHeadSpan>{t("leasing steps")}</SmallHeadSpan>
-            <h1 className="text-4xl font-bold text-gray-900 mb-2">
-              {t("heading")}
-            </h1>
-            <p className="text-xl text-gray-600">{t("intro")}</p>
-          </div>
+  const config = getResponsiveConfig();
 
-          <div className="space-y-16">
-            {data.map((item, index) => (
-              <div key={index} className="relative">
-                <div className="flex flex-col items-center">
-                  {/* Year Display - No scaling */}
-                  <div className="relative mb-8">
-                    <div className="absolute inset-0 bg-yellow-300 opacity-20 blur-3xl"></div>
-                    <div className="text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-500">
-                      {item.year}
-                    </div>
-                  </div>
-
-                  {/* Image Container - No scaling */}
-                  <div className="mb-8 relative">
-                    <div className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-amber-200 rounded-2xl blur-2xl opacity-30"></div>
-                    <img
-                      src={item.image}
-                      alt={`Milestone ${item.year}`}
-                      className="relative w-40 h-40 object-contain filter drop-shadow-2xl"
-                    />
-                  </div>
-
-                  {/* Timeline Connector */}
-                  <div className="relative mb-8">
-                    <div className="w-8 h-8 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full shadow-lg animate-pulse"></div>
-                    {index < data.length - 1 && (
-                      <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0.5 h-16 bg-gradient-to-b from-amber-400 to-transparent"></div>
-                    )}
-                  </div>
-
-                  {/* Description */}
-                  <div className="max-w-sm px-4">
-                    <p className="text-gray-700 text-center leading-relaxed">
-                      {item.title}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  // Desktop Version - Fixed to not move until section reaches top
   return (
     <section
       ref={centerSectionRef}
-      className={`h-[250vh] max-w-[1920px] mx-auto relative ${className}`}
+      className={`h-[200vh] sm:h-[220vh] md:h-[240vh] lg:h-[250vh] max-w-[1920px] mx-auto relative ${className}`}
       style={{
         background: `linear-gradient(180deg, 
           #ffffff 0%, 
@@ -273,42 +260,42 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
           #ffffff 100%)`,
       }}
     >
-      <div className="sticky top-16 h-screen flex flex-col justify-center px-8 py-12 z-20">
-        {/* Header - minimal parallax, no scaling */}
+      <div className="sticky top-8 sm:top-12 md:top-16 h-screen flex flex-col justify-center px-4 sm:px-6 md:px-8 py-8 sm:py-12 z-20">
+        {/* Enhanced Header */}
         <div
-          className="pb-10 w-full max-w-7xl mx-auto"
+          className="pb-6 sm:pb-8 md:pb-10 w-full max-w-7xl mx-auto text-center sm:text-start"
           style={{
-            transform: `translateY(${scrollProgress * -10}px)`,
-            opacity: 1 - scrollProgress * 0.2,
+            transform: `translateY(${scrollProgress * -15}px)`,
+            opacity: 1 - scrollProgress * 0.3,
           }}
         >
           <SmallHeadSpan>{t("leasing steps")}</SmallHeadSpan>
-          <h1 className="text-7xl font-black text-gray-900 mb-0">
-            <span className="text-transparent bg-clip-text bg-[#DBA426]">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-gray-900 mb-2 sm:mb-4">
+            <span
+              className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-600"
+              style={{
+                filter: `drop-shadow(0 4px 8px rgba(251, 191, 36, 0.3))`,
+              }}
+            >
               {t("heading")}
             </span>
           </h1>
-          <p className="text-3xl text-gray-700 font-light">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-700 font-light max-w-3xl">
             {t("intro")}
           </p>
         </div>
 
-        {/* Swiper Container */}
+        {/* Enhanced Swiper Container */}
         <div className="w-full relative">
           <Swiper
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
-            slidesPerView={4}
-            spaceBetween={80}
+            slidesPerView={config.slidesPerView}
+            spaceBetween={config.spaceBetween}
             allowTouchMove={false}
             centeredSlides={false}
-            speed={80}
-            breakpoints={{
-              768: { slidesPerView: 2, spaceBetween: 40 },
-              1024: { slidesPerView: 3, spaceBetween: 60 },
-              1280: { slidesPerView: 4, spaceBetween: 80 },
-            }}
+            speed={120}
             className="w-full relative z-10"
           >
             {/* Empty slide at the beginning */}
@@ -323,125 +310,176 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
               const itemProgress = getItemAnimationProgress(index);
               const isHovered = hoveredIndex === index;
 
-              // No scaling - only opacity and position changes
-              const yearOpacity = 0.5 + itemProgress * 0.5;
-              const imageOpacity = 0.6 + itemProgress * 0.4;
-              const textOpacity = 0.4 + itemProgress * 0.6;
+              // Enhanced animation values
+              const yearOpacity = 0.3 + itemProgress * 0.7;
+              const yearScale = 0.9 + itemProgress * 0.1;
+              const imageOpacity = 0.4 + itemProgress * 0.6;
+              const imageScale =
+                0.95 + itemProgress * 0.05 + (isHovered ? 0.05 : 0);
+              const textOpacity = 0.2 + itemProgress * 0.8;
+              const glowIntensity = itemProgress * 0.6 + (isHovered ? 0.3 : 0);
 
               return (
                 <SwiperSlide key={index}>
                   <div
-                    className="w-full h-full flex items-center justify-center px-4 cursor-pointer"
+                    className="w-full h-full flex items-center justify-center px-2 sm:px-4 cursor-pointer transition-all duration-500"
                     onMouseEnter={() => setHoveredIndex(index)}
                     onMouseLeave={() => setHoveredIndex(null)}
+                    style={{
+                      transform: `translateY(${isHovered ? -8 : 0}px)`,
+                    }}
                   >
                     <div className="flex flex-col items-center max-w-xs mx-auto">
-                      {/* Year Display - No scaling, only opacity */}
+                      {/* Enhanced Year Display */}
                       <div
-                        className="relative mb-4"
+                        className="relative mb-3 sm:mb-4 md:mb-6"
                         style={{
                           opacity: yearOpacity,
-                          transition: "opacity 0.3s ease-out",
+                          transform: `scale(${yearScale})`,
+                          transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
                         }}
                       >
                         <div
-                          className="absolute inset-0 bg-yellow-300 blur-3xl"
-                          style={{ opacity: itemProgress * 0.3 }}
+                          className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-amber-400 blur-2xl sm:blur-3xl rounded-full"
+                          style={{
+                            opacity: glowIntensity,
+                            transform: `scale(${1 + glowIntensity * 0.5})`,
+                          }}
                         ></div>
-                        <div className="text-7xl font-black text-transparent bg-clip-text bg-[#DBA426]">
+                        <div
+                          className={`${config.yearSize} font-black text-transparent bg-clip-text bg-gradient-to-br from-amber-400 via-yellow-500 to-orange-500 relative z-10`}
+                          style={{
+                            filter: `drop-shadow(0 4px 12px rgba(251, 191, 36, ${glowIntensity}))`,
+                          }}
+                        >
                           {item.year}
                         </div>
                       </div>
 
-                      {/* Image Container - No scaling, only opacity */}
+                      {/* Enhanced Image Container */}
                       <div
-                        className="relative mb-0"
+                        className="relative mb-4 sm:mb-6"
                         style={{
                           opacity: imageOpacity,
-                          transition: "opacity 0.3s ease-out",
+                          transform: `scale(${imageScale})`,
+                          transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
                         }}
                       >
                         <div
-                          className="absolute inset-0 bg-gradient-to-r from-yellow-200 to-amber-200 rounded-2xl blur-2xl"
+                          className="absolute inset-0 bg-gradient-to-br from-yellow-200 via-amber-200 to-orange-200 rounded-3xl blur-xl sm:blur-2xl"
                           style={{
-                            opacity: itemProgress * 0.4 + (isHovered ? 0.2 : 0),
+                            opacity: glowIntensity,
+                            transform: `scale(${1.2 + glowIntensity * 0.3})`,
                           }}
                         ></div>
                         <img
                           src={item.image}
                           alt={`Milestone ${item.year}`}
-                          className="relative w-48 h-48 object-contain filter drop-shadow-2xl"
+                          className={`relative ${config.imageSize} object-contain transition-all duration-500`}
                           style={{
-                            filter: `drop-shadow(0 20px 40px rgba(0,0,0,${
-                              0.1 + itemProgress * 0.2
+                            filter: `drop-shadow(0 ${
+                              8 + glowIntensity * 20
+                            }px ${20 + glowIntensity * 20}px rgba(0,0,0,${
+                              0.1 + glowIntensity * 0.2
                             }))`,
                           }}
                         />
                       </div>
 
-                      {/* Timeline Indicator - No scaling on dots */}
-                      <div className="relative z-20 flex items-center justify-center mb-6">
-                        {/* Connecting lines */}
+                      {/* Enhanced Timeline Indicator */}
+                      <div className="relative z-20 flex items-center justify-center mb-4 sm:mb-6">
+                        {/* Enhanced Connecting lines */}
                         {index > 0 && (
                           <div
-                            className="absolute right-full h-1 transition-all duration-300"
+                            className="absolute right-full h-1 transition-all duration-700"
                             style={{
-                              width: "calc(25vw - 50px)",
+                              width: config.connectionWidth,
                               background: isActive
-                                ? "linear-gradient(90deg, transparent, #fbbf24)"
+                                ? `linear-gradient(90deg, transparent, #fbbf24 ${
+                                    itemProgress * 100
+                                  }%)`
                                 : "#e5e7eb",
-                              opacity: isActive ? 1 : 0.5,
+                              opacity: isActive ? 1 : 0.3,
+                              boxShadow: isActive
+                                ? `0 0 8px rgba(251, 191, 36, 0.5)`
+                                : "none",
                             }}
                           ></div>
                         )}
 
                         {index < data.length - 1 && (
                           <div
-                            className="absolute left-full h-1 transition-all duration-300"
+                            className="absolute left-full h-1 transition-all duration-700"
                             style={{
-                              width: "calc(25vw - 50px)",
+                              width: config.connectionWidth,
                               background: isPassed
                                 ? "linear-gradient(90deg, #fbbf24, transparent)"
                                 : "#e5e7eb",
-                              opacity: isPassed ? 1 : 0.5,
+                              opacity: isPassed ? 1 : 0.3,
+                              boxShadow: isPassed
+                                ? `0 0 8px rgba(251, 191, 36, 0.5)`
+                                : "none",
                             }}
                           ></div>
                         )}
 
-                        {/* Dot with glow - no scaling */}
+                        {/* Enhanced Dot with advanced glow */}
                         <div className="relative">
                           {isActive && (
-                            <div
-                              className="absolute inset-0 rounded-full animate-ping"
-                              style={{
-                                background: "#fbbf24",
-                                opacity: 0.4,
-                              }}
-                            ></div>
+                            <>
+                              <div
+                                className="absolute inset-0 rounded-full animate-ping"
+                                style={{
+                                  background:
+                                    "radial-gradient(circle, #fbbf24, transparent)",
+                                  opacity: 0.6,
+                                  transform: "scale(1.5)",
+                                }}
+                              ></div>
+                              <div
+                                className="absolute inset-0 rounded-full animate-pulse"
+                                style={{
+                                  background: "#fbbf24",
+                                  opacity: 0.3,
+                                  transform: "scale(2)",
+                                  filter: "blur(8px)",
+                                }}
+                              ></div>
+                            </>
                           )}
                           <div
-                            className="w-10 h-10 rounded-full border-4 border-white relative z-10 transition-all duration-300"
+                            className={`${config.dotSize} rounded-full border-2 sm:border-4 border-white relative z-10 transition-all duration-500`}
                             style={{
                               background: isActive
-                                ? "linear-gradient(135deg, #fbbf24, #f59e0b)"
+                                ? "linear-gradient(135deg, #fbbf24, #f59e0b, #d97706)"
                                 : "#e5e7eb",
                               boxShadow: isActive
-                                ? "0 0 30px rgba(251, 191, 36, 0.6), 0 4px 15px rgba(0, 0, 0, 0.1)"
+                                ? `0 0 ${
+                                    20 + glowIntensity * 20
+                                  }px rgba(251, 191, 36, ${
+                                    0.8 + glowIntensity * 0.4
+                                  }), 0 4px 15px rgba(0, 0, 0, 0.2)`
                                 : "0 2px 8px rgba(0, 0, 0, 0.1)",
+                              transform: `scale(${
+                                isActive ? 1.1 + glowIntensity * 0.2 : 1
+                              })`,
                             }}
                           ></div>
                         </div>
                       </div>
 
-                      {/* Description - Only opacity change */}
+                      {/* Enhanced Description */}
                       <div
-                        className="text-center max-w-xs px-4"
+                        className="text-center max-w-xs px-2 sm:px-4"
                         style={{
                           opacity: textOpacity,
-                          transition: "opacity 0.3s ease-out",
+                          transform: `translateY(${(1 - itemProgress) * 10}px)`,
+                          transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
                         }}
                       >
-                        <p className="text-gray-700 text-sm leading-relaxed font-light">
+                        <p
+                          className={`text-gray-700 ${config.titleSize} leading-relaxed font-light`}
+                        >
                           {item.title}
                         </p>
                       </div>
@@ -456,6 +494,31 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
               <div className="w-full h-full opacity-0"></div>
             </SwiperSlide>
           </Swiper>
+        </div>
+
+        {/* Enhanced Progress Indicator */}
+        <div className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="flex items-center space-x-2">
+            {data.map((_, index) => (
+              <div
+                key={index}
+                className="w-2 h-2 rounded-full transition-all duration-500"
+                style={{
+                  background:
+                    index <= getActiveDotIndex()
+                      ? "linear-gradient(135deg, #fbbf24, #f59e0b)"
+                      : "#d1d5db",
+                  transform: `scale(${
+                    index === getActiveDotIndex() ? 1.3 : 1
+                  })`,
+                  boxShadow:
+                    index <= getActiveDotIndex()
+                      ? "0 0 8px rgba(251, 191, 36, 0.6)"
+                      : "none",
+                }}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
