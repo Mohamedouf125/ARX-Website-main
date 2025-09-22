@@ -4,32 +4,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import { useTranslations } from "next-intl";
+import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
 
 interface SmallHeadSpanProps {
   children: React.ReactNode;
   color?: string;
 }
 
-// SmallHeadSpan Component (inline for the artifact)
-const SmallHeadSpan = ({ children, color = "#dba426" }: SmallHeadSpanProps) => {
-  return (
-    <div className="mb-6 inline-block">
-      <div
-        className="px-3 sm:px-4 md:px-6 py-2 border border-amber-500 rounded-full overflow-hidden relative"
-        style={{ borderColor: color }}
-      >
-        <div className="flex animate-pulse">
-          <span
-            className="text-xs font-bold uppercase tracking-wider text-amber-600"
-            style={{ color }}
-          >
-            · {children} · {children} · {children} ·
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 interface TimelineItem {
   year: string;
@@ -366,7 +347,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                         }}
                       >
                         <div
-                          className="absolute inset-0 bg-[#dba426] rounded-3xl blur-xl sm:blur-2xl"
+                          className="absolute inset-0 bg-[#dba52600] rounded-3xl blur-xl sm:blur-2xl"
                           style={{
                             opacity: glowIntensity,
                             transform: `scale(${1.2 + glowIntensity * 0.3})`,
@@ -439,7 +420,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                               <div
                                 className="absolute inset-0 rounded-full animate-pulse"
                                 style={{
-                                  background: "#fbbf24",
+                                  background: "#fbbe24e2",
                                   opacity: 0.3,
                                   transform: "scale(2)",
                                   filter: "blur(8px)",

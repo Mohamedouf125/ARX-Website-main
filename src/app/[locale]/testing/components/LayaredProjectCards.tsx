@@ -204,7 +204,7 @@ export const LayaredProjectCards = ({
 
                           {/* Location */}
                           <div className="mb-3 sm:mb-4 flex items-center text-gray-600">
-                            <svg
+                            {/* <svg
                               className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#DBA426]"
                               fill="currentColor"
                               viewBox="0 0 20 20"
@@ -214,9 +214,10 @@ export const LayaredProjectCards = ({
                                 d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
                                 clipRule="evenodd"
                               />
-                            </svg>
-                            <span className="text-sm sm:text-base">
-                              {project.location}
+                            </svg> */}
+                            {/* < className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#DBA426]" /> */}
+                            <span className="text-sm text-[#DBA426] sm:text-base">
+                              {t("overview")}
                             </span>
                           </div>
 
