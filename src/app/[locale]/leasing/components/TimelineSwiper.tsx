@@ -310,7 +310,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                       transform: `translateY(${isHovered ? -8 : 0}px)`,
                     }}
                   >
-                    <div className="flex flex-col items-center max-w-xs mx-auto">
+                    <div className="flex flex-col items-center max-w-xs mx-auto ">
                       {/* Enhanced Year Display */}
                       <div
                         className="relative mb-3 sm:mb-4 md:mb-6"
