@@ -321,7 +321,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                         }}
                       >
                         <div
-                          className={`text-[clamp(10px,2.042vw,200px)] font-black text-transparent bg-clip-text bg-[#dba426] relative z-10`}
+                          className={`text-[clamp(15px,2.042vw,200px)] font-black text-transparent bg-clip-text bg-[#dba426] relative z-10`}
                           style={{
                             filter: `drop-shadow(0 4px 12px rgba(251, 191, 36, ${glowIntensity}))`,
                           }}
