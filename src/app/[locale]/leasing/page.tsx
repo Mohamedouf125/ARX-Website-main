@@ -151,7 +151,13 @@ const AboutPage = () => {
   ];
 
   // Service Card Component
-  const ServiceCard = ({ item, index }: { item: typeof servicesData[0]; index: number }) => (
+  const ServiceCard = ({
+    item,
+    index,
+  }: {
+    item: (typeof servicesData)[0];
+    index: number;
+  }) => (
     <div
       key={index}
       className={`group relative p-10 rounded-3xl w-full h-[500px] text-white flex flex-col overflow-hidden ${
@@ -188,8 +194,12 @@ const AboutPage = () => {
         <span className="text-[14px] font-[600] ">{item.span}</span>
       </div>
       <div className="bottom z-10">
-        <h3 className="text-[clamp(15px,1.662vw,300px)] font-[700]">{item.title}</h3>
-        <p className="text-[clamp(8px,0.6vw,105px)] font-[500] opacity-70">{item.description}</p>
+        <h3 className="text-[clamp(15px,1.662vw,300px)] font-[700]">
+          {item.title}
+        </h3>
+        <p className="text-[clamp(8px,0.6vw,105px)] font-[500] opacity-70">
+          {item.description}
+        </p>
 
         <div className="read mx-6 mt-6">
           {/* Link component commented out */}
@@ -340,14 +350,30 @@ const AboutPage = () => {
             </Swiper>
 
             {/* Custom Navigation Buttons */}
-            {/* <div className="flex justify-center gap-4 mt-4">
-              <button className="swiper-button-prev-services w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors">
+            <div
+              className={` ${
+                locale === "ar" ? "flex-row-reverse" : "flex-row"
+              } flex justify-center gap-4 mt-4`}
+            >
+              <button
+                className={`${
+                  locale === "ar"
+                    ? "swiper-button-next-services"
+                    : "swiper-button-prev-services"
+                } w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors`}
+              >
                 <ArrowRightIcon className="w-5 h-5 rotate-180" />
               </button>
-              <button className="swiper-button-next-services w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors">
+              <button
+                className={`${
+                  locale === "ar"
+                    ? "swiper-button-prev-services"
+                    : "swiper-button-next-services"
+                } w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors`}
+              >
                 <ArrowRightIcon className="w-5 h-5" />
               </button>
-            </div> */}
+            </div>
           </div>
 
           {/* Desktop Grid (visible on screens >= md) */}

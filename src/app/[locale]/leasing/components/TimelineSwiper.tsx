@@ -321,13 +321,6 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                         }}
                       >
                         <div
-                          className="absolute inset-0 bg-[#dba426] blur-2xl sm:blur-3xl rounded-full"
-                          style={{
-                            opacity: glowIntensity,
-                            transform: `scale(${1 + glowIntensity * 0.5})`,
-                          }}
-                        ></div>
-                        <div
                           className={`text-[clamp(10px,2.042vw,200px)] font-black text-transparent bg-clip-text bg-[#dba426] relative z-10`}
                           style={{
                             filter: `drop-shadow(0 4px 12px rgba(251, 191, 36, ${glowIntensity}))`,

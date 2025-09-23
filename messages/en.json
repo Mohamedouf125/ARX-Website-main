@@ -44,7 +44,8 @@
     "our_team": "Our Team",
     "our-team": "Our Team",
     "our-services": "Our Services",
-    "core-values": "Core Values"
+    "core-values": "Core Values",
+    "leasing": "Leasing"
   },
   "who_we_are": {
     "total_years_of_experience": "Total Years Of Experience",
@@ -517,7 +518,7 @@
     "heading": "How Leasing Works",
     "step": "Step",
     "intro": "We’ve made the leasing process smooth, transparent, and supportive from start to finish:",
-    "leasing steps": " Leasing",
+    "leasing steps": " Leasing Steps",
     "steps": {
       "one": {
         "title": "Explore Our Projects",

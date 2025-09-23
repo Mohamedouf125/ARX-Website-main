@@ -60,8 +60,8 @@ const Header = () => {
       href: "/our-team",
     },
     {
-      label: t("faqs"),
-      href: "/faqs",
+      label: t("leasing"),
+      href: "/leasing",
     },
     {
       label: t("contact"),

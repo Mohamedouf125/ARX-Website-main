@@ -1,5 +1,5 @@
 "use client";
-import ContactFormProject from "@/app/[locale]/testing/components/LeasingApplicationForm";
+import ContactFormProject from "@/app/[locale]/leasing/components/LeasingApplicationForm";
 import { AnimatedElement } from "../animations/AnimationType";
 import ContactForm from "./ContactForm";
 import "@/app/globals.css";
