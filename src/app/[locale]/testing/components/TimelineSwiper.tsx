@@ -6,10 +6,10 @@ import "swiper/css";
 import { useTranslations } from "next-intl";
 import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
 
-interface SmallHeadSpanProps {
-  children: React.ReactNode;
-  color?: string;
-}
+// interface SmallHeadSpanProps {
+//   children: React.ReactNode;
+//   color?: string;
+// }
 
 
 interface TimelineItem {
