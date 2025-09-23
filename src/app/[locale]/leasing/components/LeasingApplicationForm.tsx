@@ -21,6 +21,7 @@ interface ContactFormProps {
 
 const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
   const t = useTranslations("home");
+  const l = useTranslations("LeasingApplicationForm");
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -236,17 +237,17 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
   const getStepTitle = () => {
     switch (currentStep) {
       case 1:
-        return "Company & Contact Information";
+        return l("sections.companyInformation");
       case 2:
-        return "Responsible Person Details";
+        return l("sections.contactPerson");
       case 3:
-        return "Brand Information";
+        return l("sections.brandInformation");
       case 4:
-        return "Business Categories";
+        return l("sections.businessCategories");
       case 5:
-        return "Target Market";
+        return l("sections.targetMarket");
       case 6:
-        return "Location Requirements";
+        return l("sections.locationInformation");
       default:
         return "";
     }
@@ -312,7 +313,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
             isTransitioning ? "opacity-0" : "opacity-100"
           }`}
         >
-          Step {currentStep} of {totalSteps}
+          {currentStep} / {totalSteps}
         </p>
       </div>
 
@@ -344,7 +345,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.company_name}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Company Name"
+                    placeholder={l("placeholders.companyName")}
                   />
                 </div>
                 <div
@@ -356,11 +357,11 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 >
                   <Input
                     name="webiste"
-                    type="url"
+                    type="text"
                     value={formData.webiste}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Website"
+                    placeholder={l("placeholders.website")}
                   />
                 </div>
                 <div
@@ -377,7 +378,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.company_email}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Company Email"
+                    placeholder={l("placeholders.email")}
                   />
                 </div>
                 <div
@@ -394,7 +395,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.company_phone}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Company Phone"
+                    placeholder={l("placeholders.phone")}
                   />
                 </div>
                 <div
@@ -410,7 +411,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.company_fax}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Company Fax"
+                    placeholder={l("placeholders.fax")}
                   />
                 </div>
               </div>
@@ -427,7 +428,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   onChange={handleInputChange}
                   rows={3}
                   className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-0 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
-                  placeholder="Postal Address"
+                  placeholder={l("placeholders.postalAddress")}
                 />
               </div>
               <div
@@ -443,7 +444,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   disabled={!isCurrentStepValid() || isTransitioning}
                   className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
-                  <span>Next</span>
+                  <span>{l("buttons.next")}</span>
                   <FaArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
@@ -476,7 +477,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.responsible_person}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Responsible Person"
+                    placeholder={l("placeholders.responsiblePerson")}
                   />
                 </div>
                 <div
@@ -493,7 +494,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.responsible_person_position}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Position"
+                    placeholder={l("placeholders.position")}
                   />
                 </div>
                 <div
@@ -509,7 +510,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.responsible_person_phone}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Mobile"
+                    placeholder={l("placeholders.mobile")}
                   />
                 </div>
                 <div
@@ -525,7 +526,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.responsible_person_email}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Responsible Person Email"
+                    placeholder={l("placeholders.email")}
                   />
                 </div>
               </div>
@@ -543,7 +544,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
                   <FaArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span>Previous</span>
+                  <span>{l("buttons.previous")}</span>
                 </Button>
                 <Button
                   type="button"
@@ -551,7 +552,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   disabled={!isCurrentStepValid() || isTransitioning}
                   className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
-                  <span>Next</span>
+                  <span>{l("buttons.next")}</span>
                   <FaArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
@@ -584,7 +585,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.brand_name}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Brand Name"
+                    placeholder={l("placeholders.agencyBrandName")}
                   />
                 </div>
                 <div
@@ -600,7 +601,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.franchise_name}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Franchise Name"
+                    placeholder={l("placeholders.franchiseOwner")}
                   />
                 </div>
                 <div
@@ -617,7 +618,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.country_of_origin}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Country of Origin"
+                    placeholder={l("placeholders.countryOfOrigin")}
                   />
                 </div>
                 <div
@@ -652,7 +653,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.no_of_branches_in_egypt}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="No. of Branches in Egypt"
+                    placeholder={l("placeholders.branchesInEgypt")}
                     min="0"
                   />
                 </div>
@@ -669,7 +670,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.no_of_branches_outside_egypt}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="No. of Branches Outside Egypt"
+                    placeholder={l("placeholders.branchesOutsideEgypt")}
                     min="0"
                   />
                 </div>
@@ -688,7 +689,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
                   <FaArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span>Previous</span>
+                  <span>{l("buttons.previous")}</span>
                 </Button>
                 <Button
                   type="button"
@@ -696,7 +697,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   disabled={!isCurrentStepValid() || isTransitioning}
                   className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
-                  <span>Next</span>
+                  <span>{l("buttons.next")}</span>
                   <FaArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
@@ -729,12 +730,35 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   }
                 >
                   <SelectTrigger className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 w-full transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105">
-                    <SelectValue placeholder="Business Category" />
+                    <SelectValue placeholder={l("sections.businessCategories")} />
                   </SelectTrigger>
                   <SelectContent className="bg-white border border-gray-200 rounded-xl shadow-2xl">
                     {businessCategories.map((cat) => (
                       <SelectItem key={cat} value={cat}>
-                        {cat}
+                        {(() => {
+                          switch (cat) {
+                            case "Clothes":
+                              return l("categories.clothes");
+                            case "Accessories":
+                              return l("categories.accessories");
+                            case "Shoes & Leather":
+                              return l("categories.shoesLeather");
+                            case "Perfumes & Beauty":
+                              return l("categories.perfumesBeauty");
+                            case "Restaurants":
+                              return l("categories.restaurants");
+                            case "Jewels & Watches":
+                              return l("categories.jewellsWatches");
+                            case "Furniture":
+                              return l("categories.furniture");
+                            case "Services":
+                              return l("categories.services");
+                            case "Others":
+                              return l("categories.others");
+                            default:
+                              return cat;
+                          }
+                        })()}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -753,7 +777,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   value={formData.other_business_category}
                   onChange={handleInputChange}
                   className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                  placeholder="Other Business Category (specify)"
+                  placeholder={l("categories.others")}
                 />
               </div>
               <div
@@ -770,7 +794,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
                   <FaArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span>Previous</span>
+                  <span>{l("buttons.previous")}</span>
                 </Button>
                 <Button
                   type="button"
@@ -778,7 +802,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   disabled={!isCurrentStepValid() || isTransitioning}
                   className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
-                  <span>Next</span>
+                  <span>{l("buttons.next")}</span>
                   <FaArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
@@ -805,7 +829,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 }`}
               >
                 <h4 className="text-sm sm:text-md font-medium text-gray-800 mb-3 sm:mb-4">
-                  Product Price Range
+                  {l("labels.productPrice")}
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                   {productPriceOptions.map((item) => (
@@ -828,7 +852,18 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
                       />
                       <span className="ml-2 sm:ml-3 text-xs sm:text-sm font-medium">
-                        {item.label}
+                        {(() => {
+                          switch (item.value) {
+                            case "low":
+                              return l("options.low");
+                            case "average":
+                              return l("options.average");
+                            case "high":
+                              return l("options.high");
+                            default:
+                              return item.label;
+                          }
+                        })()}
                       </span>
                     </label>
                   ))}
@@ -844,7 +879,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 }`}
               >
                 <h4 className="text-sm sm:text-md font-medium text-gray-800 mb-3 sm:mb-4">
-                  Target Customer
+                  {l("labels.targetedCustomers")}
                 </h4>
                 <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   {targetCustomerOptions.map((item) => (
@@ -867,7 +902,20 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
                       />
                       <span className="ml-2 sm:ml-3 text-xs sm:text-sm font-medium">
-                        {item.label}
+                        {(() => {
+                          switch (item.value) {
+                            case "women":
+                              return l("subcategories.women");
+                            case "gents":
+                              return l("subcategories.gents");
+                            case "kids":
+                              return l("subcategories.kids");
+                            case "family":
+                              return l("subcategories.family");
+                            default:
+                              return item.label;
+                          }
+                        })()}
                       </span>
                     </label>
                   ))}
@@ -883,7 +931,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                 }`}
               >
                 <h4 className="text-sm sm:text-md font-medium text-gray-800 mb-3 sm:mb-4">
-                  Customer Income Level
+                  {l("labels.customerIncome")}
                 </h4>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                   {incomeOptions.map((item) => (
@@ -906,7 +954,18 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
                       />
                       <span className="ml-2 sm:ml-3 text-xs sm:text-sm font-medium">
-                        {item.label}
+                        {(() => {
+                          switch (item.value) {
+                            case "average":
+                              return l("options.average");
+                            case "above-average":
+                              return l("options.aboveAverage");
+                            case "high":
+                              return l("options.high");
+                            default:
+                              return item.label;
+                          }
+                        })()}
                       </span>
                     </label>
                   ))}
@@ -927,7 +986,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
                   <FaArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span>Previous</span>
+                  <span>{l("buttons.previous")}</span>
                 </Button>
                 <Button
                   type="button"
@@ -935,7 +994,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   disabled={!isCurrentStepValid() || isTransitioning}
                   className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
-                  <span>Next</span>
+                  <span>{l("buttons.next")}</span>
                   <FaArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
                 </Button>
               </div>
@@ -965,7 +1024,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   value={formData.location_name}
                   onChange={handleInputChange}
                   className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                  placeholder="Required Location"
+                  placeholder={l("placeholders.requiredLocation")}
                 />
               </div>
 
@@ -983,7 +1042,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.shop_no}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Shop Number (Optional)"
+                    placeholder={l("placeholders.shopNo")}
                   />
                 </div>
                 <div
@@ -999,7 +1058,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.floor_no}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Floor Number (Optional)"
+                    placeholder={l("placeholders.floorNo")}
                   />
                 </div>
                 <div
@@ -1015,7 +1074,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.area_no}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Area Number (Optional)"
+                    placeholder={l("placeholders.areaNo")}
                   />
                 </div>
                 <div
@@ -1031,7 +1090,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     value={formData.required_area}
                     onChange={handleInputChange}
                     className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                    placeholder="Required Area (sq meters)"
+                    placeholder={l("placeholders.requiredArea")}
                     min="0"
                   />
                 </div>
@@ -1050,7 +1109,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   onChange={handleInputChange}
                   rows={4}
                   className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-0 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
-                  placeholder="Other Conditions or Requirements"
+                  placeholder={l("placeholders.otherConditions")}
                 />
               </div>
 
@@ -1068,7 +1127,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
                 >
                   <FaArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
-                  <span>Previous</span>
+                  <span>{l("buttons.previous")}</span>
                 </Button>
                 <Button
                   type="submit"
@@ -1080,11 +1139,11 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   {isSubmitting ? (
                     <div className="flex items-center gap-2 sm:gap-3">
                       <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                      <span>Processing...</span>
+                      <span>{l("buttons.processing")}</span>
                     </div>
                   ) : (
                     <>
-                      <span>Submit Application</span>
+                      <span>{l("buttons.submit")}</span>
                       <FaCheck className="w-3 h-3 sm:w-4 sm:h-4" />
                     </>
                   )}
