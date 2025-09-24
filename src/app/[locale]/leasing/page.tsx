@@ -226,8 +226,8 @@ const AboutPage = () => {
           { label: locale === "en" ? "Home" : "الرئيسية", href: "/" },
           { label: t("leasingTitle") },
         ]}
-        backgroundImage={aboutBanner?.data?.bannerHeader?.image}
-        height="medium"
+        backgroundImage={"/aboutServices/banner.webp"}
+        height="custome"
       />
 
       <div className="rounded-t-3xl bg-white flex flex-col items-center px-6 mx-auto relative z-10 overflow-hidden">

@@ -13,7 +13,7 @@ interface PageHeroProps {
   description?: string;
   breadcrumbs: BreadcrumbItem[];
   backgroundImage?: string;
-  height?: "medium";
+  height?: "medium" | "custome";
   showDescription?: boolean;
   showSearch?: boolean;
   searchPlaceholder?: string;
@@ -34,23 +34,31 @@ const PageHero: React.FC<PageHeroProps> = ({
   const heightClasses = {
     medium: "h-[35vh] md:h-[45vh]",
     fullpage: "h-screen", // 100vh - full viewport height
+    custome:"h-[clamp(200px,31.771vw,6010px)]"
   };
 
   return (
     <section
       className={`relative ${heightClasses[height]} w-full bg-no-repeat z-[0]`}
-      style={{
-        backgroundImage: `url(${backgroundImage})`,
-        // Mobile: cover to fill container, Desktop: cover for consistent behavior
-        backgroundSize: "cover",
-        // Mobile: center the image, Desktop: center as well
-        backgroundPosition: "center center",
-        // Ensure image covers the full width on mobile
-        backgroundRepeat: "no-repeat",
-      }}
+      // style={{
+      //   backgroundImage: `url(${backgroundImage})`,
+      //   // Mobile: cover to fill container, Desktop: cover for consistent behavior
+      //   backgroundSize: "cover",
+      //   // Mobile: center the image, Desktop: center as well
+      //   backgroundPosition: "center center",
+      //   // Ensure image covers the full width on mobile
+      //   backgroundRepeat: "no-repeat",
+      // }}
     >
       {/* Overlay */}
       <div className="absolute bottom-0 left-0 w-full h-full bg-black/50 z-0"></div>
+      <div className="absolute bottom-0 left-0 w-full h-full">
+        <img
+          src={backgroundImage}
+          alt="Background"
+          className="w-full h-full "
+        />
+      </div>
 
       {/* Content */}
       <div className="z-10 relative h-full">
