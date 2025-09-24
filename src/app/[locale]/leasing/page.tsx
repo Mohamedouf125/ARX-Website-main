@@ -68,6 +68,8 @@ const AboutPage = () => {
     },
   });
 
+  console.log(aboutBanner)
+
   useEffect(() => {
     const fetchAboutBanner = async () => {
       try {
