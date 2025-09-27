@@ -267,21 +267,21 @@ const AboutPage = () => {
             className=" bg-cover bg-center w-full h-full rounded-3xl p-3 flex items-end relative pt-60 md:pt-0 pb-10 md:pb-3"
           >
             {/* shapes */}
-            <div className="cover z-10 absolute top-0 left-0 w-full h-full">
+            {/* <div className="cover z-10 absolute top-0 left-0 w-full h-full">
               <div
                 className="absolute top-[59px] left-[-1px] bg-white w-[30px] h-[30px] rounded-br-2xl rotate-[90deg]"
                 style={{
                   clipPath: ' path("M0 0 Q0,30 30,30 L 0 30 Z")',
                 }}
               ></div>
-              <div className="absolute top-0 left-0 bg-white w-[240px] h-[60px] rounded-br-3xl"></div>
+               <div className="absolute top-0 left-0 bg-white w-[240px] h-[60px] rounded-br-3xl"></div>
               <div
                 className="absolute top-[-3px] left-[240px] bg-white w-[30px] h-[30px] rounded-tl-4xl rotate-[90deg]"
                 style={{
                   clipPath: ' path("M0 0 Q0,30 30,30 L 0 30 Z")',
                 }}
               ></div>
-            </div>
+            </div> */}
           </div>
         </section>
       </div>

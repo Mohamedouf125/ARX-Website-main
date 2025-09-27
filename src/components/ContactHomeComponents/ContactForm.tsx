@@ -95,12 +95,13 @@ const ContactForm = () => {
             required
             value={formData.phone}
             onChange={handleInputChange}
-            className={`h-14 ${locale === "ar" ? "text-right" : ""} bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400`}
+            className={`h-14 ${
+              locale === "ar" ? "text-right" : ""
+            } bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 placeholder:text-gray-400`}
             placeholder={t("your_phone")}
           />
           <Select
             dir={locale === "ar" ? "rtl" : "ltr"}
-
             value={formData.inquiry}
             onValueChange={handleInquiryChange}
             required

@@ -110,7 +110,7 @@
     "remarkable journey": "remarkable journey",
     "Property Gallery": "Property Gallery",
     "Our Services": "Our Services",
-    "Take a brief look at some of the services we offer": "Key Benefits You’ll Get with Us",
+    "Take a brief look at some of the services we offer": "The Advantages We Offer You",
     "leasingTitle": "Leasing",
     "title": "About Us",
     "leasingDescription": " Why Join Our Projects?",
@@ -434,13 +434,13 @@
     "title": "Leasing Application Form",
     "subtitle": "طلب إستئجار موقع",
     "sections": {
-      "companyInformation": "Company Information",
-      "contactPerson": "Contact Person",
-      "brandInformation": "Brand Information",
-      "businessCategories": "Business Categories",
-      "targetMarket": "Target Market",
-      "locationInformation": "Location Information",
-      "requiredDocuments": "Required Documents"
+      "companyInformation": "Premium Company Profile",
+      "contactPerson": "Dedicated Contact Person",
+      "brandInformation": "Brand Identity Details",
+      "businessCategories": "Business Categories & Services",
+      "targetMarket": "Target Markets & Audiences",
+      "locationInformation": "Company Locations & Presence",
+      "requiredDocuments": "Essential Documents to Start"
     },
     "placeholders": {
       "companyName": "Company Name",
@@ -524,27 +524,27 @@
     "steps": {
       "one": {
         "title": "Explore Our Projects",
-        "description": "Browse through our wide range of commercial and mixed-use projects. Each development is strategically located, designed to attract high traffic, and tailored to different industries."
+        "description": "Review our projects. Access our PDF catalog to explore available locations and unit sizes."
       },
       "two": {
         "title": "Choose the Right Space",
-        "description": "Our team will guide you through the available units, sizes, and layouts to match your brand’s needs — whether you’re a flagship store, boutique, or office."
+        "description": "Complete the Application Form. Fill out the dedicated form to specify your brand’s requirements."
       },
       "three": {
         "title": "Tailored Consultation & Proposal",
-        "description": "We work with you to understand your goals, suggest the best options, and create a leasing proposal that aligns with your business vision."
+        "description": "Consultation with Our Team. Our specialized team will review your request and provide tailored recommendations."
       },
       "four": {
         "title": "Clear & Transparent Contracting",
-        "description": "Once the right space is selected, we handle the leasing agreement with full clarity and no hidden terms, ensuring a smooth and professional process."
+        "description": "Select the Optimal Location. Choose the unit that best aligns with your business objectives."
       },
       "five": {
         "title": "Handover & Fit-Out Support",
-        "description": "After signing, you’ll receive your unit ready for customization. Our projects are built with international standards, giving you the flexibility to design your space exactly as you envision it."
+        "description": "Review Offers & Terms. Receive a detailed proposal including pricing, payment plans, and contractual terms."
       },
       "six": {
         "title": "Launch & Continuous Support",
-        "description": "We stay with you beyond the handover. From marketing exposure to facility management, our team will continue to support your brand’s success within our communities."
+        "description": "Contract Signing. Proceed with a formal and transparent agreement supported by clear legal guarantees."
       }
     }
   },

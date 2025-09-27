@@ -2,15 +2,17 @@
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperType } from "swiper";
+import { Navigation } from "swiper/modules";
 import "swiper/css";
-import { useTranslations } from "next-intl";
+import "swiper/css/navigation";
+import { useTranslations, useLocale } from "next-intl";
+import { ArrowRightIcon } from "lucide-react";
 import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
 
 // interface SmallHeadSpanProps {
 //   children: React.ReactNode;
 //   color?: string;
 // }
-
 
 interface TimelineItem {
   year: string;
@@ -28,6 +30,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
   className = "",
 }) => {
   const t = useTranslations("leasing");
+  const locale = useLocale();
   const i18nTimeline: TimelineItem[] = Array.from({ length: 6 }, (_, idx) => {
     const step = `${t("step")} ${idx + 1}`;
     const stepname = ["one", "two", "three", "four", "five", "six"];
@@ -53,6 +56,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
   const [scrollProgress, setScrollProgress] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [screenSize, setScreenSize] = useState<"sm" | "md" | "lg" | "xl">("lg");
+  const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const animationFrameRef = useRef<number | undefined>(undefined);
 
@@ -79,7 +83,14 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
   }, []);
 
   const handleSmoothScroll = useCallback(() => {
-    if (!mounted || !centerSectionRef.current || !swiperRef.current) return;
+    // Only enable scroll-based movement on larger screens
+    if (
+      !mounted ||
+      !centerSectionRef.current ||
+      !swiperRef.current ||
+      screenSize === "sm"
+    )
+      return;
 
     const centerSection = centerSectionRef.current;
     const swiper = swiperRef.current;
@@ -107,22 +118,27 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
         0,
         Math.min(data.length - 1, targetTimelineIndex)
       );
-      const targetSlide = clampedTimelineIndex + 1;
+      const targetSlide = clampedTimelineIndex;
 
       if (swiper.activeIndex !== targetSlide) {
         swiper.slideTo(targetSlide, 200);
       }
     } else {
-      if (swiper.activeIndex !== 1) {
-        swiper.slideTo(1, 200);
+      if (swiper.activeIndex !== 0) {
+        swiper.slideTo(0, 200);
       }
     }
 
     animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
-  }, [mounted, data.length]);
+  }, [mounted, data.length, screenSize]);
 
   useEffect(() => {
     if (!mounted) return;
+
+    // Only add scroll listener for larger screens
+    if (screenSize === "sm") {
+      return;
+    }
 
     let ticking = false;
 
@@ -149,9 +165,14 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
         cancelAnimationFrame(animationFrameRef.current);
       }
     };
-  }, [handleSmoothScroll]);
+  }, [handleSmoothScroll, screenSize]);
 
   const getActiveDotIndex = () => {
+    if (screenSize === "sm") {
+      // For mobile, use the active slide index state
+      return activeSlideIndex;
+    }
+
     const progressPerItem = 1 / data.length;
     const calculatedIndex = Math.floor(scrollProgress / progressPerItem);
     return Math.min(calculatedIndex, data.length - 1);
@@ -159,6 +180,11 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
 
   const getItemAnimationProgress = useCallback(
     (itemIndex: number) => {
+      if (screenSize === "sm") {
+        // For mobile, show full progress for active and previous items
+        return activeSlideIndex >= itemIndex ? 1 : 0;
+      }
+
       const totalItems = data.length;
       const itemProgressStart = itemIndex / totalItems;
       const itemProgressEnd = (itemIndex + 1) / totalItems;
@@ -171,7 +197,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
         (itemProgressEnd - itemProgressStart)
       );
     },
-    [scrollProgress, data.length]
+    [scrollProgress, data.length, screenSize, activeSlideIndex]
   );
 
   // Responsive configuration
@@ -231,7 +257,11 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
   return (
     <section
       ref={centerSectionRef}
-      className={`h-[200vh] sm:h-[220vh] md:h-[240vh] lg:h-[250vh] max-w-[1920px] mx-auto relative ${className}`}
+      className={`${
+        screenSize === "sm"
+          ? "h-auto"
+          : "h-[200vh] sm:h-[220vh] md:h-[240vh] lg:h-[250vh]"
+      } max-w-[1920px] mx-auto relative ${className}`}
       style={{
         background: `linear-gradient(180deg, 
           #ffffff 0%, 
@@ -241,14 +271,24 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
           #ffffff 100%)`,
       }}
     >
-      <div className="sticky top-8 sm:top-12 md:top-16 h-screen flex flex-col justify-center px-4 sm:px-6 md:px-8 py-8 sm:py-12 z-20">
+      <div
+        className={`${
+          screenSize === "sm" ? "relative" : "sticky top-8 sm:top-12 md:top-16"
+        } ${
+          screenSize === "sm" ? "h-auto" : "h-screen"
+        } flex flex-col justify-center px-4 sm:px-6 md:px-8 py-8 sm:py-12 z-20`}
+      >
         {/* Enhanced Header */}
         <div
           className="pb-6 sm:pb-8 md:pb-10 w-full max-w-7xl mx-auto text-center sm:text-start"
-          style={{
-            transform: `translateY(${scrollProgress * -15}px)`,
-            opacity: 1 - scrollProgress * 0.3,
-          }}
+          style={
+            screenSize === "sm"
+              ? {}
+              : {
+                  transform: `translateY(${scrollProgress * -15}px)`,
+                  opacity: 1 - scrollProgress * 0.3,
+                }
+          }
         >
           <SmallHeadSpan>{t("leasing steps")}</SmallHeadSpan>
           <h1 className="text-[clamp(20px,2.604vw,500px)] font-black text-gray-900 mb-2 sm:mb-4">
@@ -272,18 +312,27 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
             }}
+            onSlideChange={(swiper) => {
+              if (screenSize === "sm") {
+                setActiveSlideIndex(swiper.activeIndex);
+              }
+            }}
+            modules={[Navigation]}
             slidesPerView={config.slidesPerView}
             spaceBetween={config.spaceBetween}
-            allowTouchMove={false}
+            allowTouchMove={screenSize === "sm"}
             centeredSlides={false}
             speed={120}
+            navigation={
+              screenSize === "sm"
+                ? {
+                    nextEl: ".swiper-button-next-timeline",
+                    prevEl: ".swiper-button-prev-timeline",
+                  }
+                : false
+            }
             className="w-full relative z-10"
           >
-            {/* Empty slide at the beginning */}
-            <SwiperSlide key="start-space">
-              <div className="w-full h-full opacity-0"></div>
-            </SwiperSlide>
-
             {data.map((item, index) => {
               const activeDotIndex = getActiveDotIndex();
               const isActive = index <= activeDotIndex;
@@ -368,13 +417,11 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                             className="absolute right-full h-1 transition-all duration-700"
                             style={{
                               width: config.connectionWidth,
-                              background: isActive
-                                ? `linear-gradient(90deg, transparent, #fbbf24 ${
-                                    itemProgress * 100
-                                  }%)`
+                              background: isPassed
+                                ? `linear-gradient(90deg, #fbbf24, transparent)`
                                 : "#e5e7eb",
-                              opacity: isActive ? 1 : 0.3,
-                              boxShadow: isActive
+                              opacity: isPassed ? 1 : 0.3,
+                              boxShadow: isPassed
                                 ? `0 0 8px rgba(251, 191, 36, 0.5)`
                                 : "none",
                             }}
@@ -386,11 +433,11 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                             className="absolute left-full h-1 transition-all duration-700"
                             style={{
                               width: config.connectionWidth,
-                              background: isPassed
-                                ? "linear-gradient(90deg, #fbbf24, transparent)"
+                              background: isActive
+                                ? `linear-gradient(90deg, #fbbf24, transparent)`
                                 : "#e5e7eb",
-                              opacity: isPassed ? 1 : 0.3,
-                              boxShadow: isPassed
+                              opacity: isActive ? 1 : 0.3,
+                              boxShadow: isActive
                                 ? `0 0 8px rgba(251, 191, 36, 0.5)`
                                 : "none",
                             }}
@@ -462,12 +509,29 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                 </SwiperSlide>
               );
             })}
-
-            {/* Empty slide at the end */}
-            <SwiperSlide key="end-space">
-              <div className="w-full h-full opacity-0"></div>
-            </SwiperSlide>
           </Swiper>
+
+          {/* Navigation Arrows for Mobile */}
+          {screenSize === "sm" && (
+            <div
+              className={` flex justify-center gap-4 mt-6`}
+            >
+              <button
+                className={`${
+                  "swiper-button-prev-timeline"
+                } w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors shadow-lg hover:shadow-xl transform hover:scale-110 active:scale-95`}
+              >
+                <ArrowRightIcon className={`w-5 h-5 ${locale === "ar" ? "" : "rotate-180"}`} />
+              </button>
+              <button
+                className={`${
+                 "swiper-button-next-timeline"
+                } w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors shadow-lg hover:shadow-xl transform hover:scale-110 active:scale-95`}
+              >
+                <ArrowRightIcon className={`w-5 h-5 ${locale === "ar" ? "rotate-180" : ""}`} />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Enhanced Progress Indicator */}

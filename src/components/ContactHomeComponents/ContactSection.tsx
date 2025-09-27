@@ -33,7 +33,7 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
               duration={1}
               className="w-full h-full"
             >
-              <span className="text-2xl sm:text-3xl lg:text-5xl uppercase font-extrabold text-gray-900">
+              <span className="text-2xl leading-20 sm:text-3xl lg:text-5xl uppercase font-extrabold text-gray-900">
                 {t("our_form_description")}
               </span>
             </AnimatedElement>

@@ -65,21 +65,28 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
     required_area: "",
     other_conditions: "",
 
-    // Step 7: File Uploads (not implemented in UI below)
+    // Step 7: File Uploads
     company_profile: null as File | null,
     brand_presentation: null as File | null,
-    shop_photos: null as File | null,
+    shop_photos: null as FileList | null,
   });
 
   const locale = useLocale();
-  const totalSteps = 6;
+  const totalSteps = 7;
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value, type, files } = e.target as HTMLInputElement;
     if (type === "file") {
-      setFormData((prev) => ({ ...prev, [name]: files && files[0] ? files[0] : null }));
+      if (name === "shop_photos") {
+        setFormData((prev) => ({ ...prev, [name]: files }));
+      } else {
+        setFormData((prev) => ({
+          ...prev,
+          [name]: files && files[0] ? files[0] : null,
+        }));
+      }
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -166,10 +173,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
           required_area: "",
           other_conditions: "",
 
-          // Step 7: File Uploads (not implemented in UI below)
+          // Step 7: File Uploads
           company_profile: null as File | null,
           brand_presentation: null as File | null,
-          shop_photos: null as File | null,
+          shop_photos: null as FileList | null,
         });
         toast.success("Form submitted successfully!");
       })
@@ -204,7 +211,14 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
   };
 
   const isStep4Valid = () => {
-    return formData.business_category.trim() !== "";
+    if (formData.business_category.trim() === "") {
+      return false;
+    }
+    // If "Others" is selected, require the other_business_category field
+    if (formData.business_category === "Others") {
+      return formData.other_business_category.trim() !== "";
+    }
+    return true;
   };
 
   const isStep5Valid = () => {
@@ -213,6 +227,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
 
   const isStep6Valid = () => {
     return formData.location_name.trim() !== "";
+  };
+
+  const isStep7Valid = () => {
+    return true; // File uploads are optional
   };
 
   const isCurrentStepValid = () => {
@@ -229,6 +247,8 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
         return isStep5Valid();
       case 6:
         return isStep6Valid();
+      case 7:
+        return isStep7Valid();
       default:
         return false;
     }
@@ -248,6 +268,8 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
         return l("sections.targetMarket");
       case 6:
         return l("sections.locationInformation");
+      case 7:
+        return "File Uploads";
       default:
         return "";
     }
@@ -344,7 +366,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     required
                     value={formData.company_name}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.companyName")}
                   />
                 </div>
@@ -360,7 +382,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="text"
                     value={formData.webiste}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.website")}
                   />
                 </div>
@@ -377,7 +399,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     required
                     value={formData.company_email}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.email")}
                   />
                 </div>
@@ -394,7 +416,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     required
                     value={formData.company_phone}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.phone")}
                   />
                 </div>
@@ -410,7 +432,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="tel"
                     value={formData.company_fax}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.fax")}
                   />
                 </div>
@@ -427,7 +449,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   value={formData.postal_address}
                   onChange={handleInputChange}
                   rows={3}
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-0 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
+                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228] resize-none"
                   placeholder={l("placeholders.postalAddress")}
                 />
               </div>
@@ -476,7 +498,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     required
                     value={formData.responsible_person}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.responsiblePerson")}
                   />
                 </div>
@@ -493,7 +515,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     required
                     value={formData.responsible_person_position}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.position")}
                   />
                 </div>
@@ -509,7 +531,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="tel"
                     value={formData.responsible_person_phone}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.mobile")}
                   />
                 </div>
@@ -525,7 +547,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="email"
                     value={formData.responsible_person_email}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.email")}
                   />
                 </div>
@@ -584,7 +606,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     required
                     value={formData.brand_name}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.agencyBrandName")}
                   />
                 </div>
@@ -600,7 +622,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="text"
                     value={formData.franchise_name}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.franchiseOwner")}
                   />
                 </div>
@@ -617,7 +639,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     required
                     value={formData.country_of_origin}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.countryOfOrigin")}
                   />
                 </div>
@@ -633,7 +655,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="number"
                     value={formData.no_of_employees}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder="No. of Employees"
                     min="0"
                   />
@@ -652,7 +674,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="number"
                     value={formData.no_of_branches_in_egypt}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.branchesInEgypt")}
                     min="0"
                   />
@@ -669,7 +691,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="number"
                     value={formData.no_of_branches_outside_egypt}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.branchesOutsideEgypt")}
                     min="0"
                   />
@@ -729,10 +751,12 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     handleSelectChange("business_category", value)
                   }
                 >
-                  <SelectTrigger className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 w-full transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105">
-                    <SelectValue placeholder={l("sections.businessCategories")} />
+                  <SelectTrigger className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 w-full transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]">
+                    <SelectValue
+                      placeholder={l("sections.businessCategories")}
+                    />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border border-gray-200 rounded-xl shadow-2xl">
+                  <SelectContent className="bg-white border border-gray-500 rounded-xl shadow-2xl">
                     {businessCategories.map((cat) => (
                       <SelectItem key={cat} value={cat}>
                         {(() => {
@@ -764,22 +788,24 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   </SelectContent>
                 </Select>
               </div>
-              <div
-                className={`transition-all duration-700 delay-200 transform ${
-                  currentStep === 4 && !isTransitioning
-                    ? "translate-y-0 opacity-100"
-                    : "translate-y-8 opacity-0"
-                }`}
-              >
-                <Input
-                  name="other_business_category"
-                  type="text"
-                  value={formData.other_business_category}
-                  onChange={handleInputChange}
-                  className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
-                  placeholder={l("categories.others")}
-                />
-              </div>
+              {formData.business_category === "Others" && (
+                <div
+                  className={`transition-all duration-700 delay-200 transform ${
+                    currentStep === 4 && !isTransitioning
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-8 opacity-0"
+                  }`}
+                >
+                  <Input
+                    name="other_business_category"
+                    type="text"
+                    value={formData.other_business_category}
+                    onChange={handleInputChange}
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-300 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
+                    placeholder={l("categories.others")}
+                  />
+                </div>
+              )}
               <div
                 className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-300 transform ${
                   currentStep === 4 && !isTransitioning
@@ -835,10 +861,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   {productPriceOptions.map((item) => (
                     <label
                       key={item.value}
-                      className={`flex items-center cursor-pointer p-3 sm:p-4 rounded-xl border transition-all duration-300 ${
+                      className={`flex items-center gap-[5px] cursor-pointer p-3 sm:p-4 rounded-xl border transition-all duration-300 ${
                         formData.product_price === item.value
                           ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
-                          : "border-gray-200 hover:border-[#DEA228]/50"
+                          : "border-gray-500 hover:border-[#DEA228]/50"
                       }`}
                     >
                       <input
@@ -849,7 +875,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         onChange={(e) =>
                           handleSelectChange("product_price", e.target.value)
                         }
-                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
+                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-500 focus:ring-[#DEA228]"
                       />
                       <span className="ml-2 sm:ml-3 text-xs sm:text-sm font-medium">
                         {(() => {
@@ -872,7 +898,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
 
               {/* Target Customer */}
               <div
-                className={`transition-all duration-700 delay-200 transform ${
+                className={`transition-all duration-700 delay-500 transform ${
                   currentStep === 5 && !isTransitioning
                     ? "translate-y-0 opacity-100"
                     : "translate-y-8 opacity-0"
@@ -885,10 +911,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   {targetCustomerOptions.map((item) => (
                     <label
                       key={item.value}
-                      className={`flex items-center cursor-pointer p-2 sm:p-3 rounded-lg sm:rounded-xl border transition-all duration-300 ${
+                      className={`flex items-center gap-[5px] cursor-pointer p-2 sm:p-3 rounded-lg sm:rounded-xl border transition-all duration-300 ${
                         formData.target_customer === item.value
                           ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
-                          : "border-gray-200 hover:border-[#DEA228]/50"
+                          : "border-gray-500 hover:border-[#DEA228]/50"
                       }`}
                     >
                       <input
@@ -899,7 +925,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         onChange={(e) =>
                           handleSelectChange("target_customer", e.target.value)
                         }
-                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
+                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-500 focus:ring-[#DEA228]"
                       />
                       <span className="ml-2 sm:ml-3 text-xs sm:text-sm font-medium">
                         {(() => {
@@ -937,10 +963,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   {incomeOptions.map((item) => (
                     <label
                       key={item.value}
-                      className={`flex items-center cursor-pointer p-3 sm:p-4 rounded-xl border transition-all duration-300 ${
+                      className={`flex items-center gap-[5px] cursor-pointer p-3 sm:p-4 rounded-xl border transition-all duration-300 ${
                         formData.icome === item.value
                           ? "border-[#DEA228] bg-[#DEA228]/10 scale-105"
-                          : "border-gray-200 hover:border-[#DEA228]/50"
+                          : "border-gray-500 hover:border-[#DEA228]/50"
                       }`}
                     >
                       <input
@@ -951,7 +977,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         onChange={(e) =>
                           handleSelectChange("icome", e.target.value)
                         }
-                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-300 focus:ring-[#DEA228]"
+                        className="w-3 h-3 sm:w-4 sm:h-4 text-[#DEA228] border-gray-500 focus:ring-[#DEA228]"
                       />
                       <span className="ml-2 sm:ml-3 text-xs sm:text-sm font-medium">
                         {(() => {
@@ -1041,7 +1067,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="text"
                     value={formData.shop_no}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.shopNo")}
                   />
                 </div>
@@ -1057,7 +1083,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="text"
                     value={formData.floor_no}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.floorNo")}
                   />
                 </div>
@@ -1073,7 +1099,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="text"
                     value={formData.area_no}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.areaNo")}
                   />
                 </div>
@@ -1089,7 +1115,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                     type="number"
                     value={formData.required_area}
                     onChange={handleInputChange}
-                    className="h-12 sm:h-16 bg-gray-50 border-0 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105"
+                    className="h-12 sm:h-16 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl px-4 sm:px-6 text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228]"
                     placeholder={l("placeholders.requiredArea")}
                     min="0"
                   />
@@ -1108,7 +1134,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                   value={formData.other_conditions}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-0 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 resize-none"
+                  className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-50 border-2 border-gray-500 rounded-xl sm:rounded-2xl text-gray-600 placeholder:text-gray-400 transition-all duration-300 focus:bg-white focus:shadow-lg focus:scale-105 focus:border-[#DEA228] resize-none"
                   placeholder={l("placeholders.otherConditions")}
                 />
               </div>
@@ -1116,6 +1142,197 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
               <div
                 className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-400 transform ${
                   currentStep === 6 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <Button
+                  type="button"
+                  onClick={handlePrevious}
+                  disabled={isTransitioning}
+                  className="bg-gray-200 hover:bg-gray-300 text-gray-700 font-semibold px-6 sm:px-8 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-lg flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
+                >
+                  <FaArrowLeft className="w-3 h-3 sm:w-4 sm:h-4" />
+                  <span>{l("buttons.previous")}</span>
+                </Button>
+                <Button
+                  type="button"
+                  onClick={handleNext}
+                  disabled={!isCurrentStepValid() || isTransitioning}
+                  className="bg-[#DEA228] hover:bg-[#c8911e] text-white font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl h-auto transition-all duration-300 transform hover:scale-110 hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 sm:gap-3 text-sm sm:text-base"
+                >
+                  <span>{l("buttons.next")}</span>
+                  <FaArrowRight className="w-3 h-3 sm:w-4 sm:h-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          {/* Step 7: File Uploads */}
+          <div
+            className={`absolute inset-0 transition-all duration-500 transform ${
+              currentStep === 7
+                ? "translate-x-0 opacity-100 pointer-events-auto"
+                : "translate-x-full opacity-0 pointer-events-none"
+            }`}
+          >
+            <div className="space-y-6 sm:space-y-8">
+              {/* Company Profile Upload */}
+              <div
+                className={`transition-all duration-700 delay-100 transform ${
+                  currentStep === 7 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <div className="space-y-3">
+                  <label className="text-sm sm:text-md font-medium text-gray-800">
+                    Company Profile (PDF)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      name="company_profile"
+                      accept=".pdf"
+                      onChange={handleInputChange}
+                      className="hidden"
+                      id="company_profile"
+                    />
+                    <label
+                      htmlFor="company_profile"
+                      className="flex items-center justify-center w-full h-16 sm:h-20 bg-gray-50 border-2 border-dashed border-gray-400 rounded-xl sm:rounded-2xl cursor-pointer hover:bg-gray-100 hover:border-[#DEA228] transition-all duration-300 group"
+                    >
+                      <div className="flex flex-col items-center justify-center text-center">
+                        <svg
+                          className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 group-hover:text-[#DEA228] mb-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          />
+                        </svg>
+                        <span className="text-sm sm:text-base text-gray-500 group-hover:text-[#DEA228]">
+                          {formData.company_profile
+                            ? formData.company_profile.name
+                            : "Click to upload company profile"}
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Brand Presentation Upload */}
+              <div
+                className={`transition-all duration-700 delay-200 transform ${
+                  currentStep === 7 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <div className="space-y-3">
+                  <label className="text-sm sm:text-md font-medium text-gray-800">
+                    Brand Presentation (PDF)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      name="brand_presentation"
+                      accept=".pdf"
+                      onChange={handleInputChange}
+                      className="hidden"
+                      id="brand_presentation"
+                    />
+                    <label
+                      htmlFor="brand_presentation"
+                      className="flex items-center justify-center w-full h-16 sm:h-20 bg-gray-50 border-2 border-dashed border-gray-400 rounded-xl sm:rounded-2xl cursor-pointer hover:bg-gray-100 hover:border-[#DEA228] transition-all duration-300 group"
+                    >
+                      <div className="flex flex-col items-center justify-center text-center">
+                        <svg
+                          className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 group-hover:text-[#DEA228] mb-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                          />
+                        </svg>
+                        <span className="text-sm sm:text-base text-gray-500 group-hover:text-[#DEA228]">
+                          {formData.brand_presentation
+                            ? formData.brand_presentation.name
+                            : "Click to upload brand presentation"}
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Shop Photos Upload */}
+              <div
+                className={`transition-all duration-700 delay-300 transform ${
+                  currentStep === 7 && !isTransitioning
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-8 opacity-0"
+                }`}
+              >
+                <div className="space-y-3">
+                  <label className="text-sm sm:text-md font-medium text-gray-800">
+                    Shop Photos (Multiple Images)
+                  </label>
+                  <div className="relative">
+                    <input
+                      type="file"
+                      name="shop_photos"
+                      accept="image/*"
+                      multiple
+                      onChange={handleInputChange}
+                      className="hidden"
+                      id="shop_photos"
+                    />
+                    <label
+                      htmlFor="shop_photos"
+                      className="flex items-center justify-center w-full h-16 sm:h-20 bg-gray-50 border-2 border-dashed border-gray-400 rounded-xl sm:rounded-2xl cursor-pointer hover:bg-gray-100 hover:border-[#DEA228] transition-all duration-300 group"
+                    >
+                      <div className="flex flex-col items-center justify-center text-center">
+                        <svg
+                          className="w-6 h-6 sm:w-8 sm:h-8 text-gray-400 group-hover:text-[#DEA228] mb-2"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                          />
+                        </svg>
+                        <span className="text-sm sm:text-base text-gray-500 group-hover:text-[#DEA228]">
+                          {formData.shop_photos &&
+                          formData.shop_photos.length > 0
+                            ? `${formData.shop_photos.length} file(s) selected`
+                            : "Click to upload shop photos"}
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Navigation Buttons */}
+              <div
+                className={`flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 transition-all duration-700 delay-400 transform ${
+                  currentStep === 7 && !isTransitioning
                     ? "translate-y-0 opacity-100"
                     : "translate-y-8 opacity-0"
                 }`}
