@@ -438,13 +438,13 @@
     "title": "طلب إستئجار موقع",
     "subtitle": "Leasing Application Form",
     "sections": {
-      "companyInformation": "لمحة مميزة عن الشركة",
-      "contactPerson": "مسؤول التواصل المعتمد",
-      "brandInformation": "تفاصيل الهوية التجارية",
-      "businessCategories": "تصنيفات الأنشطة والخدمات",
-      "targetMarket": "الأسواق والفئات المستهدفة",
-      "locationInformation": "مواقع وحضور الشركة",
-      "requiredDocuments": "الوثائق الأساسية للانطلاق"
+      "companyInformation": "الرجاء إدخال بيانات الشركة بشكل كامل",
+      "contactPerson": "الرجاء إدخال بيانات الشخص المسؤول",
+      "brandInformation": "الرجاء إدخال معلومات العلامة التجارية",
+      "businessCategories": "الرجاء اختيار تصنيف النشاط",
+      "targetMarket": "الرجاء تحديد السوق المستهدف",
+      "locationInformation": "الرجاء إدخال معلومات الموقع",
+      "requiredDocuments": "الوثائق المطلوبة"
     },
     "placeholders": {
       "companyName": "إسم الشركة",
@@ -505,6 +505,21 @@
       "companyProfile": "ملف الشركة",
       "brandPresentation": "ملف الوكالة / العلامة التجارية",
       "shopPhotos": "صور من المحلات الحالية"
+    },
+    "fileUpload": {
+      "companyProfile": {
+        "label": "ملف الشركة (PDF)",
+        "placeholder": "اضغط لرفع ملف الشركة"
+      },
+      "brandPresentation": {
+        "label": "ملف الوكالة / العلامة التجارية (PDF)",
+        "placeholder": "اضغط لرفع ملف الوكالة / العلامة التجارية"
+      },
+      "shopPhotos": {
+        "label": "صور من المحلات الحالية (صور متعددة)",
+        "placeholder": "اضغط لرفع صور المحلات",
+        "filesSelected": "تم اختيار {count} ملف"
+      }
     },
     "buttons": {
       "submit": "إرسال الطلب",

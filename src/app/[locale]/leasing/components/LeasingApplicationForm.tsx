@@ -269,7 +269,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
       case 6:
         return l("sections.locationInformation");
       case 7:
-        return "File Uploads";
+        return l("sections.requiredDocuments");
       default:
         return "";
     }
@@ -1187,7 +1187,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
               >
                 <div className="space-y-3">
                   <label className="text-sm sm:text-md font-medium text-gray-800">
-                    Company Profile (PDF)
+                    {l("fileUpload.companyProfile.label")}
                   </label>
                   <div className="relative">
                     <input
@@ -1219,7 +1219,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         <span className="text-sm sm:text-base text-gray-500 group-hover:text-[#DEA228]">
                           {formData.company_profile
                             ? formData.company_profile.name
-                            : "Click to upload company profile"}
+                            : l("fileUpload.companyProfile.placeholder")}
                         </span>
                       </div>
                     </label>
@@ -1237,7 +1237,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
               >
                 <div className="space-y-3">
                   <label className="text-sm sm:text-md font-medium text-gray-800">
-                    Brand Presentation (PDF)
+                    {l("fileUpload.brandPresentation.label")}
                   </label>
                   <div className="relative">
                     <input
@@ -1269,7 +1269,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         <span className="text-sm sm:text-base text-gray-500 group-hover:text-[#DEA228]">
                           {formData.brand_presentation
                             ? formData.brand_presentation.name
-                            : "Click to upload brand presentation"}
+                            : l("fileUpload.brandPresentation.placeholder")}
                         </span>
                       </div>
                     </label>
@@ -1287,7 +1287,7 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
               >
                 <div className="space-y-3">
                   <label className="text-sm sm:text-md font-medium text-gray-800">
-                    Shop Photos (Multiple Images)
+                    {l("fileUpload.shopPhotos.label")}
                   </label>
                   <div className="relative">
                     <input
@@ -1320,8 +1320,10 @@ const ContactFormProject = ({ handleReloadAnimation }: ContactFormProps) => {
                         <span className="text-sm sm:text-base text-gray-500 group-hover:text-[#DEA228]">
                           {formData.shop_photos &&
                           formData.shop_photos.length > 0
-                            ? `${formData.shop_photos.length} file(s) selected`
-                            : "Click to upload shop photos"}
+                            ? l("fileUpload.shopPhotos.filesSelected", {
+                                count: formData.shop_photos.length,
+                              })
+                            : l("fileUpload.shopPhotos.placeholder")}
                         </span>
                       </div>
                     </label>

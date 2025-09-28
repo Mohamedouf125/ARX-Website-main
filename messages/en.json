@@ -434,13 +434,13 @@
     "title": "Leasing Application Form",
     "subtitle": "طلب إستئجار موقع",
     "sections": {
-      "companyInformation": "Premium Company Profile",
-      "contactPerson": "Dedicated Contact Person",
-      "brandInformation": "Brand Identity Details",
-      "businessCategories": "Business Categories & Services",
-      "targetMarket": "Target Markets & Audiences",
-      "locationInformation": "Company Locations & Presence",
-      "requiredDocuments": "Essential Documents to Start"
+      "companyInformation": "Please enter the company information in full",
+      "contactPerson": "Please enter the authorized person’s information",
+      "brandInformation": "Please enter the brand information",
+      "businessCategories": "Please select the business category",
+      "targetMarket": "Please specify the target market",
+      "locationInformation": "Please enter the location information",
+      "requiredDocuments": "Required Documents"
     },
     "placeholders": {
       "companyName": "Company Name",
@@ -501,6 +501,21 @@
       "companyProfile": "Company's Profile",
       "brandPresentation": "Brand Presentation",
       "shopPhotos": "Shop Photos"
+    },
+    "fileUpload": {
+      "companyProfile": {
+        "label": "Company Profile (PDF)",
+        "placeholder": "Click to upload company profile"
+      },
+      "brandPresentation": {
+        "label": "Brand Presentation (PDF)",
+        "placeholder": "Click to upload brand presentation"
+      },
+      "shopPhotos": {
+        "label": "Shop Photos (Multiple Images)",
+        "placeholder": "Click to upload shop photos",
+        "filesSelected": "{count} file(s) selected"
+      }
     },
     "buttons": {
       "submit": "Submit Application",
