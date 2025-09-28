@@ -537,29 +537,29 @@
     "intro": "We’ve made the leasing process smooth, transparent, and supportive from start to finish:",
     "leasing steps": " Leasing Steps",
     "steps": {
-      "one": {
-        "title": "Explore Our Projects",
-        "description": "Review our projects. Access our PDF catalog to explore available locations and unit sizes."
+      "companyInformation": {
+        "title": "Review Our Projects",
+        "description": "Access our PDF catalog to explore available locations and unit sizes."
       },
-      "two": {
-        "title": "Choose the Right Space",
-        "description": "Complete the Application Form. Fill out the dedicated form to specify your brand’s requirements."
+      "contactPerson": {
+        "title": "Complete the Application Form",
+        "description": "Fill out the dedicated form to specify your brand’s requirements."
       },
-      "three": {
-        "title": "Tailored Consultation & Proposal",
-        "description": "Consultation with Our Team. Our specialized team will review your request and provide tailored recommendations."
+      "brandInformation": {
+        "title": "Consultation with Our Team",
+        "description": "Our specialized team will review your request and provide tailored recommendations."
       },
-      "four": {
-        "title": "Clear & Transparent Contracting",
-        "description": "Select the Optimal Location. Choose the unit that best aligns with your business objectives."
+      "businessCategories": {
+        "title": "Select the Optimal Location",
+        "description": "Choose the unit that best aligns with your business objectives."
       },
-      "five": {
-        "title": "Handover & Fit-Out Support",
-        "description": "Review Offers & Terms. Receive a detailed proposal including pricing, payment plans, and contractual terms."
+      "targetMarket": {
+        "title": "Review Offers & Terms",
+        "description": "Receive a detailed proposal including pricing, payment plans, and contractual terms."
       },
-      "six": {
-        "title": "Launch & Continuous Support",
-        "description": "Contract Signing. Proceed with a formal and transparent agreement supported by clear legal guarantees."
+      "locationInformation": {
+        "title": "Contract Signing",
+        "description": "Proceed with a formal and transparent agreement supported by clear legal guarantees."
       }
     }
   },

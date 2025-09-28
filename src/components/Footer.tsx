@@ -129,15 +129,15 @@ const Footer: React.FC = () => {
   // Address links configuration
   const addressLinks = [
     {
-      coordinates: "30.026306,31.489864",
+      coordinates: "https://maps.google.com/?q=30.026306,31.489864",
       text: t2("footer_address_3"),
     },
     {
-      coordinates: "31.438272,31.664551",
+      coordinates: "https://maps.google.com/?q=31.438272,31.664551",
       text: t2("footer_address_2"),
     },
     {
-      coordinates: "31.438272,31.664551",
+      coordinates: "https://maps.app.goo.gl/xbStUfkkbEbtuLFb8?g_st=iw",
       text: t2("footer_address"),
     },
   ];
@@ -224,7 +224,7 @@ const Footer: React.FC = () => {
                 {addressLinks.map((address, index) => (
                   <li key={index}>
                     <a
-                      href={`https://maps.google.com/?q=${address.coordinates}`}
+                      href={`${address.coordinates}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-2 hover:text-[#DBA426] transition-colors duration-300"
@@ -304,7 +304,9 @@ const Footer: React.FC = () => {
                         }
                         className="transition flex items-center gap-2 text-[0px] md:text-[20px] lg:text-[25px] font-['Switzer, Sans-serif'] font-[550]"
                       >
-                        <span className="text-black lg:text-lg md:2xl text-xl">{item.title}</span>
+                        <span className="text-black lg:text-lg md:2xl text-xl">
+                          {item.title}
+                        </span>
                       </a>
                     </div>
                   </li>
@@ -314,15 +316,10 @@ const Footer: React.FC = () => {
               {/* Mobile Style - Full Width */}
               <ul className="md:hidden text-sm font-['Switzer, Sans-serif'] flex flex-col gap-1 w-full">
                 {contactInfo.map((item) => (
-                  <li
-                    className="group relative w-full"
-                    key={item.id}
-                  >
+                  <li className="group relative w-full" key={item.id}>
                     <div className="flex items-center justify-start gap-2 w-full border-b border-transparent group-hover:border-[#DBA426] transition-all duration-300 ">
                       <div className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#DBA426] group-hover:w-full transition-all duration-300"></div>
-                      <div className="flex-shrink-0">
-                        {item.icon}
-                      </div>
+                      <div className="flex-shrink-0">{item.icon}</div>
                       <a
                         href={item.link}
                         target={
@@ -350,7 +347,9 @@ const Footer: React.FC = () => {
                       href={social.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`opacity-60 hover:opacity-100 transition-all duration-300 text-center text-gray-600 hover:text-[#DBA426] ${locale === "ar" ? "ml-3" : "mr-3"} my-2`}
+                      className={`opacity-60 hover:opacity-100 transition-all duration-300 text-center text-gray-600 hover:text-[#DBA426] ${
+                        locale === "ar" ? "ml-3" : "mr-3"
+                      } my-2`}
                       title={social.name}
                     >
                       {social.icon}
@@ -373,7 +372,7 @@ const Footer: React.FC = () => {
                         <span className="w-4 h-4 lg:hidden md:hidden block">
                           {social.icon}
                         </span>
-                        <span >{social.name}</span>
+                        <span>{social.name}</span>
                       </a>
                     </li>
                     {index < socialLinks.length - 1 && (

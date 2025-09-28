@@ -33,7 +33,15 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
   const locale = useLocale();
   const i18nTimeline: TimelineItem[] = Array.from({ length: 6 }, (_, idx) => {
     const step = `${t("step")} ${idx + 1}`;
-    const stepname = ["one", "two", "three", "four", "five", "six"];
+    const stepname = [
+      "companyInformation",
+      "contactPerson",
+      "brandInformation",
+      "businessCategories",
+      "targetMarket",
+      "locationInformation",
+    ];
+
     const images = [
       "/aboutServices/one.png",
       "/aboutServices/two.png",
@@ -44,10 +52,24 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     ];
     return {
       year: step,
-      title: t(`steps.${stepname[idx]}.description`),
+      title: t(`steps.${stepname[idx]}.title`), // Use .title for the title
       image: images[idx],
     };
   });
+
+  // Add descriptions for each step
+  const i18nTimelineDescriptions: string[] = Array.from(
+    { length: 6 },
+    (_, idx) => {
+      const stepname = [ "companyInformation",
+        "contactPerson",
+        "brandInformation",
+        "businessCategories",
+        "targetMarket",
+        "locationInformation",];
+      return t(`steps.${stepname[idx]}.description`);
+    }
+  );
 
   const data: TimelineItem[] = timelineData ?? i18nTimeline;
   const swiperRef = useRef<SwiperType | null>(null);
@@ -349,6 +371,12 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
               const textOpacity = 0.2 + itemProgress * 0.8;
               const glowIntensity = itemProgress * 0.6 + (isHovered ? 0.3 : 0);
 
+              // Get description for this step
+              const description =
+                timelineData && timelineData[index]
+                  ? timelineData[index].title // fallback if custom data
+                  : i18nTimelineDescriptions[index];
+
               return (
                 <SwiperSlide key={index}>
                   <div
@@ -381,7 +409,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
 
                       {/* Enhanced Image Container */}
                       <div
-                        className="relative mb-4 sm:mb-6"
+                        className="relative mb-2 sm:mb-4"
                         style={{
                           opacity: imageOpacity,
                           transform: `scale(${imageScale})`,
@@ -409,8 +437,40 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                         />
                       </div>
 
+                      {/* Title under image */}
+                      <div
+                        className="text-center max-w-xs px-2 sm:px-4 mb-1"
+                        style={{
+                          opacity: textOpacity,
+                          transform: `translateY(${(1 - itemProgress) * 8}px)`,
+                          transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                        }}
+                      >
+                        <p
+                          className={`text-gray-900 font-semibold ${config.titleSize} leading-snug`}
+                        >
+                          {item.title}
+                        </p>
+                      </div>
+
+                      {/* Description under title */}
+                      <div
+                        className="text-center max-w-xs px-2 sm:px-4"
+                        style={{
+                          opacity: textOpacity,
+                          transform: `translateY(${(1 - itemProgress) * 10}px)`,
+                          transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
+                        }}
+                      >
+                        <p
+                          className={`text-gray-700 ${config.titleSize} leading-relaxed font-light`}
+                        >
+                          {description}
+                        </p>
+                      </div>
+
                       {/* Enhanced Timeline Indicator */}
-                      <div className="relative z-20 flex items-center justify-center mb-4 sm:mb-6">
+                      <div className="relative z-20 flex items-center justify-center mb-4 sm:mb-6 mt-2">
                         {/* Enhanced Connecting lines */}
                         {index > 0 && (
                           <div
@@ -488,22 +548,6 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                           ></div>
                         </div>
                       </div>
-
-                      {/* Enhanced Description */}
-                      <div
-                        className="text-center max-w-xs px-2 sm:px-4"
-                        style={{
-                          opacity: textOpacity,
-                          transform: `translateY(${(1 - itemProgress) * 10}px)`,
-                          transition: "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)",
-                        }}
-                      >
-                        <p
-                          className={`text-gray-700 ${config.titleSize} leading-relaxed font-light`}
-                        >
-                          {item.title}
-                        </p>
-                      </div>
                     </div>
                   </div>
                 </SwiperSlide>
@@ -513,22 +557,20 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
 
           {/* Navigation Arrows for Mobile */}
           {screenSize === "sm" && (
-            <div
-              className={` flex justify-center gap-4 mt-6`}
-            >
+            <div className={` flex justify-center gap-4 mt-6`}>
               <button
-                className={`${
-                  "swiper-button-prev-timeline"
-                } w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors shadow-lg hover:shadow-xl transform hover:scale-110 active:scale-95`}
+                className={`${"swiper-button-prev-timeline"} w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors shadow-lg hover:shadow-xl transform hover:scale-110 active:scale-95`}
               >
-                <ArrowRightIcon className={`w-5 h-5 ${locale === "ar" ? "" : "rotate-180"}`} />
+                <ArrowRightIcon
+                  className={`w-5 h-5 ${locale === "ar" ? "" : "rotate-180"}`}
+                />
               </button>
               <button
-                className={`${
-                 "swiper-button-next-timeline"
-                } w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors shadow-lg hover:shadow-xl transform hover:scale-110 active:scale-95`}
+                className={`${"swiper-button-next-timeline"} w-10 h-10 rounded-full bg-[#dba426] text-white flex items-center justify-center hover:bg-black transition-colors shadow-lg hover:shadow-xl transform hover:scale-110 active:scale-95`}
               >
-                <ArrowRightIcon className={`w-5 h-5 ${locale === "ar" ? "rotate-180" : ""}`} />
+                <ArrowRightIcon
+                  className={`w-5 h-5 ${locale === "ar" ? "rotate-180" : ""}`}
+                />
               </button>
             </div>
           )}
