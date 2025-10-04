@@ -569,5 +569,33 @@
     "comingSoon": "Coming Soon",
     "comingSoonDescription": "The brochure for {projectTitle} is currently being prepared and will be available soon.",
     "close": "Close"
+  },
+  "infoPage": {
+    "title": "We Create Achievement",
+    "findMeOn": "Find me on",
+    "socialLinks": {
+      "website": "Website",
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "tiktok": "TikTok",
+      "youtube": "YouTube",
+      "threads": "Threads"
+    },
+    "branches": {
+      "newDamietta": "New Damietta Branche",
+      "newCairo": "New Cairo Branche",
+      "mansoura": "Mansoura Branche"
+    },
+    "ourProjects": "Our Projects",
+    "projects": {
+      "kentroTower": "Kentro Tower",
+      "bariq": "BARIQ",
+      "uni": "UNI",
+      "aura": "Aura",
+      "miraj": "MIRAJ",
+      "o7": "O7",
+      "laVie": "LA VIE"
+    }
   }
 }

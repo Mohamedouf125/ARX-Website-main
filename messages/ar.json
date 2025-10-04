@@ -541,7 +541,7 @@
     "step": "خطوه",
     "leasing steps": "خطوات التأجير",
     "steps": {
-     "companyInformation": {
+      "companyInformation": {
         "title": "الاطّلاع على مشروعاتنا",
         "description": "مراجعة الكتالوج (PDF) للتعرف على المواقع والمساحات المتاحة."
       },
@@ -573,5 +573,33 @@
     "comingSoon": "قريباً",
     "comingSoonDescription": "كتيب {projectTitle} قيد الإعداد وسيكون متاحاً قريباً.",
     "close": "إغلاق"
+  },
+  "infoPage": {
+    "title": "نحن نصنع الإنجاز",
+    "findMeOn": "تجدني على",
+    "socialLinks": {
+      "website": "الموقع الإلكتروني",
+      "facebook": "فيسبوك",
+      "linkedin": "لينكد إن",
+      "instagram": "إنستجرام",
+      "tiktok": "تيك توك",
+      "youtube": "يوتيوب",
+      "threads": "ثريدز"
+    },
+    "branches": {
+      "newDamietta": "فرع دمياط الجديدة",
+      "newCairo": "فرع القاهرة الجديدة",
+      "mansoura": "فرع المنصورة"
+    },
+    "ourProjects": "مشاريعنا",
+    "projects": {
+      "kentroTower": "برج كينترو",
+      "bariq": "بريق",
+      "uni": "يوني",
+      "aura": "أورا",
+      "miraj": "ميراج",
+      "o7": "أو 7",
+      "laVie": "لا في"
+    }
   }
 }
