@@ -143,7 +143,7 @@ export const LayaredProjectCards = ({
           </div>
         </div>
 
-        <section className="w-full h-full relative bg-[#f6f3ec]">
+        <section className="w-full h-full relative bg-[#f8f6f0]">
           <div className="gap-14 grid grid-cols-1" ref={cardsContainerRef}>
             {projects.map((project, index) => (
               <div
@@ -190,7 +190,7 @@ export const LayaredProjectCards = ({
 
                             <div className="description">
                               <p
-                                className="text-sm sm:text-base text-gray-600 flex flex-col gap-2 mb-2"
+                                className="text-sm sm:text-base text-gray-800 flex flex-col gap-2 mb-2"
                                 dangerouslySetInnerHTML={{
                                   __html: `${project.description.slice(
                                     0,
@@ -203,9 +203,9 @@ export const LayaredProjectCards = ({
                           </div>
 
                           {/* Location */}
-                          <div className="mb-3 sm:mb-4 flex items-center text-gray-600">
+                          <div className="mb-3 sm:mb-4 flex items-center text-gray-800">
                             {/* <svg
-                              className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#DBA426]"
+                              className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#B8860B]"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
@@ -215,8 +215,8 @@ export const LayaredProjectCards = ({
                                 clipRule="evenodd"
                               />
                             </svg> */}
-                            {/* < className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#DBA426]" /> */}
-                            <span className="text-sm text-[#DBA426] sm:text-base">
+                            {/* < className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#B8860B]" /> */}
+                            <span className="text-sm text-[#B8860B] sm:text-base">
                               {t("overview")}
                             </span>
                           </div>

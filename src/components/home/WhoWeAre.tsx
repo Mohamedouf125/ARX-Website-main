@@ -73,7 +73,7 @@ const WhoWeAre: NextPage<WhoWeAreProps> = ({ bannerWho }: WhoWeAreProps) => {
                     {
                       title: t("who_we_are.total_constructions"),
                       value: 170,
-                      description: t("who_we_are.offices_worldwide_3"),   
+                      description: t("who_we_are.offices_worldwide_3"),
 
                       animation: "slideUp",
                       delay: 0.4,
@@ -203,9 +203,9 @@ const WhoWeAre: NextPage<WhoWeAreProps> = ({ bannerWho }: WhoWeAreProps) => {
                   className="w-full h-full"
                 >
                   <div className="luxury-card duration-300 flex flex-col items-start justify-between bg-[#F5F5F5] p-4 lg:p-8 rounded-3xl md:h-[335px] transition-all duration-300">
-                    <h3 className="text-[14px] font-bold mb-2 border-b border-gray-300 pb-2 w-full uppercase">
+                    <h4 className="text-[14px] font-bold mb-2 border-b border-gray-300 pb-2 w-full uppercase">
                       {item.title}
-                    </h3>
+                    </h4>
 
                     <div className="item">
                       <div className="">

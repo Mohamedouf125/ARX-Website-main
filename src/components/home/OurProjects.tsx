@@ -83,7 +83,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
   }, []);
 
   return (
-    <div className="home_projects py-20 bg-[#f6f3ec]">
+    <div className="home_projects py-20 bg-[#f8f6f0]">
       {/* ---------------------------- */}
       {/* Projects Banner Section */}
       {/* ---------------------------- */}
@@ -106,7 +106,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
 
             <Link
               href="/projects"
-              className="mt-4 items-center justify-center w-fit flex gap-1 text-[#DBA426] font-medium transition hover:text-[#DBA426]"
+              className="mt-4 items-center justify-center w-fit flex gap-1 text-[#B8860B] font-medium transition hover:text-[#996F00] hover:underline"
             >
               {t("see_all_projects")}{" "}
               <svg
@@ -119,14 +119,14 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
               >
                 <path
                   d="M8.50008 3.21484L7.56008 4.15484L11.2801 7.88151H3.16675V9.21484H11.2801L7.56008 12.9415L8.50008 13.8815L13.8334 8.54818L8.50008 3.21484Z"
-                  fill="#DBA426"
+                  fill="#B8860B"
                 />
               </svg>
             </Link>
           </div>
         </div>
 
-        <section className="w-full h-full relative bg-[#f6f3ec]">
+        <section className="w-full h-full relative bg-[#f8f6f0]">
           <div className="gap-14 grid grid-cols-1" ref={cardsContainerRef}>
             {projects.map((project, index) => (
               <div
@@ -174,7 +174,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
 
                             <div className="description">
                               <p
-                                className="text-sm sm:text-base text-gray-600 flex flex-col gap-2 mb-2"
+                                className="text-sm sm:text-base text-gray-800 flex flex-col gap-2 mb-2"
                                 dangerouslySetInnerHTML={{
                                   __html: `${project.description.slice(
                                     0,
@@ -187,9 +187,9 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                           </div>
 
                           {/* Location */}
-                          <div className="mb-3 sm:mb-4 flex items-center text-gray-600">
+                          <div className="mb-3 sm:mb-4 flex items-center text-gray-800">
                             <svg
-                              className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#DBA426]"
+                              className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#B8860B]"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >
@@ -209,6 +209,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                             <Link
                               href={`${locale}/projects/${project.slug}`}
                               className="group inline-flex items-center bg-[#DBA426] hover:bg-[#DBA426] text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                              aria-label={`View ${project.title} project details`}
                             >
                               <svg
                                 className={`w-3 sm:w-4 lg:w-5 h-3 sm:h-4 lg:h-5 transition-transform duration-300 ${
@@ -216,6 +217,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                                 }`}
                                 fill="currentColor"
                                 viewBox="0 0 20 20"
+                                aria-hidden="true"
                               >
                                 <path
                                   fillRule="evenodd"

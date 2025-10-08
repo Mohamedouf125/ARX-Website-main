@@ -74,9 +74,9 @@ const AboutHome: NextPage<AboutHomeProps> = ({
                       height={50}
                       className="mb-4"
                     />
-                    <h3 className="text-[25px] font-bold  mb-2 text-white">
+                    <h2 className="text-[25px] font-bold  mb-2 text-white">
                       {t("vision_title")}
-                    </h3>
+                    </h2>
                     <p className="text-[18px] text-white/80">
                       {t("vision_description")}
                     </p>
@@ -97,9 +97,9 @@ const AboutHome: NextPage<AboutHomeProps> = ({
                       height={50}
                       className="mb-4"
                     />
-                    <h3 className="text-[25px] font-bold  mb-2 text-white">
+                    <h2 className="text-[25px] font-bold  mb-2 text-white">
                       {t("mission_title")}
-                    </h3>
+                    </h2>
                     <p className="text-[18px] text-white/80">
                       {t("mission_description")}
                     </p>
@@ -120,9 +120,9 @@ const AboutHome: NextPage<AboutHomeProps> = ({
                       height={50}
                       className="mb-4"
                     />
-                    <h3 className="text-[25px] font-bold  mb-2 text-white">
+                    <h2 className="text-[25px] font-bold  mb-2 text-white">
                       {t("values_title")}
-                    </h3>
+                    </h2>
                     <p className="text-[18px] text-white/80">
                       {t("values_description")}
                     </p>
