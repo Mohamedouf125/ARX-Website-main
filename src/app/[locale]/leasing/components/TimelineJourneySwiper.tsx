@@ -87,10 +87,10 @@ const TimelineSection: React.FC = () => {
 
     const now = Date.now();
     const deltaTime = now - lastUpdateTime.current;
-    
+
     // Throttle to 60fps max, allow higher frequency for smoother scrolling
-    if (deltaTime < 8) return; // ~120fps throttle for ultra-smooth experience
-    
+    if (deltaTime < 16) return; // Reduced from 8ms to 16ms to prevent excessive calls
+
     lastUpdateTime.current = now;
 
     const section = sectionRef.current;
@@ -113,10 +113,12 @@ const TimelineSection: React.FC = () => {
     const headerFixedStart = sectionTop + viewportHeight * 0.15;
     const headerFixedEnd = sectionBottom - viewportHeight * 0.85;
 
-    const shouldBeFixed = currentScroll >= fixedZoneStart && currentScroll <= fixedZoneEnd;
-    const shouldHeaderBeFixed = currentScroll >= headerFixedStart && currentScroll <= headerFixedEnd;
+    const shouldBeFixed =
+      currentScroll >= fixedZoneStart && currentScroll <= fixedZoneEnd;
+    const shouldHeaderBeFixed =
+      currentScroll >= headerFixedStart && currentScroll <= headerFixedEnd;
     const shouldShowExitTransition = currentScroll > exitTransitionStart;
-    
+
     // Enhanced swiper entry animation logic
     if (shouldBeFixed && !isFixed) {
       setIsFixed(true);
@@ -139,11 +141,17 @@ const TimelineSection: React.FC = () => {
 
     // Smoother state transitions for header
     if (shouldHeaderBeFixed !== isHeaderFixed) {
-      setTimeout(() => setIsHeaderFixed(shouldHeaderBeFixed), shouldHeaderBeFixed ? 0 : 50);
+      setTimeout(
+        () => setIsHeaderFixed(shouldHeaderBeFixed),
+        shouldHeaderBeFixed ? 0 : 50
+      );
     }
 
     if (shouldShowExitTransition !== exitTransition) {
-      setTimeout(() => setExitTransition(shouldShowExitTransition), shouldShowExitTransition ? 0 : 50);
+      setTimeout(
+        () => setExitTransition(shouldShowExitTransition),
+        shouldShowExitTransition ? 0 : 50
+      );
     }
 
     // Enhanced progress calculation with smoothing
@@ -151,7 +159,10 @@ const TimelineSection: React.FC = () => {
     if (shouldBeFixed) {
       const activeZoneLength = fixedZoneEnd - fixedZoneStart;
       const scrollInActiveZone = currentScroll - fixedZoneStart;
-      progress = Math.min(Math.max(scrollInActiveZone / activeZoneLength, 0), 1);
+      progress = Math.min(
+        Math.max(scrollInActiveZone / activeZoneLength, 0),
+        1
+      );
     }
 
     setScrollProgress(progress);
@@ -159,31 +170,40 @@ const TimelineSection: React.FC = () => {
     // Enhanced slide calculation with smoother transitions
     const totalSlides = timelineData.length;
     const exactSlidePosition = progress * (totalSlides - 1);
-    
+
     // Use a threshold to prevent excessive slide changes
     const slideThreshold = 0.3;
     let targetSlide = Math.round(exactSlidePosition);
-    
+
     // Only change slide if we've moved significantly
     const slideProgress = exactSlidePosition - Math.floor(exactSlidePosition);
     if (slideProgress < slideThreshold && exactSlidePosition > 0) {
       targetSlide = Math.floor(exactSlidePosition);
-    } else if (slideProgress > (1 - slideThreshold) && exactSlidePosition < totalSlides - 1) {
+    } else if (
+      slideProgress > 1 - slideThreshold &&
+      exactSlidePosition < totalSlides - 1
+    ) {
       targetSlide = Math.ceil(exactSlidePosition);
     }
 
     // Ultra-smooth slide transitions with variable speed
     if (targetSlide !== currentSlide && swiperRef.current && shouldBeFixed) {
       const slideDistance = Math.abs(targetSlide - currentSlide);
-      
+
       // Dynamic speed based on distance and scroll velocity
       const baseSpeed = 800;
       const maxSpeed = 1200;
       const minSpeed = 400;
-      
-      const speedMultiplier = Math.max(0.4, Math.min(1, 1 - slideDistance * 0.15));
-      let transitionSpeed = Math.max(minSpeed, Math.min(maxSpeed, baseSpeed * speedMultiplier));
-      
+
+      const speedMultiplier = Math.max(
+        0.4,
+        Math.min(1, 1 - slideDistance * 0.15)
+      );
+      let transitionSpeed = Math.max(
+        minSpeed,
+        Math.min(maxSpeed, baseSpeed * speedMultiplier)
+      );
+
       // Slower transitions for multi-slide jumps
       if (slideDistance > 1) {
         transitionSpeed *= 1.3;

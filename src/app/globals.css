@@ -203,6 +203,31 @@ img {
   transform: translateZ(0);
 }
 
+/* Optimize Swiper components to prevent forced reflows */
+.swiper {
+  contain: layout style paint;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.swiper-slide {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* Optimize scroll performance */
+.scroll-optimized {
+  contain: layout style paint;
+  will-change: scroll-position;
+}
+
+/* Prevent layout thrashing in animations */
+.animation-optimized {
+  contain: layout style paint;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
 /* Optimize font loading */
 @font-face {
   font-display: swap;

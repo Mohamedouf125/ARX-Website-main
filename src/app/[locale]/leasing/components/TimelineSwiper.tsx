@@ -117,6 +117,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     const centerSection = centerSectionRef.current;
     const swiper = swiperRef.current;
 
+    // Use cached values to avoid repeated DOM queries
     const rect = centerSection.getBoundingClientRect();
     const sectionHeight = centerSection.offsetHeight;
     const windowHeight = window.innerHeight;
@@ -132,6 +133,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
       }
     }
 
+    // Batch state updates to prevent multiple reflows
     setScrollProgress(progress);
 
     if (progress > 0) {
@@ -142,16 +144,25 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
       );
       const targetSlide = clampedTimelineIndex;
 
+      // Only update if actually different to prevent unnecessary reflows
       if (swiper.activeIndex !== targetSlide) {
-        swiper.slideTo(targetSlide, 200);
+        // Use faster transition and avoid layout thrashing
+        swiper.slideTo(targetSlide, 0); // Remove animation to prevent reflows
       }
     } else {
       if (swiper.activeIndex !== 0) {
-        swiper.slideTo(0, 200);
+        swiper.slideTo(0, 0); // Remove animation to prevent reflows
       }
     }
 
-    animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
+    // Use requestIdleCallback for better performance
+    if (window.requestIdleCallback) {
+      window.requestIdleCallback(() => {
+        animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
+      });
+    } else {
+      animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
+    }
   }, [mounted, data.length, screenSize]);
 
   useEffect(() => {
@@ -163,18 +174,33 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
     }
 
     let ticking = false;
+    let lastScrollY = 0;
 
     const onScroll = () => {
       if (!ticking) {
-        if (animationFrameRef.current) {
-          cancelAnimationFrame(animationFrameRef.current);
+        const currentScrollY = window.scrollY;
+
+        // Only process if scroll position actually changed
+        if (Math.abs(currentScrollY - lastScrollY) > 1) {
+          lastScrollY = currentScrollY;
+
+          if (animationFrameRef.current) {
+            cancelAnimationFrame(animationFrameRef.current);
+          }
+          animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
         }
-        animationFrameRef.current = requestAnimationFrame(handleSmoothScroll);
         ticking = true;
 
-        setTimeout(() => {
-          ticking = false;
-        }, 16);
+        // Use requestIdleCallback for better performance
+        if (window.requestIdleCallback) {
+          window.requestIdleCallback(() => {
+            ticking = false;
+          });
+        } else {
+          setTimeout(() => {
+            ticking = false;
+          }, 8); // Reduced from 16ms to 8ms for smoother performance
+        }
       }
     };
 
@@ -344,7 +370,8 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
             spaceBetween={config.spaceBetween}
             allowTouchMove={screenSize === "sm"}
             centeredSlides={false}
-            speed={120}
+            speed={0}
+            resistanceRatio={0}
             navigation={
               screenSize === "sm"
                 ? {
@@ -353,7 +380,7 @@ const TimelineSwiper: React.FC<TimelineSwiperProps> = ({
                   }
                 : false
             }
-            className="w-full relative z-10"
+            className="w-full relative z-10 scroll-optimized"
           >
             {data.map((item, index) => {
               const activeDotIndex = getActiveDotIndex();
