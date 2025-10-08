@@ -173,6 +173,41 @@ body {
   overflow-x: hidden !important;
 }
 
+/* Performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Reduce layout thrashing */
+img {
+  content-visibility: auto;
+  contain-intrinsic-size: 300px 200px;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* GPU acceleration for animations */
+.animate-pulse,
+.animate-spin,
+.animate-bounce {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Optimize font loading */
+@font-face {
+  font-display: swap;
+}
+
 
 
 button {

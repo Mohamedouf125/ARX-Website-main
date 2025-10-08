@@ -9,14 +9,28 @@ import { AxiosHeaders } from "axios";
 import HomeContact from "@/components/home/HomeContact";
 import TimelineSwiper from "./components/TimelineSwiper";
 import { ArrowRightIcon } from "lucide-react";
-// Import Swiper React components and modules
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation } from "swiper/modules";
-// Import Swiper styles
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { LayaredProjectCards } from "./components/LayaredProjectCards";
+// Dynamic imports for heavy components
+import dynamic from "next/dynamic";
+
+// Lazy load Swiper components
+const Swiper = dynamic(() => import("swiper/react").then(mod => ({ default: mod.Swiper })), {
+  ssr: false,
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />
+});
+
+const SwiperSlide = dynamic(() => import("swiper/react").then(mod => ({ default: mod.SwiperSlide })), {
+  ssr: false
+});
+
+const LayaredProjectCards = dynamic(() => import("./components/LayaredProjectCards").then(mod => ({ default: mod.LayaredProjectCards })), {
+  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />
+});
+
+// Lazy load Swiper modules when needed
+const loadSwiperModules = async () => {
+  const { Pagination, Navigation } = await import("swiper/modules");
+  return { Pagination, Navigation };
+};
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -40,6 +54,7 @@ const AboutPage = () => {
   const t = useTranslations("about");
   const locale = useLocale();
   const [projects, setProjects] = useState([]);
+  const [swiperModules, setSwiperModules] = useState<any[]>([]);
 
   const getProjects = async () => {
     try {
@@ -56,6 +71,9 @@ const AboutPage = () => {
 
   useEffect(() => {
     getProjects();
+    loadSwiperModules().then(modules => {
+      setSwiperModules([modules.Pagination, modules.Navigation]);
+    });
   }, []);
 
   // Updated state type to match API response
@@ -312,7 +330,7 @@ const AboutPage = () => {
           {/* Mobile Swiper (visible on screens < md) */}
           <div className="block md:hidden">
             <Swiper
-              modules={[Pagination, Navigation]}
+              modules={swiperModules}
               spaceBetween={20}
               slidesPerView={1.1}
               centeredSlides={false}

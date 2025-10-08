@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import { NextIntlClientProvider } from "next-intl";
 import FloatingSocialIcons from "@/components/FloatingSocialIcons";
 import { ClientToaster } from "@/components/ui/ClientToaster";
+import PerformanceOptimizedLayout from "@/components/PerformanceOptimizedLayout";
 
 export const metadata: Metadata = {
   title: "ARX Development",
@@ -79,11 +80,13 @@ export default async function RootLayout({
       </head>
       <NextIntlClientProvider locale={locale}>
         <body className="relative">
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <FloatingSocialIcons />
-          <ClientToaster />
+          <PerformanceOptimizedLayout>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <FloatingSocialIcons />
+            <ClientToaster />
+          </PerformanceOptimizedLayout>
         </body>
       </NextIntlClientProvider>
     </html>
