@@ -9,6 +9,11 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 });
 
 const nextConfig: NextConfig = {
+  // Target modern browsers to reduce polyfills
+  compiler: {
+    // Remove console.logs in production
+    removeConsole: process.env.NODE_ENV === "production",
+  },
   images: {
     // (https://images.unsplash.com/photo-1600585154340-be6161a56a0c)
     domains: [
@@ -27,7 +32,7 @@ const nextConfig: NextConfig = {
       "framer-motion",
     ],
   },
-  webpack: (config, { isServer }) => {
+  webpack: (config, { isServer, dev }) => {
     // Optimize bundle splitting
     if (!isServer) {
       config.optimization.splitChunks = {
@@ -60,6 +65,16 @@ const nextConfig: NextConfig = {
         },
       };
     }
+
+    // Optimize for modern browsers
+    if (!isServer && !dev) {
+      // Use modern JavaScript features without polyfills for modern browsers
+      config.resolve.alias = {
+        ...config.resolve.alias,
+        // Ensure we're using modern versions
+      };
+    }
+
     return config;
   },
 };

@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "analyze": "set ANALYZE=true && next build"
+    "analyze": "set ANALYZE=true && next build",
+    "build:modern": "NODE_ENV=production next build",
+    "check-bundle": "npm run analyze"
   },
   "dependencies": {
     "@heroicons/react": "2.2.0",
