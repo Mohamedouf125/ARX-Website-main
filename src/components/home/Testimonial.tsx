@@ -100,7 +100,10 @@ const Testimonial = ({ testimonials }: { testimonials: TestimonialType }) => {
         </h2> */}
         <div className="max-w-xl mx-auto">
           {/* Left Navigation Button */}
-          <button className="testimonial-prev-button text-black absolute left-0 top-1/2 transform -translate-y-1/2 bg-white hover:bg-[#035B8D] transition-all duration-300 rounded-full p-4 z-10">
+          <button
+            className="testimonial-prev-button text-black absolute left-0 top-1/2 transform -translate-y-1/2 bg-white hover:bg-[#035B8D] transition-all duration-300 rounded-full p-4 z-10"
+            aria-label="Previous testimonial"
+          >
             <svg
               className="w-3 h-3 text-black"
               viewBox="0 0 18 15"
@@ -115,7 +118,10 @@ const Testimonial = ({ testimonials }: { testimonials: TestimonialType }) => {
           </button>
 
           {/* Right Navigation Button */}
-          <button className="testimonial-next-button absolute right-0 top-1/2 transform -translate-y-1/2 bg-white hover:bg-[#035B8D] rounded-full transition-all duration-300 p-4 z-10">
+          <button
+            className="testimonial-next-button absolute right-0 top-1/2 transform -translate-y-1/2 bg-white hover:bg-[#035B8D] rounded-full transition-all duration-300 p-4 z-10"
+            aria-label="Next testimonial"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-4 w-4 text-white"

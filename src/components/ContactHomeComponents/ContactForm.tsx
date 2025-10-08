@@ -106,7 +106,10 @@ const ContactForm = () => {
             onValueChange={handleInquiryChange}
             required
           >
-            <SelectTrigger className="h-14! bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 w-full ">
+            <SelectTrigger
+              className="h-14! bg-gray-50 border-0 rounded-2xl px-6 text-gray-600 w-full "
+              aria-label={t("your_inquiry_about")}
+            >
               <SelectValue placeholder={t("your_inquiry_about")} />
             </SelectTrigger>
             <SelectContent className="bg-white border border-gray-200 rounded-xl shadow-lg">

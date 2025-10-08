@@ -126,6 +126,7 @@ const Header = () => {
             <button
               className="flex items-center text-white font-bold font-['Lato'] text-sm"
               onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+              aria-label="Language selector"
             >
               <img
                 className="w-6 h-6 rounded-full overflow-hidden me-1.5"
@@ -154,12 +155,14 @@ const Header = () => {
                     <button
                       onClick={() => handleLanguageChange("En")}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      aria-label="Switch to English"
                     >
                       English
                     </button>
                     <button
                       onClick={() => handleLanguageChange("Ar")}
                       className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      aria-label="Switch to Arabic"
                     >
                       Arabic
                     </button>
@@ -177,11 +180,12 @@ const Header = () => {
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
         style={{
-          background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.18)',
-          boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)'
+          background:
+            "linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))",
+          backdropFilter: "blur(20px)",
+          WebkitBackdropFilter: "blur(20px)",
+          border: "1px solid rgba(255, 255, 255, 0.18)",
+          boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
         }}
       >
         <div className="flex justify-end p-4">
@@ -218,15 +222,19 @@ const Header = () => {
               </Link>
             ))}
           </nav>
-          
+
           {/* Mobile Language Selector - matching desktop design */}
-          <div className="mt-8 pt-4" style={{
-            borderTop: '1px solid rgba(255, 255, 255, 0.18)'
-          }}>
+          <div
+            className="mt-8 pt-4"
+            style={{
+              borderTop: "1px solid rgba(255, 255, 255, 0.18)",
+            }}
+          >
             <div className="relative">
               <button
                 className="flex items-center text-white font-bold font-['Lato'] text-sm w-full justify-between hover:bg-white/5 hover:rounded-lg px-2 py-2 transition-all duration-300 hover:scale-105"
                 onClick={() => setIsMobileLangMenuOpen(!isMobileLangMenuOpen)}
+                aria-label="Mobile language selector"
               >
                 <div className="flex items-center">
                   <img
@@ -252,21 +260,22 @@ const Header = () => {
                   />
                 </svg>
               </button>
-              
+
               {isMobileLangMenuOpen && (
-                <div 
+                <div
                   className="mt-2 w-full rounded-md shadow-lg overflow-hidden"
                   style={{
-                    background: 'rgba(255, 255, 255, 0.1)',
-                    backdropFilter: 'blur(10px)',
-                    WebkitBackdropFilter: 'blur(10px)',
-                    border: '1px solid rgba(255, 255, 255, 0.18)',
+                    background: "rgba(255, 255, 255, 0.1)",
+                    backdropFilter: "blur(10px)",
+                    WebkitBackdropFilter: "blur(10px)",
+                    border: "1px solid rgba(255, 255, 255, 0.18)",
                   }}
                 >
                   <div className="py-1">
                     <button
                       onClick={() => handleLanguageChange("En")}
                       className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-white/15 hover:scale-105 hover:text-[#DBA426] transition-all duration-300 flex items-center group"
+                      aria-label="Switch to English"
                     >
                       <img
                         className="w-4 h-4 rounded-full overflow-hidden me-2 group-hover:scale-110 transition-transform duration-300"
@@ -278,6 +287,7 @@ const Header = () => {
                     <button
                       onClick={() => handleLanguageChange("Ar")}
                       className="block w-full text-left px-4 py-2 text-sm text-white hover:bg-white/15 hover:scale-105 hover:text-[#DBA426] transition-all duration-300 flex items-center group"
+                      aria-label="Switch to Arabic"
                     >
                       <img
                         className="w-4 h-4 rounded-full overflow-hidden me-2 group-hover:scale-110 transition-transform duration-300"
