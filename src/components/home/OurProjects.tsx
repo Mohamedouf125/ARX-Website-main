@@ -106,7 +106,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
 
             <Link
               href="/projects"
-              className="mt-4 items-center justify-center w-fit flex gap-1 text-[#B8860B] font-medium transition hover:text-[#996F00] hover:underline"
+              className="mt-4 items-center justify-center w-fit flex gap-1 text-[#8B6914] font-medium transition hover:text-[#6B4F0A] hover:underline"
             >
               {t("see_all_projects")}{" "}
               <svg
@@ -119,7 +119,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
               >
                 <path
                   d="M8.50008 3.21484L7.56008 4.15484L11.2801 7.88151H3.16675V9.21484H11.2801L7.56008 12.9415L8.50008 13.8815L13.8334 8.54818L8.50008 3.21484Z"
-                  fill="#B8860B"
+                  fill="#8B6914"
                 />
               </svg>
             </Link>
@@ -189,7 +189,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                           {/* Location */}
                           <div className="mb-3 sm:mb-4 flex items-center text-gray-800">
                             <svg
-                              className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#B8860B]"
+                              className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#8B6914]"
                               fill="currentColor"
                               viewBox="0 0 20 20"
                             >

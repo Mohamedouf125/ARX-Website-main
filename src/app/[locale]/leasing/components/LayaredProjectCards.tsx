@@ -215,8 +215,8 @@ export const LayaredProjectCards = ({
                                 clipRule="evenodd"
                               />
                             </svg> */}
-                            {/* < className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#B8860B]" /> */}
-                            <span className="text-sm text-[#B8860B] sm:text-base">
+                            {/* < className="w-3 sm:w-4 h-3 sm:h-4 mr-2 text-[#8B6914]" /> */}
+                            <span className="text-sm text-[#8B6914] sm:text-base">
                               {t("overview")}
                             </span>
                           </div>

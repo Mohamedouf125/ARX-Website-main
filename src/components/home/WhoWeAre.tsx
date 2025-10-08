@@ -94,9 +94,9 @@ const WhoWeAre: NextPage<WhoWeAreProps> = ({ bannerWho }: WhoWeAreProps) => {
                       className="w-full"
                     >
                       <div className="luxury-card duration-300 flex flex-col items-start justify-between bg-white/20 backdrop-blur-sm p-3 rounded-2xl h-[140px] transition-all duration-300 shadow-lg">
-                        <h3 className="text-[10px] text-[#fff] font-bold mb-1 border-b border-gray-300 pb-1 w-full uppercase leading-tight">
+                        <div className="text-[10px] text-[#fff] font-bold mb-1 border-b border-gray-300 pb-1 w-full uppercase leading-tight">
                           {item.title}
-                        </h3>
+                        </div>
 
                         <div className="item flex-1 flex flex-col justify-center">
                           <div className="flex items-center p-0">
@@ -203,9 +203,9 @@ const WhoWeAre: NextPage<WhoWeAreProps> = ({ bannerWho }: WhoWeAreProps) => {
                   className="w-full h-full"
                 >
                   <div className="luxury-card duration-300 flex flex-col items-start justify-between bg-[#F5F5F5] p-4 lg:p-8 rounded-3xl md:h-[335px] transition-all duration-300">
-                    <h4 className="text-[14px] font-bold mb-2 border-b border-gray-300 pb-2 w-full uppercase">
+                    <div className="text-[14px] font-bold mb-2 border-b border-gray-300 pb-2 w-full uppercase">
                       {item.title}
-                    </h4>
+                    </div>
 
                     <div className="item">
                       <div className="">
