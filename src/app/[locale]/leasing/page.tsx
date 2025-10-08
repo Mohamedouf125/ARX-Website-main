@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import PageHero from "@/components/PageHero";
 import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
@@ -13,24 +13,41 @@ import { ArrowRightIcon } from "lucide-react";
 import dynamic from "next/dynamic";
 
 // Lazy load Swiper components
-const Swiper = dynamic(() => import("swiper/react").then(mod => ({ default: mod.Swiper })), {
-  ssr: false,
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />
-});
+const Swiper = dynamic(
+  () => import("swiper/react").then((mod) => ({ default: mod.Swiper })),
+  {
+    ssr: false,
+    loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  }
+);
 
-const SwiperSlide = dynamic(() => import("swiper/react").then(mod => ({ default: mod.SwiperSlide })), {
-  ssr: false
-});
+const SwiperSlide = dynamic(
+  () => import("swiper/react").then((mod) => ({ default: mod.SwiperSlide })),
+  {
+    ssr: false,
+  }
+);
 
-const LayaredProjectCards = dynamic(() => import("./components/LayaredProjectCards").then(mod => ({ default: mod.LayaredProjectCards })), {
-  loading: () => <div className="h-96 bg-gray-100 animate-pulse" />
-});
+const LayaredProjectCards = dynamic(
+  () =>
+    import("./components/LayaredProjectCards").then((mod) => ({
+      default: mod.LayaredProjectCards,
+    })),
+  {
+    loading: () => <div className="h-96 bg-gray-100 animate-pulse" />,
+  }
+);
 
 // Lazy load Swiper modules when needed
 const loadSwiperModules = async () => {
   const { Pagination, Navigation } = await import("swiper/modules");
   return { Pagination, Navigation };
 };
+
+// Define the type for Swiper modules
+type SwiperModule =
+  | typeof import("swiper/modules").Pagination
+  | typeof import("swiper/modules").Navigation;
 
 // Define the correct type for aboutBanner
 interface AboutBannerType {
@@ -54,9 +71,9 @@ const AboutPage = () => {
   const t = useTranslations("about");
   const locale = useLocale();
   const [projects, setProjects] = useState([]);
-  const [swiperModules, setSwiperModules] = useState<any[]>([]);
+  const [swiperModules, setSwiperModules] = useState<SwiperModule[]>([]);
 
-  const getProjects = async () => {
+  const getProjects = useCallback(async () => {
     try {
       const response = await getData(
         "properties",
@@ -67,14 +84,14 @@ const AboutPage = () => {
     } catch (error) {
       console.error("Error fetching projects:", error);
     }
-  };
+  }, [locale]);
 
   useEffect(() => {
     getProjects();
-    loadSwiperModules().then(modules => {
+    loadSwiperModules().then((modules) => {
       setSwiperModules([modules.Pagination, modules.Navigation]);
     });
-  }, []);
+  }, [getProjects]);
 
   // Updated state type to match API response
   const [aboutBanner, setAboutBanner] = useState<AboutBannerType>({
@@ -86,7 +103,7 @@ const AboutPage = () => {
     },
   });
 
-  console.log(aboutBanner)
+  console.log(aboutBanner);
 
   useEffect(() => {
     const fetchAboutBanner = async () => {
