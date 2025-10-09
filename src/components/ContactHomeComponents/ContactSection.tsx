@@ -96,7 +96,7 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
             <div className="cover w-full md:w-[70%]">
               <AnimatedElement
                 type="slideUp"
-                duration={3}
+                duration={3} 
                 className="w-full h-full"
               >
                 {/* Conditional rendering based on current page */}
