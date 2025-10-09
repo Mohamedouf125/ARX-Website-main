@@ -74,7 +74,11 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
                 duration={3}
                 className="w-full h-full"
               >
-                <img src="/h1_shape.png" className=" w-80 h-80 z-[-1]" alt="" />
+                <img
+                  src="/h1_shape.png"
+                  className=" w-80 h-auto z-[-1] object-contain"
+                  alt="h1_shape"
+                />
               </AnimatedElement>
             </div>
 
@@ -87,8 +91,8 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
               >
                 <img
                   src="/h1_shape.png"
-                  className=" w-100 h-100 z-[-1] "
-                  alt=""
+                  className=" w-100 h-auto z-[-1] object-contain"
+                  alt="h1_shape"
                 />
               </AnimatedElement>
             </div>
@@ -96,7 +100,7 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
             <div className="cover w-full md:w-[70%]">
               <AnimatedElement
                 type="slideUp"
-                duration={3} 
+                duration={3}
                 className="w-full h-full"
               >
                 {/* Conditional rendering based on current page */}

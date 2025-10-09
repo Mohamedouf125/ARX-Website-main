@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { NextPage } from "next";
 import { useTranslations } from "next-intl";
 import CountUp from "react-countup";
@@ -11,9 +11,13 @@ interface WhoWeAreProps {
 }
 
 const WhoWeAre: NextPage<WhoWeAreProps> = ({ bannerWho }: WhoWeAreProps) => {
-
+  const [mounted, setMounted] = useState(false);
   const t = useTranslations();
   const statsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <section className="bg-white relative rounded-3xl mt-[-100px] z-10 w-full">
@@ -101,14 +105,20 @@ const WhoWeAre: NextPage<WhoWeAreProps> = ({ bannerWho }: WhoWeAreProps) => {
                         <div className="item flex-1 flex flex-col justify-center">
                           <div className="flex items-center p-0">
                             <h1 className="text-[35px] font-[700] font-[Involve, Sans-serif] mb-[-10px] leading-none">
-                              <CountUp
-                                start={0}
-                                end={item.value}
-                                duration={4}
-                                className="text-[35px] text-[#fff]"
-                                enableScrollSpy={true}
-                                scrollSpyOnce={true}
-                              />
+                              {mounted ? (
+                                <CountUp
+                                  start={0}
+                                  end={item.value}
+                                  duration={4}
+                                  className="text-[35px] text-[#fff]"
+                                  enableScrollSpy={true}
+                                  scrollSpyOnce={true}
+                                />
+                              ) : (
+                                <span className="text-[35px] text-[#fff]">
+                                  0
+                                </span>
+                              )}
                             </h1>
                             <span className="text-lg font-bold text-[#DBA426] text-[25px] mt-2">
                               +
@@ -211,14 +221,20 @@ const WhoWeAre: NextPage<WhoWeAreProps> = ({ bannerWho }: WhoWeAreProps) => {
                       <div className="">
                         <div className="flex items-center p-0">
                           <h1 className="text-[70px] font-[700] font-[Involve, Sans-serif] mb-[-20px]">
-                            <CountUp
-                              start={0}
-                              end={item.value}
-                              duration={4}
-                              className="text-[60px] md:text-[70px]"
-                              enableScrollSpy={true}
-                              scrollSpyOnce={true}
-                            />
+                            {mounted ? (
+                              <CountUp
+                                start={0}
+                                end={item.value}
+                                duration={4}
+                                className="text-[60px] md:text-[70px]"
+                                enableScrollSpy={true}
+                                scrollSpyOnce={true}
+                              />
+                            ) : (
+                              <span className="text-[60px] md:text-[70px]">
+                                0
+                              </span>
+                            )}
                           </h1>
                           <span className="text-lg font-bold text-[#DBA426] text-[40px] md:text-[50px] mt-5 md:mt-0">
                             +
