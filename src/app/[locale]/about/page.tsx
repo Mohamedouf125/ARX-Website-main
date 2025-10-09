@@ -8,7 +8,7 @@ import PageHero from "@/components/PageHero";
 import SmallHeadSpan from "@/components/SharedComponent/SmallHeadSpan";
 import SectionButton from "@/components/SharedComponent/SectionButton";
 import { ArrowRightIcon } from "lucide-react";
-import CountUp from "react-countup";
+import SafeCountUp from "@/components/SafeCountUp";
 import Link from "next/link";
 import Testimonial from "@/components/home/Testimonial";
 import { getTestimonials } from "@/libs/helpers/testimonials";
@@ -37,7 +37,6 @@ interface AboutBannerType {
 }
 
 const AboutPage = () => {
-  const [mounted, setMounted] = useState(false);
   const t = useTranslations("about");
   const locale = useLocale();
   const [testimonials, setTestimonials] = React.useState<TestimonialType>({});
@@ -82,10 +81,6 @@ const AboutPage = () => {
 
     fetchAboutBanner();
   }, [locale]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <div className="text-gray-800 mx-auto overflow-hidden">
@@ -326,16 +321,12 @@ const AboutPage = () => {
                           className="font-[700] text-black flex items-center leading-none"
                           style={{ fontSize: "clamp(20px,10vw,70px)" }}
                         >
-                          {mounted ? (
-                            <CountUp
-                              end={count}
-                              duration={3}
-                              scrollSpyOnce={true}
-                              enableScrollSpy={true}
-                            />
-                          ) : (
-                            <span>0</span>
-                          )}
+                          <SafeCountUp
+                            end={count}
+                            duration={3}
+                            scrollSpyOnce={true}
+                            enableScrollSpy={true}
+                          />
                           <span>{unit}</span>
                           <span
                             className="font-[700] text-[#dba426]"
