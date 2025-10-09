@@ -71,7 +71,7 @@ const SmallHeadSpan = ({ children, color }: SmallHeadSpanProps) => {
                       display: "block",
                     }}
                   >
-                    <a
+                    <span
                       title="·"
                       style={{
                         textDecoration: "none",
@@ -131,7 +131,7 @@ const SmallHeadSpan = ({ children, color }: SmallHeadSpanProps) => {
                           {item.title}
                         </span>
                       ))}
-                    </a>
+                    </span>
                   </div>
                 </div>
               </div>
