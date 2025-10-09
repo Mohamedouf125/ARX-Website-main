@@ -14,6 +14,8 @@ const nextConfig: NextConfig = {
     // Remove console.logs in production
     removeConsole: process.env.NODE_ENV === "production",
   },
+  // Enable source maps for production debugging
+  productionBrowserSourceMaps: true,
   images: {
     // (https://images.unsplash.com/photo-1600585154340-be6161a56a0c)
     domains: [
@@ -33,6 +35,11 @@ const nextConfig: NextConfig = {
     ],
   },
   webpack: (config, { isServer, dev }) => {
+    // Configure source maps for better debugging
+    if (!isServer) {
+      config.devtool = dev ? "eval-source-map" : "source-map";
+    }
+
     // Optimize bundle splitting
     if (!isServer) {
       config.optimization.splitChunks = {
