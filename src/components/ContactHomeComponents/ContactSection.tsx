@@ -34,7 +34,7 @@ const ContactSection = ({ contact }: ContactSectionProps) => {
               className="w-full h-full"
             >
               <span className="text-2xl leading-20 sm:text-3xl lg:text-5xl uppercase font-extrabold text-gray-900">
-                {t("our_form_description")}
+                {isHomePage ? t("enquiry_title") : t("our_form_description")}
               </span>
             </AnimatedElement>
           </div>
