@@ -3,5 +3,5 @@ Allow: /
 Disallow: /admin/
 Disallow: /api/
 Disallow: /server-scripts/
-
+Allow: /
 Sitemap: https://arxeg.com/sitemap.xml
