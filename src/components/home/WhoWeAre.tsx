@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { NextPage } from "next";
 import { useTranslations } from "next-intl";
 import SafeCountUp from "../SafeCountUp";

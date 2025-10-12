@@ -9,7 +9,7 @@ interface SafeCountUpProps {
   className?: string;
   enableScrollSpy?: boolean;
   scrollSpyOnce?: boolean;
-  [key: string]: any; // Allow other props to be passed through
+  [key: string]: unknown; // Allow other props to be passed through
 }
 
 const SafeCountUp: React.FC<SafeCountUpProps> = ({
