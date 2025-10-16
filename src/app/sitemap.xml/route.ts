@@ -93,7 +93,7 @@ ${urls
   <url>
     <loc>${url}</loc>
     <lastmod>${new Date().toISOString()}</lastmod>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>`
   )
