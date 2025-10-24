@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "../globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { NextIntlClientProvider } from "next-intl";
 import FloatingSocialIcons from "@/components/FloatingSocialIcons";
 import { ClientToaster } from "@/components/ui/ClientToaster";
 import PerformanceOptimizedLayout from "@/components/PerformanceOptimizedLayout";
@@ -29,15 +28,12 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }>) {
-  const { locale } = await params;
 
   return (
-    <html dir={locale === "ar" ? "rtl" : "ltr"} lang={locale}>
+    <>
       <head>
         <script
           id="organization-schema"
@@ -164,19 +160,17 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <NextIntlClientProvider locale={locale}>
-        <body className="relative">
-          <ErrorBoundary>
-            <PerformanceOptimizedLayout>
-              <Header />
-              <main>{children}</main>
-              <Footer />
-              <FloatingSocialIcons />
-              <ClientToaster />
-            </PerformanceOptimizedLayout>
-          </ErrorBoundary>
-        </body>
-      </NextIntlClientProvider>
-    </html>
+      <body className="relative">
+        <ErrorBoundary>
+          <PerformanceOptimizedLayout>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <FloatingSocialIcons />
+            <ClientToaster />
+          </PerformanceOptimizedLayout>
+        </ErrorBoundary>
+      </body>
+    </>
   );
 }

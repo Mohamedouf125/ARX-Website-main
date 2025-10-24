@@ -598,5 +598,16 @@
       "o7": "O7",
       "laVie": "LA VIE"
     }
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "quickLinks": {
+      "title": "Quick Navigation",
+      "home": "Home",
+      "projects": "Our Projects",
+      "contact": "Contact Us"
+    },
+    "backButton": "Go Back"
   }
 }
