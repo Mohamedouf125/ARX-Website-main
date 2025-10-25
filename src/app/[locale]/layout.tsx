@@ -6,6 +6,7 @@ import FloatingSocialIcons from "@/components/FloatingSocialIcons";
 import { ClientToaster } from "@/components/ui/ClientToaster";
 import PerformanceOptimizedLayout from "@/components/PerformanceOptimizedLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { useParams } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "ARX Development",
@@ -28,10 +29,12 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
-
+  const { locale } = await params;
   return (
     <>
       <head>
@@ -160,7 +163,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <body className="relative">
+      <body dir={locale === "ar" ? "rtl" : "ltr"} className="relative">
         <ErrorBoundary>
           <PerformanceOptimizedLayout>
             <Header />

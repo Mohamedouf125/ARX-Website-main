@@ -13,85 +13,6 @@ import { AnimatedElement } from "../animations/AnimationType";
 const Hero = ({ banners }: { banners?: BannerTypes[] }) => {
 
   const t = useTranslations();
-  // const buttonRef = useRef<HTMLButtonElement>(null);
-  // const [position, setPosition] = useState({ x: 0, y: 0 });
-  // const isHovered = false;
-  // const targetPosition = { x: 0, y: 0 };
-  // const [scale, setScale] = useState(1);
-  // const locale = useLocale();
-
-  // useEffect(() => {
-  //   if (!isHovered) {
-  //     // Smoothly return to original position when not hovered
-  //     const returnAnimation = () => {
-  //       setPosition((prev) => {
-  //         const dx = (0 - prev.x) * 0.1;
-  //         const dy = (0 - prev.y) * 0.1;
-
-  //         if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
-  //           return {
-  //             x: prev.x + dx,
-  //             y: prev.y + dy,
-  //           };
-  //         }
-  //         return { x: 0, y: 0 };
-  //       });
-
-  //       if (Math.abs(position.x) > 0.1 || Math.abs(position.y) > 0.1) {
-  //         requestAnimationFrame(returnAnimation);
-  //       }
-  //     };
-
-  //     returnAnimation();
-  //     // setScale(1);
-  //     return;
-  //   }
-
-  //   const animate = () => {
-  //     setPosition((prev) => {
-  //       // Dynamic easing based on distance
-  //       const distance = Math.sqrt(
-  //         Math.pow(targetPosition.x - prev.x, 2) +
-  //           Math.pow(targetPosition.y - prev.y, 2)
-  //       );
-  //       const easingFactor = Math.min(0.3, 0.05 + distance * 0.005);
-
-  //       return {
-  //         x: prev.x + (targetPosition.x - prev.x) * easingFactor,
-  //         y: prev.y + (targetPosition.y - prev.y) * easingFactor,
-  //       };
-  //     });
-
-  //     requestAnimationFrame(animate);
-  //   };
-
-  //   const animationFrame = requestAnimationFrame(animate);
-  //   return () => cancelAnimationFrame(animationFrame);
-  // }, [isHovered, targetPosition]);
-
-  // const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
-  //   if (!buttonRef.current) return;
-
-  //   const rect = buttonRef.current.getBoundingClientRect();
-  //   // More pronounced movement effect
-  //   const x = (e.clientX - rect.left - rect.width / 2) * 0.6;
-  //   const y = (e.clientY - rect.top - rect.height / 2) * 0.6;
-
-  //   setTargetPosition({ x, y });
-  //   // Subtle scale and opacity changes
-  //   setScale(1.05);
-  // };
-
-  // const handleMouseLeave = () => {
-  //   setIsHovered(false);
-  //   setTargetPosition({ x: 0, y: 0 });
-  //   setScale(1);
-  // };
-
-  // const handleMouseEnter = () => {
-  //   setIsHovered(true);
-  //   setScale(1.03);
-  // };
 
   return (
     <div className="w-full relative h-[60vh] md:h-[80vh] lg:h-[110vh] ">
@@ -157,7 +78,7 @@ const Hero = ({ banners }: { banners?: BannerTypes[] }) => {
                         duration={1}
                         className="w-full h-full"
                       >
-                        <h1 className="justify-center capitalize text-white font-bold font-['Lucida Grande'] tracking-tight leading-[0.9] sm:leading-[0.95] md:leading-[1]
+                        <h1 className="justify-center capitalize text-white font-bold font-['Noto'] tracking-tight leading-[0.9] sm:leading-[0.95] md:leading-[1]
                           text-[28px] xs:text-[32px] sm:text-[40px] md:text-[50px] lg:text-[70px] xl:text-[80px] 2xl:text-[90px]
                           drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                           {t("home.hero_title")} {t("home.hero_subtitle")}{" "}
