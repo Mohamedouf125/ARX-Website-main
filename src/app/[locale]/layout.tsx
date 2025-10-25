@@ -6,7 +6,6 @@ import FloatingSocialIcons from "@/components/FloatingSocialIcons";
 import { ClientToaster } from "@/components/ui/ClientToaster";
 import PerformanceOptimizedLayout from "@/components/PerformanceOptimizedLayout";
 import ErrorBoundary from "@/components/ErrorBoundary";
-import { useParams } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "ARX Development",
