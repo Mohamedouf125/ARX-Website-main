@@ -13,7 +13,6 @@ async function Page({ params }: { params: Promise<{ locale: string }> }) {
   const t = await getTranslations("our_team");
   const teamMembers = getAllTeamMembers();
 
-
   return (
     <div>
       <PageHero
@@ -25,6 +24,7 @@ async function Page({ params }: { params: Promise<{ locale: string }> }) {
         ]}
         backgroundImage="/header__team.webp"
         height="medium"
+        hideDescription={true}
       />
       {/* BOARD OF DIRECTORS */}
       <section className="pt-30 px-4 pb-60 relative z-10 bg-white rounded-b-3xl">

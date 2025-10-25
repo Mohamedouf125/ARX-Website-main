@@ -65,7 +65,7 @@ const PageHero: React.FC<PageHeroProps> = ({
         {/* Standard layout with breadcrumbs */}
         <div className="absolute inset-0 flex flex-col items-start justify-start pt-30 md:pt-40 pb-20 lg:pb-30 mb-[-50px] px-3 md:px-8 w-full z-10">
           {/* Title */}
-          <h1 className="text-[30px] sm:text-[50px] md:text-[70px] font-bold font-['Cinzel'] mb-4 text-white">
+          <h1 className="text-[30px] sm:text-[50px] md:text-[70px] font-bold font-['Cinzel'] mb-4 text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
             {title}
           </h1>
 
@@ -77,7 +77,7 @@ const PageHero: React.FC<PageHeroProps> = ({
                 {breadcrumbs.map((item, index) => (
                   <li
                     key={index}
-                    className="flex items-center text-[15px] font-[600] opacity-70 hover:opacity-100 transition-all duration-300 ease-in-out"
+                    className="flex items-center text-[15px] font-[600] opacity-70 hover:opacity-100 transition-all duration-300 ease-in-out drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]"
                   >
                     {index > 0 && (
                       <div className="w-[3px] h-[3px] bg-white rounded-full mx-3"></div>
@@ -85,12 +85,12 @@ const PageHero: React.FC<PageHeroProps> = ({
                     {item.href ? (
                       <Link
                         href={item.href}
-                        className="text-white transition-colors hover:text-[#dba426]"
+                        className="text-white transition-colors hover:text-[#dba426] drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]"
                       >
                         {item.label}
                       </Link>
                     ) : (
-                      <span className="text-white hover:text-[#dba426] transition-colors">
+                      <span className="text-white hover:text-[#dba426] transition-colors drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
                         {item.label}
                       </span>
                     )}
@@ -101,7 +101,7 @@ const PageHero: React.FC<PageHeroProps> = ({
 
             {/* Description */}
             {!hideDescription && (
-              <p className="text-[20px] font-[600] text-white font-['Lato'] w-[400px] opacity-60 hidden md:block">
+              <p className="text-[20px] font-[600] text-white font-['Lato'] w-[400px] opacity-60 hidden md:block drop-shadow-[0_2px_4px_rgba(0,0,0,0.7)]">
                 {description ?? t("description")}
               </p>
             )}
