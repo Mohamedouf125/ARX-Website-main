@@ -672,3 +672,8 @@ html[lang="ar"] .animate-infinite-scroll {
 .container-animate:hover {
   animation: glowPulse 2s ease-in-out infinite;
 }
+
+/* to make sublinks in descripton color blue */
+.blog-description-container a {
+  color : #035B8D;
+}

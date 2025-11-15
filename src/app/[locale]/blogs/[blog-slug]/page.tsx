@@ -148,7 +148,6 @@ const BlogPage = async ({
   // Pre-format the date to avoid dynamic calculations
   const formattedDate = formatDate(blog?.created_at || "");
 
-  console.log(blog?.description);
 
   return (
     <div>
@@ -204,7 +203,7 @@ const BlogPage = async ({
         <div className="max-w-5xl mx-auto px-6">
           <div className="description my-16">
             <div
-              className="text-gray-500 text-[18px] font-[400] space-y-3 leading-[25px] rounded-3xl prose prose-lg max-w-none"
+              className="text-gray-500 blog-description-container text-[18px] font-[400] space-y-3 leading-[25px] rounded-3xl prose prose-lg max-w-none"
               dangerouslySetInnerHTML={{ __html: blog?.description || "" }}
             />
           </div>
