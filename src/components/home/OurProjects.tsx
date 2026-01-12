@@ -166,7 +166,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
 
                           {/* Project Title with Bottom Border */}
                           <div className="mb-3 sm:mb-4">
-                            <Link href={`${locale}/projects/${project.slug}`}>
+                            <Link href={`${locale}/${project.slug}`}>
                               <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-2">
                                 {project.title}
                               </h2>
@@ -207,7 +207,7 @@ export const OurProjects = ({ projects }: { projects: ProjectType[] }) => {
                           {/* Floating Button with Arrow - Bottom Right */}
                           <div className="bg-black/20 rounded-full absolute bottom-[-15px] sm:bottom-[-20px] lg:bottom-[-25px] right-[40px] md:right-[50px] sm:right-[50px] lg:right-[65px]">
                             <Link
-                              href={`${locale}/projects/${project.slug}`}
+                              href={`${locale}/${project.slug}`}
                               className="group inline-flex items-center bg-[#DBA426] hover:bg-[#DBA426] text-white p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                               aria-label={`View ${project.title} project details`}
                             >
