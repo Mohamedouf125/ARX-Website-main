@@ -16,11 +16,11 @@ const ProjectCard = ({ project }: { project?: ProjectType }) => {
       <div
         className={`w-full h-full bg-cover bg-center bg-no-repeat flex flex-col justify-between p-8 rounded-3xl relative`}
       >
-          <Link
-            href={`projects/${project?.slug}`}
-            className="text-[40px] font-[600] capitalize hover:text-[#dba426] transition-all duration-300 flex justify-start"
-          >
-        <div className="absolute top-0 left-0 w-full h-full transition-all duration-300 after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gradient-to-b after:from-transparent after:to-black/90 after:rounded-3xl after:z-0">
+        <Link
+          href={`${project?.slug}`}
+          className="text-[40px] font-[600] capitalize hover:text-[#dba426] transition-all duration-300 flex justify-start"
+        >
+          <div className="absolute top-0 left-0 w-full h-full transition-all duration-300 after:content-[''] after:absolute after:top-0 after:left-0 after:w-full after:h-full after:bg-gradient-to-b after:from-transparent after:to-black/90 after:rounded-3xl after:z-0">
             <Image
               src={project?.cover || ""}
               alt={project?.title || "Axiom Tower"}
@@ -28,13 +28,13 @@ const ProjectCard = ({ project }: { project?: ProjectType }) => {
               width={700}
               height={700}
             />
-        </div>
-        <div className="flex justify-start z-10">
-          <span className="bg-[#dba426] text-white font-[500] text-[12px] px-6 py-2 rounded-full uppercase">
-            {t("under_construction")}
-          </span>
-        </div>
-          </Link>
+          </div>
+          <div className="flex justify-start z-10">
+            <span className="bg-[#dba426] text-white font-[500] text-[12px] px-6 py-2 rounded-full uppercase">
+              {t("under_construction")}
+            </span>
+          </div>
+        </Link>
 
         <div className="z-10 w-full text-white">
           <div className="">
@@ -59,7 +59,7 @@ const ProjectCard = ({ project }: { project?: ProjectType }) => {
 
               <div className="flex justify-start">
                 <Link
-                  href={`projects/${project?.slug}`}
+                  href={`${project?.slug}`}
                   className="text-[40px] font-[600] capitalize hover:text-[#dba426] transition-all duration-300 flex justify-start"
                 >
                   {project?.title}
